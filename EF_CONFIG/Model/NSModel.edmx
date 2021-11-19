@@ -1,0 +1,985 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NeedleSupplierModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NS_Buildings">
+          <Key>
+            <PropertyRef Name="BuildingID" />
+          </Key>
+          <Property Name="BuildingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuildingName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NS_Devices">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DeviceCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OnlineStatus" Type="nvarchar(max)" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NS_Export">
+          <Key>
+            <PropertyRef Name="ExportID" />
+          </Key>
+          <Property Name="ExportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="NeedleID" Type="int" Nullable="false" />
+          <Property Name="ExportTime" Type="datetime" Nullable="false" />
+          <Property Name="ExprtTimeString" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NS_Imports">
+          <Key>
+            <PropertyRef Name="ImportID" />
+          </Key>
+          <Property Name="ImportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="NeedleID" Type="int" Nullable="false" />
+          <Property Name="ImportTime" Type="datetime" Nullable="false" />
+          <Property Name="ImportTimeStr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NS_Needles">
+          <Key>
+            <PropertyRef Name="NeedleID" />
+          </Key>
+          <Property Name="NeedleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NeedleName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NeedleCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NeedleSize" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NeedlePoint" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NeedlePrice" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="NeedleLength" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="NS_PostRecords">
+          <Key>
+            <PropertyRef Name="PostRecordID" />
+          </Key>
+          <Property Name="PostRecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostTime" Type="datetime" Nullable="false" />
+          <Property Name="PostTimeStr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NS_Staffs">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StaffName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CardNumber" Type="int" Nullable="false" />
+          <Property Name="Department" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
+          <Property Name="RFIDCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="UserPassword" Type="nvarchar(max)" />
+          <Property Name="UserLayer" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NS_Stocks">
+          <Key>
+            <PropertyRef Name="StockID" />
+          </Key>
+          <Property Name="StockID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="NeedleID" Type="int" Nullable="false" />
+          <Property Name="CurrentQuantity" Type="int" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="TimrStr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_NS_Devices_NS_Buildings">
+          <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Devices">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Buildings">
+          <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
+          <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Devices">
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="1" />
+          <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Export">
+          <End Role="NS_Needles" Type="Self.NS_Needles" Multiplicity="1" />
+          <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Staffs">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
+          <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Imports_NS_Buildings">
+          <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
+          <End Role="NS_Imports" Type="Self.NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_PostRecord_NS_Buildings">
+          <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
+          <End Role="NS_PostRecords" Type="Self.NS_PostRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_PostRecords">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_PostRecords_NS_Devices">
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="1" />
+          <End Role="NS_PostRecords" Type="Self.NS_PostRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_PostRecords">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Staffs_NS_Buildings">
+          <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Staffs">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Staffs_NS_Devices">
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="1" />
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Staffs">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Stocks_NS_Devices">
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="1" />
+          <End Role="NS_Stocks" Type="Self.NS_Stocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Stocks">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Stocks_NS_Needles">
+          <End Role="NS_Needles" Type="Self.NS_Needles" Multiplicity="1" />
+          <End Role="NS_Stocks" Type="Self.NS_Stocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Stocks">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Stocks_NS_Staffs">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
+          <End Role="NS_Stocks" Type="Self.NS_Stocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Stocks">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Tracking_NS_Devices">
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="1" />
+          <End Role="NS_Imports" Type="Self.NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Tracking_NS_Needles">
+          <End Role="NS_Needles" Type="Self.NS_Needles" Multiplicity="1" />
+          <End Role="NS_Imports" Type="Self.NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Tracking_NS_Staffs">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
+          <End Role="NS_Imports" Type="Self.NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="NeedleSupplierModelStoreContainer">
+          <EntitySet Name="NS_Buildings" EntityType="Self.NS_Buildings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Devices" EntityType="Self.NS_Devices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Export" EntityType="Self.NS_Export" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Imports" EntityType="Self.NS_Imports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Needles" EntityType="Self.NS_Needles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_PostRecords" EntityType="Self.NS_PostRecords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Staffs" EntityType="Self.NS_Staffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Stocks" EntityType="Self.NS_Stocks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_NS_Devices_NS_Buildings" Association="Self.FK_NS_Devices_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Buildings" Association="Self.FK_NS_Export_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Devices" Association="Self.FK_NS_Export_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Export" Association="Self.FK_NS_Export_NS_Export">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Staffs" Association="Self.FK_NS_Export_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Imports_NS_Buildings" Association="Self.FK_NS_Imports_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_PostRecord_NS_Buildings" Association="Self.FK_NS_PostRecord_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_PostRecords_NS_Devices" Association="Self.FK_NS_PostRecords_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Staffs_NS_Buildings" Association="Self.FK_NS_Staffs_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Staffs_NS_Devices" Association="Self.FK_NS_Staffs_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Stocks_NS_Devices" Association="Self.FK_NS_Stocks_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Stocks_NS_Needles" Association="Self.FK_NS_Stocks_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Stocks_NS_Staffs" Association="Self.FK_NS_Stocks_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Tracking_NS_Devices" Association="Self.FK_NS_Tracking_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Tracking_NS_Needles" Association="Self.FK_NS_Tracking_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Tracking_NS_Staffs" Association="Self.FK_NS_Tracking_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NeedleSupplierModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NeedleSupplierDataContext" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(NeedleSupplierModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(NeedleSupplierModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="NS_Buildings" EntityType="NeedleSupplierModel.NS_Buildings" />
+          <EntitySet Name="NS_Devices" EntityType="NeedleSupplierModel.NS_Devices" />
+          <EntitySet Name="NS_Export" EntityType="NeedleSupplierModel.NS_Export" />
+          <EntitySet Name="NS_Imports" EntityType="NeedleSupplierModel.NS_Imports" />
+          <EntitySet Name="NS_Needles" EntityType="NeedleSupplierModel.NS_Needles" />
+          <EntitySet Name="NS_PostRecords" EntityType="NeedleSupplierModel.NS_PostRecords" />
+          <EntitySet Name="NS_Staffs" EntityType="NeedleSupplierModel.NS_Staffs" />
+          <EntitySet Name="NS_Stocks" EntityType="NeedleSupplierModel.NS_Stocks" />
+          <AssociationSet Name="FK_NS_Devices_NS_Buildings" Association="NeedleSupplierModel.FK_NS_Devices_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Buildings" Association="NeedleSupplierModel.FK_NS_Export_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Imports_NS_Buildings" Association="NeedleSupplierModel.FK_NS_Imports_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_PostRecord_NS_Buildings" Association="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Staffs_NS_Buildings" Association="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Devices" Association="NeedleSupplierModel.FK_NS_Export_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_PostRecords_NS_Devices" Association="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Staffs_NS_Devices" Association="NeedleSupplierModel.FK_NS_Staffs_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Stocks_NS_Devices" Association="NeedleSupplierModel.FK_NS_Stocks_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Tracking_NS_Devices" Association="NeedleSupplierModel.FK_NS_Tracking_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Export" Association="NeedleSupplierModel.FK_NS_Export_NS_Export">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Staffs" Association="NeedleSupplierModel.FK_NS_Export_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Tracking_NS_Needles" Association="NeedleSupplierModel.FK_NS_Tracking_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Tracking_NS_Staffs" Association="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Imports" EntitySet="NS_Imports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Stocks_NS_Needles" Association="NeedleSupplierModel.FK_NS_Stocks_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Stocks_NS_Staffs" Association="NeedleSupplierModel.FK_NS_Stocks_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="NS_Buildings">
+          <Key>
+            <PropertyRef Name="BuildingID" />
+          </Key>
+          <Property Name="BuildingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuildingName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Devices_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Devices" />
+          <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Export" />
+          <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Imports" />
+          <NavigationProperty Name="NS_PostRecords" Relationship="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_PostRecords" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Staffs" />
+        </EntityType>
+        <EntityType Name="NS_Devices">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OnlineStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Devices_NS_Buildings" FromRole="NS_Devices" ToRole="NS_Buildings" />
+          <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Devices" FromRole="NS_Devices" ToRole="NS_Export" />
+          <NavigationProperty Name="NS_PostRecords" Relationship="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices" FromRole="NS_Devices" ToRole="NS_PostRecords" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Devices" FromRole="NS_Devices" ToRole="NS_Staffs" />
+          <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Devices" FromRole="NS_Devices" ToRole="NS_Stocks" />
+          <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Devices" FromRole="NS_Devices" ToRole="NS_Imports" />
+        </EntityType>
+        <EntityType Name="NS_Export">
+          <Key>
+            <PropertyRef Name="ExportID" />
+          </Key>
+          <Property Name="ExportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="NeedleID" Type="Int32" Nullable="false" />
+          <Property Name="ExportTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExprtTimeString" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Buildings" FromRole="NS_Export" ToRole="NS_Buildings" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Devices" FromRole="NS_Export" ToRole="NS_Devices" />
+          <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Export" FromRole="NS_Export" ToRole="NS_Needles" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Staffs" FromRole="NS_Export" ToRole="NS_Staffs" />
+        </EntityType>
+        <EntityType Name="NS_Imports">
+          <Key>
+            <PropertyRef Name="ImportID" />
+          </Key>
+          <Property Name="ImportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="NeedleID" Type="Int32" Nullable="false" />
+          <Property Name="ImportTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ImportTimeStr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_Buildings" FromRole="NS_Imports" ToRole="NS_Buildings" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Devices" FromRole="NS_Imports" ToRole="NS_Devices" />
+          <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" FromRole="NS_Imports" ToRole="NS_Needles" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" FromRole="NS_Imports" ToRole="NS_Staffs" />
+        </EntityType>
+        <EntityType Name="NS_Needles">
+          <Key>
+            <PropertyRef Name="NeedleID" />
+          </Key>
+          <Property Name="NeedleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NeedleName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NeedleCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NeedleSize" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NeedlePoint" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NeedlePrice" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="NeedleLength" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Export" FromRole="NS_Needles" ToRole="NS_Export" />
+          <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" FromRole="NS_Needles" ToRole="NS_Imports" />
+          <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" FromRole="NS_Needles" ToRole="NS_Stocks" />
+        </EntityType>
+        <EntityType Name="NS_PostRecords">
+          <Key>
+            <PropertyRef Name="PostRecordID" />
+          </Key>
+          <Property Name="PostRecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PostTimeStr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings" FromRole="NS_PostRecords" ToRole="NS_Buildings" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices" FromRole="NS_PostRecords" ToRole="NS_Devices" />
+        </EntityType>
+        <EntityType Name="NS_Staffs">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CardNumber" Type="Int32" Nullable="false" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <Property Name="RFIDCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserLayer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings" FromRole="NS_Staffs" ToRole="NS_Buildings" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Devices" FromRole="NS_Staffs" ToRole="NS_Devices" />
+          <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Staffs" FromRole="NS_Staffs" ToRole="NS_Export" />
+          <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" FromRole="NS_Staffs" ToRole="NS_Imports" />
+          <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Staffs" FromRole="NS_Staffs" ToRole="NS_Stocks" />
+        </EntityType>
+        <EntityType Name="NS_Stocks">
+          <Key>
+            <PropertyRef Name="StockID" />
+          </Key>
+          <Property Name="StockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="NeedleID" Type="Int32" Nullable="false" />
+          <Property Name="CurrentQuantity" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimrStr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Devices" FromRole="NS_Stocks" ToRole="NS_Devices" />
+          <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" FromRole="NS_Stocks" ToRole="NS_Needles" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Staffs" FromRole="NS_Stocks" ToRole="NS_Staffs" />
+        </EntityType>
+        <Association Name="FK_NS_Devices_NS_Buildings">
+          <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Devices">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Buildings">
+          <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Imports_NS_Buildings">
+          <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Imports" Role="NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_PostRecord_NS_Buildings">
+          <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_PostRecords" Role="NS_PostRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_PostRecords">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Staffs_NS_Buildings">
+          <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Staffs">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Devices">
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_PostRecords_NS_Devices">
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_PostRecords" Role="NS_PostRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_PostRecords">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Staffs_NS_Devices">
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Staffs">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Stocks_NS_Devices">
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Stocks">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Tracking_NS_Devices">
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Imports" Role="NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Export">
+          <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Staffs">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Tracking_NS_Needles">
+          <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Imports" Role="NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Tracking_NS_Staffs">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Imports" Role="NS_Imports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Imports">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Stocks_NS_Needles">
+          <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Stocks">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Stocks_NS_Staffs">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Stocks">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NeedleSupplierModelStoreContainer" CdmEntityContainer="NeedleSupplierDataContext">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="NeedleSupplierModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="NeedleSupplierModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="NeedleSupplierModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="NeedleSupplierModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NeedleSupplierModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="NeedleSupplierModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NeedleSupplierModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="NeedleSupplierModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="NeedleSupplierModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="NS_Buildings">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Buildings">
+              <MappingFragment StoreEntitySet="NS_Buildings">
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_Devices">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Devices">
+              <MappingFragment StoreEntitySet="NS_Devices">
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="OnlineStatus" ColumnName="OnlineStatus" />
+                <ScalarProperty Name="DeviceCode" ColumnName="DeviceCode" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_Export">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Export">
+              <MappingFragment StoreEntitySet="NS_Export">
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ExprtTimeString" ColumnName="ExprtTimeString" />
+                <ScalarProperty Name="ExportTime" ColumnName="ExportTime" />
+                <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="ExportID" ColumnName="ExportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_Imports">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Imports">
+              <MappingFragment StoreEntitySet="NS_Imports">
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ImportTimeStr" ColumnName="ImportTimeStr" />
+                <ScalarProperty Name="ImportTime" ColumnName="ImportTime" />
+                <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="ImportID" ColumnName="ImportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_Needles">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Needles">
+              <MappingFragment StoreEntitySet="NS_Needles">
+                <ScalarProperty Name="NeedleLength" ColumnName="NeedleLength" />
+                <ScalarProperty Name="NeedlePrice" ColumnName="NeedlePrice" />
+                <ScalarProperty Name="NeedlePoint" ColumnName="NeedlePoint" />
+                <ScalarProperty Name="NeedleSize" ColumnName="NeedleSize" />
+                <ScalarProperty Name="NeedleCode" ColumnName="NeedleCode" />
+                <ScalarProperty Name="NeedleName" ColumnName="NeedleName" />
+                <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_PostRecords">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_PostRecords">
+              <MappingFragment StoreEntitySet="NS_PostRecords">
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="PostTimeStr" ColumnName="PostTimeStr" />
+                <ScalarProperty Name="PostTime" ColumnName="PostTime" />
+                <ScalarProperty Name="PostRecordID" ColumnName="PostRecordID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_Staffs">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Staffs">
+              <MappingFragment StoreEntitySet="NS_Staffs">
+                <ScalarProperty Name="UserLayer" ColumnName="UserLayer" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="RFIDCode" ColumnName="RFIDCode" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_Stocks">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Stocks">
+              <MappingFragment StoreEntitySet="NS_Stocks">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="TimrStr" ColumnName="TimrStr" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="CurrentQuantity" ColumnName="CurrentQuantity" />
+                <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

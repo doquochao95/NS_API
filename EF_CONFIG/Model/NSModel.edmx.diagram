@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e5f008b7738c4d72a210656c33f027fe" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Buildings" Width="1.5" PointX="0.75" PointY="9.25" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Devices" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Export" Width="1.5" PointX="5.25" PointY="8.75" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Imports" Width="1.5" PointX="13.5" PointY="6.5" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Needles" Width="1.5" PointX="9.125" PointY="0.75" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_PostRecords" Width="1.5" PointX="8.25" PointY="9.25" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Staffs" Width="1.5" PointX="8.25" PointY="4.5" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Stocks" Width="1.5" PointX="10.5" PointY="6.75" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Devices_NS_Buildings" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Buildings" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Imports_NS_Buildings" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Devices" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Staffs_NS_Devices" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Devices" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Devices" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Export" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Staffs" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Staffs" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

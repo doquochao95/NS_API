@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="NeedleTracking.UserControlUC.VolatilityUC.VolatilityCombobox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:NeedleTracking.UserControlUC"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:demoAppDomain="clr-namespace:NeedleTracking.Domain"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Name="ucVolatilityCombobox"
+             DataContext="{StaticResource volatilitycomboboxVM}"
+             mc:Ignorable="d">
+    <Grid Background="#080710">
+        <Grid Background="#111123"
+              Margin="20 20 20 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Label Content="Building:"
+                               Foreground="White"
+                               FontSize="18"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="10 0 0 0" />
+                    </Grid>
+                    <Grid Grid.Column="1">
+
+                    </Grid>
+                    <Grid Grid.Column="2">
+                       
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <ComboBox x:Name="BuildingComboBox"
+                              Style="{StaticResource MaterialDesignFilledComboBox}"
+                              IsEnabled="{Binding Path=BuildingComboBoxEnable}"
+                              materialDesign:HintAssist.Hint="Building"
+                              materialDesign:TextFieldAssist.HasClearButton="True"
+                              Background="White"
+                              BorderBrush="#603E20"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Width="220"
+                              Height="45"
+                              Margin="20 5 20 0"
+                              ItemsSource="{Binding BuildingList}"
+                              DisplayMemberPath="BuildingName">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="BuildingSelected"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <demoAppDomain:NotEmptyValidationRule ValidatesOnTargetUpdated="True"></demoAppDomain:NotEmptyValidationRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Label Content="Machine:"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Margin="10 20 0 0" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+
+                        </Grid>
+                        <Grid Grid.Column="2">
+
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <ComboBox x:Name="MachineComboBox"
+                              Style="{StaticResource MaterialDesignFilledComboBox}"
+                              IsEnabled="{Binding Path=MachineComboBoxEnable}"
+                              materialDesign:HintAssist.Hint="Machine"
+                              materialDesign:TextFieldAssist.HasClearButton="True"
+                              Background="White"
+                              BorderBrush="#603E20"
+                              Padding="10"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Width="220"
+                              Height="45"
+                              Margin="20 5 20 10"
+                              ItemsSource="{Binding MachineList}"
+                              DisplayMemberPath="DeviceName">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="MachineSelected"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <demoAppDomain:NotEmptyValidationRule ValidatesOnTargetUpdated="True"></demoAppDomain:NotEmptyValidationRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

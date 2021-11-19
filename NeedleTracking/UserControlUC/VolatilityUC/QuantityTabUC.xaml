@@ -1,0 +1,222 @@
+﻿<UserControl x:Class="NeedleTracking.UserControlUC.VolatilityUC.QuantityTabUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:NeedleTracking.UserControlUC"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Name="ucQuantityTab"
+             mc:Ignorable="d">
+    <Grid Background="#080710">
+        <Grid Margin="20 20 20 0"
+              Background="#111123">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <materialDesign:Card Grid.Column="0"
+                                     Background="#3B3B5C"
+                                     Margin="48 24 24 24">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Margin="5 5 5 0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="WrapWithOverflow"
+                                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                           Text="Total Usage"
+                                           Foreground="White">
+                                </TextBlock>
+                                <Grid Grid.Row="1">
+                                    <TextBlock Margin="5 5 5 5"
+                                               TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="Gray">*the total needle usage quantiity</TextBlock>
+                                </Grid>
+                            </Grid>
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Center"
+                                                     Width="90"
+                                                     Height="90"
+                                                     Foreground="White"
+                                                     Kind="Counter"></materialDesign:PackIcon>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Background="White"
+                                    BorderThickness="3"
+                                    BorderBrush="#564987">
+                                <TextBlock Grid.Column="0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="20"
+                                           Foreground="#564987"
+                                           Text="22222"
+                                           FontStyle="Italic"></TextBlock>
+                            </Border>
+                            <Button BorderThickness="0"
+                                    Background="#564987"
+                                    Grid.Column="1"
+                                    Height="39"
+                                    Content="detail"></Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card Grid.Column="1"
+                                     Background="#3B3B5C"
+                                     Margin="24 24 24 24">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Margin="5 5 5 0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="WrapWithOverflow"
+                                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                           Text="Total Type"
+                                           Foreground="White">
+                                </TextBlock>
+                                <Grid Grid.Row="1">
+                                    <TextBlock Margin="5 5 5 5"
+                                               TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="Gray">*the total quantiy of used needle type</TextBlock>
+                                </Grid>
+                            </Grid>
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Center"
+                                                     Width="90"
+                                                     Height="90"
+                                                     Foreground="White"
+                                                     Kind="FormatListBulletedType"></materialDesign:PackIcon>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Background="White"
+                                    BorderThickness="3"
+                                    BorderBrush="#564987">
+                                <TextBlock Grid.Column="0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="20"
+                                           Foreground="#564987"
+                                           Text="22222"
+                                           FontStyle="Italic"></TextBlock>
+                            </Border>
+                            <Button BorderThickness="0"
+                                    Background="#564987"
+                                    Grid.Column="1"
+                                    Height="39"
+                                    Content="detail"></Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card Grid.Column="2"
+                                     Background="#3B3B5C"
+                                     Margin="24 24 48 24">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Margin="5 5 5 0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="WrapWithOverflow"
+                                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                           Text="Total Price"
+                                           Foreground="White">
+                                </TextBlock>
+                                <Grid Grid.Row="1">
+                                    <TextBlock Margin="5 5 5 5"
+                                               TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="Gray">*the total price of used knives (unit: USD)</TextBlock>
+                                </Grid>
+                            </Grid>
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Center"
+                                                     Width="90"
+                                                     Height="90"
+                                                     Foreground="White"
+                                                     Kind="CurrencyUsd"></materialDesign:PackIcon>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Background="White"
+                                    BorderThickness="3"
+                                    BorderBrush="#564987">
+                                <TextBlock Grid.Column="0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="20"
+                                           Foreground="#564987"
+                                           Text="22222"
+                                           FontStyle="Italic"></TextBlock>
+                            </Border>
+                            <Button BorderThickness="0"
+                                    Background="#564987"
+                                    Grid.Column="1"
+                                    Height="39"
+                                    Content="detail"></Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
