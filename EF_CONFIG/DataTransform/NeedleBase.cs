@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EF_CONFIG.Model;
+using EF_CONFIG.BaseModel;
 
 namespace EF_CONFIG.DataTransform
 {
@@ -139,5 +140,23 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
+        public static NS_Needles Get_NeedleByVotatilityDatagridModelItem(VotatilityDatagridModel item)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Needles
+                        .Where(i => i.NeedleID == item.NS_Export.NeedleID)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
     }
 }

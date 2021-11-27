@@ -8,5 +8,7 @@
     <viewmodel:VolatilityMenuViewModel x:Key="volatilitymenuVM"></viewmodel:VolatilityMenuViewModel>
     <volatilityviewmodel:VolatilityCBViewModel x:Key="volatilitycomboboxVM"></volatilityviewmodel:VolatilityCBViewModel>
     <volatilityviewmodel:VolatilityDataGridViewModel x:Key="volatilitydatagridVM"></volatilityviewmodel:VolatilityDataGridViewModel>
+    <volatilityviewmodel:VolatilityQtyTabViewModel x:Key="volatilityqtytabVM"></volatilityviewmodel:VolatilityQtyTabViewModel>
+    <volatilityviewmodel:VolatilityLiveChartViewModel x:Key="voaltilitylivechartVM"></volatilityviewmodel:VolatilityLiveChartViewModel>
 
 </ResourceDictionary>

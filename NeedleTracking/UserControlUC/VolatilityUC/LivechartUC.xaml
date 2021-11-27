@@ -8,6 +8,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Name="ucLivechart"
+             DataContext="{StaticResource voaltilitylivechartVM}"
              mc:Ignorable="d">
     <Grid Background="#080710">
         <Grid Margin="20 20 0 0">
@@ -17,20 +18,37 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0"
                   Background="#111123">
-                <TextBlock Foreground="White" FontSize="18" Margin="10 5 5 5">Quantity by datetime</TextBlock>
+                <TextBlock Foreground="White"
+                           FontSize="18"
+                           Margin="10 5 5 5">Quantity by datetime</TextBlock>
             </Grid>
-            <lvc:CartesianChart Grid.Row="1"
+          
+            <lvc:CartesianChart x:Name="lvcChart" 
+                                Grid.Row="1"
                                 MinHeight="100"
-                                MinWidth="300"
                                 Background="#111123"
                                 LegendLocation="Right"
-                                Foreground="White">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Quantity"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
+                                Foreground="White"
+                                Series="{Binding SeriesCollection}"
+                                ScrollMode="X"
+                                Zoom="X">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="DateTime"></lvc:Axis>
+                    <lvc:Axis x:Name="X"
+                              Title="DateTime"
+                              Labels="{Binding Labels}"
+                              Position="LeftBottom" LabelsRotation="45">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="1"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis x:Name="Y"
+                              Title="Quantity"
+                              LabelFormatter="{Binding YFormatter}"
+                              Position="LeftBottom"
+                              MinValue="0"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Grid>
     </Grid>

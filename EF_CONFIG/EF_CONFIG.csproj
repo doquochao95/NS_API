@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseModel\VolatilityLiveChartModel.cs" />
     <Compile Include="BaseModel\VotatilityDatagridModel.cs" />
     <Compile Include="DataTransform\ImplementBase.cs" />
     <Compile Include="DataTransform\NeedleBase.cs" />
@@ -104,6 +105,9 @@
       <DependentUpon>NSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\sp_helpdiagrams_Result.cs">
+      <DependentUpon>NSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sysdiagram.cs">
       <DependentUpon>NSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -29,6 +29,7 @@
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Staffs" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

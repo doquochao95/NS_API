@@ -27,7 +27,7 @@ namespace EF_CONFIG.Model
         public string NeedleCode { get; set; }
         public string NeedleSize { get; set; }
         public string NeedlePoint { get; set; }
-        public Nullable<decimal> NeedlePrice { get; set; }
+        public decimal NeedlePrice { get; set; }
         public Nullable<decimal> NeedleLength { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

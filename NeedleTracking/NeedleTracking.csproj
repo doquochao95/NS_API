@@ -135,6 +135,7 @@
     <Compile Include="ViewModel\VolatilityMenuViewModel.cs" />
     <Compile Include="ViewModel\VolatilityMenuViewModels\VolatilityCBViewModel.cs" />
     <Compile Include="ViewModel\VolatilityMenuViewModels\VolatilityDataGridViewModel.cs" />
+    <Compile Include="ViewModel\VolatilityMenuViewModels\VolatilityLiveChartViewModel.cs" />
     <Compile Include="ViewModel\VolatilityMenuViewModels\VolatilityQtyTabViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

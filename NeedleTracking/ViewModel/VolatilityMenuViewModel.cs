@@ -158,6 +158,7 @@ namespace NeedleTracking.ViewModel
         public ICommand MonthRadioButtonChecked { get; set; }
 
         public ICommand ApplyButtonClick { get; set; }
+        private readonly LivechartUC livechartUC = new LivechartUC();
 
         public VolatilityMenuViewModel()
         {
@@ -215,21 +216,33 @@ namespace NeedleTracking.ViewModel
             {
                 VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
                 var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
-                voladatagridVM.LoadDataGrid("All", null, SelectedDate, "Day");
+                voladatagridVM.LoadDataGrid(true, null, null, SelectedDate, "Day");
+                this.LoadQuantityTabVar();
+                var livechartVM = livechartUC.DataContext as VolatilityLiveChartViewModel;
+                livechartVM.SetLiveChartExportList();
+                livechartVM.UpdateAllDayLiveChart();
                 return;
             }
             if (MenuArray.SequenceEqual(AllWeekArray))
             {
                 VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
                 var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
-                voladatagridVM.LoadDataGrid("All", null, SelectedDate, "Week");
+                voladatagridVM.LoadDataGrid(true, null, null, SelectedDate, "Week");
+                this.LoadQuantityTabVar();
+                var livechartVM = livechartUC.DataContext as VolatilityLiveChartViewModel;
+                livechartVM.SetLiveChartExportList();
+                livechartVM.UpdateAllWeekLiveChart();
                 return;
             }
             if (MenuArray.SequenceEqual(AllMonthArray))
             {
                 VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
                 var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
-                voladatagridVM.LoadDataGrid("All", null, SelectedDate, "Month");
+                voladatagridVM.LoadDataGrid(true, null, null, SelectedDate, "Month");
+                this.LoadQuantityTabVar();
+                var livechartVM = livechartUC.DataContext as VolatilityLiveChartViewModel;
+                livechartVM.SetLiveChartExportList();
+                livechartVM.UpdateAllMonthLiveChart();
                 return;
             }
             if (MenuArray.SequenceEqual(BuldingDayArray))
@@ -238,27 +251,58 @@ namespace NeedleTracking.ViewModel
                 VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
                 var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
                 var volacomboboxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
-                voladatagridVM.LoadDataGrid("All", null, SelectedDate, "Month");
+                voladatagridVM.LoadDataGrid(false, volacomboboxVM.BuildingSelected.BuildingID, null, SelectedDate, "Day");
+                this.LoadQuantityTabVar();
                 return;
             }
             if (MenuArray.SequenceEqual(BuldingWeekArray))
             {
+                VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
+                VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
+                var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
+                var volacomboboxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
+                voladatagridVM.LoadDataGrid(false, volacomboboxVM.BuildingSelected.BuildingID, null, SelectedDate, "Week");
+                this.LoadQuantityTabVar();
                 return;
             }
             if (MenuArray.SequenceEqual(BuldingMonthArray))
             {
+                VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
+                VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
+                var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
+                var volacomboboxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
+                voladatagridVM.LoadDataGrid(false, volacomboboxVM.BuildingSelected.BuildingID, null, SelectedDate, "Month");
+                this.LoadQuantityTabVar();
                 return;
             }
             if (MenuArray.SequenceEqual(MachineDayArray))
             {
+                VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
+                VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
+                var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
+                var volacomboboxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
+                voladatagridVM.LoadDataGrid(false, null, volacomboboxVM.MachineSelected.DeviceID, SelectedDate, "Day");
+                this.LoadQuantityTabVar();
                 return;
             }
             if (MenuArray.SequenceEqual(MachineWeekArray))
             {
+                VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
+                VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
+                var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
+                var volacomboboxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
+                voladatagridVM.LoadDataGrid(false, null, volacomboboxVM.MachineSelected.DeviceID, SelectedDate, "Week");
+                this.LoadQuantityTabVar();
                 return;
             }
             if (MenuArray.SequenceEqual(MachineMonthArray))
             {
+                VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
+                VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
+                var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
+                var volacomboboxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
+                voladatagridVM.LoadDataGrid(false, null, volacomboboxVM.MachineSelected.DeviceID, SelectedDate, "Month");
+                this.LoadQuantityTabVar();
                 return;
             }
             else
@@ -290,8 +334,6 @@ namespace NeedleTracking.ViewModel
             ViewDateString = null;
             VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
             var volatilityComboBoxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
-            volatilityComboBoxVM.BuildingSelectedName = null;
-            volatilityComboBoxVM.MachineSelectedName = null;
             ApplyButtonEnable = false;
             VolatilityDataGrid volatilityDataGrid = new VolatilityDataGrid();
             var voladatagridVM = volatilityDataGrid.DataContext as VolatilityDataGridViewModel;
@@ -310,6 +352,12 @@ namespace NeedleTracking.ViewModel
             array[4] = WeekChecked;
             array[5] = MonthChecked;
             MenuArray = array;
+        }
+        void LoadQuantityTabVar ()
+        {
+            QuantityTabUC quantityTabUC = new QuantityTabUC();
+            var quantitytabVM = quantityTabUC.DataContext as VolatilityQtyTabViewModel;
+            quantitytabVM.CalculateVarible();
         }
     }
 }

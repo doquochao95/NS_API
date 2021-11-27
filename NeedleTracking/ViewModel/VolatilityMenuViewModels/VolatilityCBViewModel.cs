@@ -37,8 +37,6 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
         }
         
 
-        public string? BuildingSelectedName ;
-        public int BuildingSelectedID;
         public NS_Buildings _BuildingSelected { get; set; }
         public NS_Buildings BuildingSelected
         {
@@ -49,8 +47,6 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                 OnPropertyChanged("BuildingSelected");
                 if (BuildingSelected != null)
                 { 
-                    BuildingSelectedName = BuildingSelected.BuildingName;
-                    BuildingSelectedID = BuildingSelected.BuildingID;
                     VolatilityMenu volatilityMenu = new VolatilityMenu();
                     var volatilitymenuVM = volatilityMenu.DataContext as VolatilityMenuViewModel;
                     volatilitymenuVM.SortedByEnable=true;
@@ -58,8 +54,6 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
             }
         }
 
-        public string MachineSelectedName;
-        public int MachineSelectedID;
         public NS_Devices _MachineSelected { get; set; }
         public NS_Devices MachineSelected
         {
@@ -70,8 +64,6 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                 OnPropertyChanged("MachineSelected");
                 if (MachineSelected != null)
                 {
-                    MachineSelectedName = MachineSelected.DeviceName;
-                    MachineSelectedID = MachineSelected.DeviceID;
                     VolatilityMenu volatilityMenu = new VolatilityMenu();
                     var volatilitymenuVM = volatilityMenu.DataContext as VolatilityMenuViewModel;
                     volatilitymenuVM.SortedByEnable = true;

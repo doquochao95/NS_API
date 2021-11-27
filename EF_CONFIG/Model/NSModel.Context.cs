@@ -35,6 +35,7 @@ namespace EF_CONFIG.Model
         public virtual DbSet<NS_PostRecords> NS_PostRecords { get; set; }
         public virtual DbSet<NS_Staffs> NS_Staffs { get; set; }
         public virtual DbSet<NS_Stocks> NS_Stocks { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

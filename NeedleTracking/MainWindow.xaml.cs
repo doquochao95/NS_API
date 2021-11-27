@@ -32,6 +32,7 @@ namespace NeedleTracking
             base.OnClosed(e);
 
             Application.Current.Shutdown();
+
         }
 
     }

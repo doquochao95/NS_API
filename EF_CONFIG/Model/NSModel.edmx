@@ -28,12 +28,12 @@
           </Key>
           <Property Name="ExportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
           <Property Name="NeedleID" Type="int" Nullable="false" />
           <Property Name="ExportTime" Type="datetime" Nullable="false" />
           <Property Name="ExprtTimeString" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
-          <Property Name="BuildingID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NS_Imports">
           <Key>
@@ -41,12 +41,12 @@
           </Key>
           <Property Name="ImportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
           <Property Name="NeedleID" Type="int" Nullable="false" />
           <Property Name="ImportTime" Type="datetime" Nullable="false" />
           <Property Name="ImportTimeStr" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
-          <Property Name="BuildingID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NS_Needles">
           <Key>
@@ -57,7 +57,7 @@
           <Property Name="NeedleCode" Type="nvarchar(max)" Nullable="false" />
           <Property Name="NeedleSize" Type="nvarchar(max)" Nullable="false" />
           <Property Name="NeedlePoint" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="NeedlePrice" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="NeedlePrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="NeedleLength" Type="decimal" Precision="5" Scale="2" />
         </EntityType>
         <EntityType Name="NS_PostRecords">
@@ -96,6 +96,16 @@
           <Property Name="Time" Type="datetime" Nullable="false" />
           <Property Name="TimrStr" Type="nvarchar(max)" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_NS_Devices_NS_Buildings">
           <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
@@ -329,6 +339,7 @@
           <EntitySet Name="NS_PostRecords" EntityType="Self.NS_PostRecords" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Staffs" EntityType="Self.NS_Staffs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Stocks" EntityType="Self.NS_Stocks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_NS_Devices_NS_Buildings" Association="Self.FK_NS_Devices_NS_Buildings">
             <End Role="NS_Buildings" EntitySet="NS_Buildings" />
             <End Role="NS_Devices" EntitySet="NS_Devices" />
@@ -501,6 +512,7 @@
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
             <End Role="NS_Stocks" EntitySet="NS_Stocks" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="NeedleSupplierModel.sysdiagram" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -584,7 +596,7 @@
           <Property Name="NeedleCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NeedleSize" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NeedlePoint" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NeedlePrice" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="NeedlePrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="NeedleLength" Type="Decimal" Precision="5" Scale="2" />
           <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Export" FromRole="NS_Needles" ToRole="NS_Export" />
           <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" FromRole="NS_Needles" ToRole="NS_Imports" />
@@ -829,6 +841,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -956,6 +978,17 @@
                 <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
                 <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
                 <ScalarProperty Name="StockID" ColumnName="StockID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
