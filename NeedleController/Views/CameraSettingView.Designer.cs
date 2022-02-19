@@ -1,7 +1,7 @@
 ﻿
-namespace NeedleController
+namespace NeedleController.Views
 {
-    partial class Form1
+    partial class CameraSettingView
     {
         /// <summary>
         /// Required designer variable.
@@ -29,13 +29,21 @@ namespace NeedleController
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // CameraSettingView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(1264, 729);
+            this.MinimizeBox = false;
+            this.Name = "CameraSettingView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "CameraSettingView";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
     }
 }
-

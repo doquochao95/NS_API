@@ -1,8 +1,12 @@
-﻿using System;
+﻿using NeedleController.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using WinFormsMvp.Binder;
+using WinFormsMvp.Unity;
 
 namespace NeedleController
 {
@@ -16,7 +20,7 @@ namespace NeedleController
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainView());
         }
     }
 }
