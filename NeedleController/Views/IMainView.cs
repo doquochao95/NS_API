@@ -13,10 +13,19 @@ namespace NeedleController.Views
         event EventHandler NeedleInfoClicked;
         event EventHandler DeviceSettingClicked;
         event EventHandler CameraSettingClicked;
+        event EventHandler MainViewLoaded;
+        event EventHandler ConnectDeviceButtonClicked;
+
 
         void ShowNeedlePickingView();
         void ShowNeedleInfoView();
         void ShowDeviceSettingView();
         void ShowCameraSettingView();
+        void MainViewLoad();
+        void ConnectDevice();
+
+        void ServerThread();
+        bool PingHost(string nameOrAddress);
+
     }
 }

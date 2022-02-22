@@ -72,6 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Resources\configuration_para.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>configuration_para.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\CameraSettingView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +114,16 @@
     <Compile Include="Views\NeedlePickingView.Designer.cs">
       <DependentUpon>NeedlePickingView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\RFIDCheckingView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\RFIDCheckingView.Designer.cs">
+      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Resources\configuration_para.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>configuration_para.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CameraSettingView.resx">
       <DependentUpon>CameraSettingView.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\NeedlePickingView.resx">
       <DependentUpon>NeedlePickingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RFIDCheckingView.resx">
+      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

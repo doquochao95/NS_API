@@ -16,14 +16,11 @@ namespace EF_CONFIG.Model
     {
         public int StockID { get; set; }
         public int DeviceID { get; set; }
-        public int NeedleID { get; set; }
-        public int CurrentQuantity { get; set; }
-        public System.DateTime Time { get; set; }
-        public string TimrStr { get; set; }
-        public int StaffID { get; set; }
+        public Nullable<int> NeedleID { get; set; }
+        public Nullable<int> CurrentQuantity { get; set; }
+        public string NeedlePosition { get; set; }
     
         public virtual NS_Devices NS_Devices { get; set; }
         public virtual NS_Needles NS_Needles { get; set; }
-        public virtual NS_Staffs NS_Staffs { get; set; }
     }
 }

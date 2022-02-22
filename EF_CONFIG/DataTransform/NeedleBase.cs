@@ -89,7 +89,7 @@ namespace EF_CONFIG.DataTransform
             }
         }
 
-        public static List<NS_Stocks> Get_StockChangedByUser(int StaffID)
+        /*public static List<NS_Stocks> Get_StockChangedByUser(int StaffID)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace EF_CONFIG.DataTransform
                 Console.WriteLine(e.ToString());
                 return null;
             }
-        }
+        }*/
         public static List<NS_Stocks> Get_LastStockOfNeedle(int NeedleID)
         {
             try

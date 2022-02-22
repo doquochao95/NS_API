@@ -15,7 +15,7 @@ namespace EF_CONFIG.Model
     public partial class NS_PostRecords
     {
         public int PostRecordID { get; set; }
-        public System.DateTime PostTime { get; set; }
+        public Nullable<System.DateTime> PostTime { get; set; }
         public string PostTimeStr { get; set; }
         public int DeviceID { get; set; }
         public int BuildingID { get; set; }

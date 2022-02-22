@@ -16,12 +16,13 @@ namespace EF_CONFIG.Model
     {
         public int ImportID { get; set; }
         public int DeviceID { get; set; }
+        public int BuildingID { get; set; }
         public int NeedleID { get; set; }
         public System.DateTime ImportTime { get; set; }
         public string ImportTimeStr { get; set; }
         public int Quantity { get; set; }
         public int StaffID { get; set; }
-        public int BuildingID { get; set; }
+        public string NeedlePosition { get; set; }
     
         public virtual NS_Buildings NS_Buildings { get; set; }
         public virtual NS_Devices NS_Devices { get; set; }

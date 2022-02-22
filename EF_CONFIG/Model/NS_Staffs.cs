@@ -19,7 +19,6 @@ namespace EF_CONFIG.Model
         {
             this.NS_Export = new HashSet<NS_Export>();
             this.NS_Imports = new HashSet<NS_Imports>();
-            this.NS_Stocks = new HashSet<NS_Stocks>();
         }
     
         public int StaffID { get; set; }
@@ -39,7 +38,5 @@ namespace EF_CONFIG.Model
         public virtual ICollection<NS_Export> NS_Export { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NS_Imports> NS_Imports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NS_Stocks> NS_Stocks { get; set; }
     }
 }

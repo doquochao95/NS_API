@@ -17,6 +17,9 @@ namespace NeedleController.Presenters
             View.NeedleInfoClicked += View_NeedleInfoClicked;
             View.DeviceSettingClicked += View_DeviceSettingClicked;
             View.CameraSettingClicked += View_CameraSettingClicked;
+            View.MainViewLoaded += View_MainViewLoaded;
+            View.ConnectDeviceButtonClicked += View_ConnectDeviceButtonClicked;
+
         }
         void View_GetNeedleClicked(object sender, System.EventArgs e)
         {
@@ -33,6 +36,14 @@ namespace NeedleController.Presenters
         void View_CameraSettingClicked(object sender, System.EventArgs e)
         {
             View.ShowCameraSettingView();
+        }
+        void View_MainViewLoaded(object sender, System.EventArgs e)
+        {
+            View.MainViewLoad();
+        }
+        void View_ConnectDeviceButtonClicked(object  sender, System.EventArgs e)
+        {
+            View.ConnectDevice();
         }
     }
 }
