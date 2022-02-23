@@ -32,27 +32,27 @@ namespace NeedleController.Views
         {
             TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
             if (elapsed.TotalMilliseconds > 100)
-                _barcode.Clear();
+            _barcode.Clear();
             _barcode.Add(e.KeyChar);
             _lastKeystroke = DateTime.Now;
 
             if (_barcode.Count == 10)
             {
-                NeedlePickingView needlePickingView = new NeedlePickingView();
                 string msg = new String(_barcode.ToArray());
                 bool flag = StaffBase.Check_User(msg);
                 if (flag)
                 {
-                    this.Close();
-                    needlePickingView.Show();
+                    MainView._message = "Confirmed Success";
+                    MainView._confirmRFID=true;
                 }
                 else
                 {
-
-                  
+                    MainView._message = "Invalid ID Card";
+                    MainView._confirmRFID = false;
                 }
                 _barcode.Clear();
-
+                this.Hide();
+                this.Close();
             }
         }
         public enum MapType : uint

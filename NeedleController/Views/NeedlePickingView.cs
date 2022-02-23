@@ -16,5 +16,15 @@ namespace NeedleController.Views
         {
             InitializeComponent();
         }
+
+        private void NeedlePickingView_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

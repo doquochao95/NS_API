@@ -26,6 +26,7 @@ namespace NeedleController.Views
 
         void ServerThread();
         bool PingHost(string nameOrAddress);
+        void SetString_message();
 
     }
 }

@@ -65,17 +65,7 @@ namespace NeedleController.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap camera_100x100 {
             get {
-                object obj = ResourceManager.GetObject("camera 100x100", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap GROZ_B {
-            get {
-                object obj = ResourceManager.GetObject("GROZ B", resourceCulture);
+                object obj = ResourceManager.GetObject("camera_100x100", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -85,27 +75,7 @@ namespace NeedleController.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap GROZ_B_100x100 {
             get {
-                object obj = ResourceManager.GetObject("GROZ B 100x100", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap GROZ_B_50x50 {
-            get {
-                object obj = ResourceManager.GetObject("GROZ B 50x50", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Info_100x100 {
-            get {
-                object obj = ResourceManager.GetObject("Info 100x100", resourceCulture);
+                object obj = ResourceManager.GetObject("GROZ_B_100x100", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -115,7 +85,7 @@ namespace NeedleController.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Info_100x100_2 {
             get {
-                object obj = ResourceManager.GetObject("Info 100x100 2", resourceCulture);
+                object obj = ResourceManager.GetObject("Info_100x100_2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +93,19 @@ namespace NeedleController.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SETTING {
+        internal static System.Drawing.Bitmap ParkingIcon {
             get {
-                object obj = ResourceManager.GetObject("SETTING", resourceCulture);
+                object obj = ResourceManager.GetObject("ParkingIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ResetIcon {
+            get {
+                object obj = ResourceManager.GetObject("ResetIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -135,7 +115,37 @@ namespace NeedleController.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap SETTING_100x100 {
             get {
-                object obj = ResourceManager.GetObject("SETTING 100x100", resourceCulture);
+                object obj = ResourceManager.GetObject("SETTING_100x100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Table2 {
+            get {
+                object obj = ResourceManager.GetObject("Table2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Techlogo {
+            get {
+                object obj = ResourceManager.GetObject("Techlogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UnParkingIcon {
+            get {
+                object obj = ResourceManager.GetObject("UnParkingIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

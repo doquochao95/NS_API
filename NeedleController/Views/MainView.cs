@@ -12,7 +12,6 @@ using System.Resources;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-using NeedleController.Resources;
 
 using WinFormsMvp.Forms;
 using System.Net.NetworkInformation;
@@ -23,7 +22,8 @@ namespace NeedleController.Views
     {
         public static bool _cableConnection;
         public static bool _deviceConnection;
-
+        public static string _message { get; set; }
+        public static bool _confirmRFID { get; set; }
 
         public MainView()
         {
@@ -43,6 +43,8 @@ namespace NeedleController.Views
         }
         private void GetNeedleButton_Click(object sender, EventArgs e)
         {
+            
+            
             GetNeedleClicked(this, EventArgs.Empty);
         }
         private void NeedleInfoButton_Click(object sender, EventArgs e)
@@ -69,7 +71,7 @@ namespace NeedleController.Views
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            _cableConnection = PingHost(NeedleController.Resources.configuration_para.local_ip);
+            _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
 
             if (!_cableConnection)
             {
@@ -101,8 +103,19 @@ namespace NeedleController.Views
         {
             if (_deviceConnection)
             {
-                new RFIDCheckingView().Show();
-                /*new NeedlePickingView().Show();*/
+                using (RFIDCheckingView checkingView = new RFIDCheckingView())
+                {
+                    checkingView.ShowDialog();
+                }
+                SetString_message();
+                if (_confirmRFID)
+                {
+                    new NeedlePickingView().Show();
+                }
+                else
+                {
+
+                }
             }
             else
             {
@@ -140,7 +153,7 @@ namespace NeedleController.Views
             {
                 try
                 {
-                    udpClient.Connect(NeedleController.Resources.configuration_para.local_ip, Convert.ToInt16(NeedleController.Resources.configuration_para.port));
+                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
                     Byte[] senddata = Encoding.ASCII.GetBytes("<reset:1>");
                     udpClient.Send(senddata, senddata.Length);
                 }
@@ -153,18 +166,16 @@ namespace NeedleController.Views
 
         public void ServerThread()
         {
-            UdpClient udpClient = new UdpClient(Convert.ToInt16(NeedleController.Resources.configuration_para.port));
+            UdpClient udpClient = new UdpClient(NeedleController.Properties.Settings.Default.port);
             while (true)
             {
-                IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, Convert.ToInt16(NeedleController.Resources.configuration_para.port));
+                IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, NeedleController.Properties.Settings.Default.port);
                 Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
                 string returnData = Encoding.ASCII.GetString(receiveBytes);
                 this.Invoke(new MethodInvoker(delegate ()
                 {
-
-                    listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + returnData.ToString());
-                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    listBox1.SelectedIndex = -1;
+                    _message=returnData;
+                    SetString_message();
                     if (returnData == "<msg:setting_success>")
                     {
                         _deviceConnection = true;
@@ -198,6 +209,11 @@ namespace NeedleController.Views
 
             return pingable;
         }
-
+        public void SetString_message()
+        {
+            listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + _message.ToString());
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            listBox1.SelectedIndex = -1;
+        }
     }
 }
