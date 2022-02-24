@@ -18,9 +18,10 @@ namespace EF_CONFIG.Model
         public int DeviceID { get; set; }
         public Nullable<int> NeedleID { get; set; }
         public Nullable<int> CurrentQuantity { get; set; }
-        public string NeedlePosition { get; set; }
+        public int NeedlePositionID { get; set; }
     
         public virtual NS_Devices NS_Devices { get; set; }
+        public virtual NS_NeedlePosition NS_NeedlePosition { get; set; }
         public virtual NS_Needles NS_Needles { get; set; }
     }
 }

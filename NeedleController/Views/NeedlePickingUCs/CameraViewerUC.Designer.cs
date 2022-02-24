@@ -30,12 +30,21 @@ namespace NeedleController.Views.NeedlePickingUCs
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.CameraControllergroupBox = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.CameraControllergroupBox = new System.Windows.Forms.GroupBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.CameraControllergroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -54,18 +63,6 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1121, 321);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // CameraControllergroupBox
-            // 
-            this.CameraControllergroupBox.AutoSize = true;
-            this.CameraControllergroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CameraControllergroupBox.Location = new System.Drawing.Point(756, 10);
-            this.CameraControllergroupBox.Margin = new System.Windows.Forms.Padding(10);
-            this.CameraControllergroupBox.Name = "CameraControllergroupBox";
-            this.CameraControllergroupBox.Size = new System.Drawing.Size(355, 301);
-            this.CameraControllergroupBox.TabIndex = 2;
-            this.CameraControllergroupBox.TabStop = false;
-            this.CameraControllergroupBox.Text = "Camera Controller";
             // 
             // pictureBox1
             // 
@@ -98,6 +95,76 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
+            // CameraControllergroupBox
+            // 
+            this.CameraControllergroupBox.AutoSize = true;
+            this.CameraControllergroupBox.Controls.Add(this.label4);
+            this.CameraControllergroupBox.Controls.Add(this.label3);
+            this.CameraControllergroupBox.Controls.Add(this.label2);
+            this.CameraControllergroupBox.Controls.Add(this.label1);
+            this.CameraControllergroupBox.Controls.Add(this.trackBar2);
+            this.CameraControllergroupBox.Controls.Add(this.trackBar1);
+            this.CameraControllergroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CameraControllergroupBox.Location = new System.Drawing.Point(756, 10);
+            this.CameraControllergroupBox.Margin = new System.Windows.Forms.Padding(10);
+            this.CameraControllergroupBox.Name = "CameraControllergroupBox";
+            this.CameraControllergroupBox.Size = new System.Drawing.Size(355, 301);
+            this.CameraControllergroupBox.TabIndex = 2;
+            this.CameraControllergroupBox.TabStop = false;
+            this.CameraControllergroupBox.Text = "Camera Controller";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(100, 56);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(233, 45);
+            this.trackBar1.TabIndex = 0;
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.Location = new System.Drawing.Point(100, 111);
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(233, 45);
+            this.trackBar2.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(32, 56);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Bright";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Contrast";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(65, 212);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Status :";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.SpringGreen;
+            this.label4.Location = new System.Drawing.Point(145, 197);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(118, 31);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Success";
+            // 
             // CameraViewerUC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -110,6 +177,10 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.CameraControllergroupBox.ResumeLayout(false);
+            this.CameraControllergroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -120,5 +191,11 @@ namespace NeedleController.Views.NeedlePickingUCs
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox CameraControllergroupBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }

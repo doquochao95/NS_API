@@ -22,11 +22,12 @@ namespace EF_CONFIG.Model
         public string ExprtTimeString { get; set; }
         public int Quantity { get; set; }
         public int StaffID { get; set; }
-        public string NeedlePosition { get; set; }
+        public int NeedlePositionID { get; set; }
     
         public virtual NS_Buildings NS_Buildings { get; set; }
         public virtual NS_Devices NS_Devices { get; set; }
         public virtual NS_Needles NS_Needles { get; set; }
+        public virtual NS_NeedlePosition NS_NeedlePosition { get; set; }
         public virtual NS_Staffs NS_Staffs { get; set; }
     }
 }

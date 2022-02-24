@@ -89,6 +89,9 @@
     <Compile Include="Model\NS_Imports.cs">
       <DependentUpon>NSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\NS_NeedlePosition.cs">
+      <DependentUpon>NSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\NS_Needles.cs">
       <DependentUpon>NSModel.tt</DependentUpon>
     </Compile>

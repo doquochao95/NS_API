@@ -31,6 +31,7 @@ namespace EF_CONFIG.Model
         public virtual DbSet<NS_Devices> NS_Devices { get; set; }
         public virtual DbSet<NS_Export> NS_Export { get; set; }
         public virtual DbSet<NS_Imports> NS_Imports { get; set; }
+        public virtual DbSet<NS_NeedlePosition> NS_NeedlePosition { get; set; }
         public virtual DbSet<NS_Needles> NS_Needles { get; set; }
         public virtual DbSet<NS_PostRecords> NS_PostRecords { get; set; }
         public virtual DbSet<NS_Staffs> NS_Staffs { get; set; }
