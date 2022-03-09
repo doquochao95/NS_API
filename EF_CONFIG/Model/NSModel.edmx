@@ -34,7 +34,7 @@
           <Property Name="ExprtTimeString" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
-          <Property Name="NeedlePositionID" Type="int" Nullable="false" />
+          <Property Name="StockID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NS_Imports">
           <Key>
@@ -48,7 +48,7 @@
           <Property Name="ImportTimeStr" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
-          <Property Name="NeedlePositionID" Type="int" Nullable="false" />
+          <Property Name="StockID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NS_NeedlePosition">
           <Key>
@@ -62,7 +62,7 @@
             <PropertyRef Name="NeedleID" />
           </Key>
           <Property Name="NeedleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NeedleName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NeedleName" Type="int" Nullable="false" />
           <Property Name="NeedleCode" Type="nvarchar(max)" Nullable="false" />
           <Property Name="NeedleSize" Type="nvarchar(max)" Nullable="false" />
           <Property Name="NeedlePoint" Type="nvarchar(max)" Nullable="false" />
@@ -99,10 +99,10 @@
             <PropertyRef Name="StockID" />
           </Key>
           <Property Name="StockID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockName" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="DeviceID" Type="int" Nullable="false" />
-          <Property Name="NeedleID" Type="int" />
-          <Property Name="CurrentQuantity" Type="int" />
-          <Property Name="NeedlePositionID" Type="int" Nullable="false" />
+          <Property Name="NeedleID" Type="int" Nullable="false" />
+          <Property Name="CurrentQuantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -162,18 +162,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NS_Export_NS_NeedlePosition">
-          <End Role="NS_NeedlePosition" Type="Self.NS_NeedlePosition" Multiplicity="1" />
-          <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NS_NeedlePosition">
-              <PropertyRef Name="NeedlePositionID" />
-            </Principal>
-            <Dependent Role="NS_Export">
-              <PropertyRef Name="NeedlePositionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NS_Export_NS_Staffs">
           <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
           <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
@@ -183,6 +171,18 @@
             </Principal>
             <Dependent Role="NS_Export">
               <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_Stocks">
+          <End Role="NS_Stocks" Type="Self.NS_Stocks" Multiplicity="1" />
+          <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Stocks">
+              <PropertyRef Name="StockID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="StockID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -198,15 +198,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NS_Imports_NS_NeedlePosition">
-          <End Role="NS_NeedlePosition" Type="Self.NS_NeedlePosition" Multiplicity="1" />
+        <Association Name="FK_NS_Imports_NS_Stocks">
+          <End Role="NS_Stocks" Type="Self.NS_Stocks" Multiplicity="1" />
           <End Role="NS_Imports" Type="Self.NS_Imports" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="NS_NeedlePosition">
-              <PropertyRef Name="NeedlePositionID" />
+            <Principal Role="NS_Stocks">
+              <PropertyRef Name="StockID" />
             </Principal>
             <Dependent Role="NS_Imports">
-              <PropertyRef Name="NeedlePositionID" />
+              <PropertyRef Name="StockID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -270,20 +270,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NS_Stocks_NS_NeedlePosition">
-          <End Role="NS_NeedlePosition" Type="Self.NS_NeedlePosition" Multiplicity="1" />
-          <End Role="NS_Stocks" Type="Self.NS_Stocks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NS_NeedlePosition">
-              <PropertyRef Name="NeedlePositionID" />
-            </Principal>
-            <Dependent Role="NS_Stocks">
-              <PropertyRef Name="NeedlePositionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NS_Stocks_NS_Needles">
-          <End Role="NS_Needles" Type="Self.NS_Needles" Multiplicity="0..1" />
+          <End Role="NS_Needles" Type="Self.NS_Needles" Multiplicity="1" />
           <End Role="NS_Stocks" Type="Self.NS_Stocks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NS_Needles">
@@ -388,20 +376,20 @@
             <End Role="NS_Needles" EntitySet="NS_Needles" />
             <End Role="NS_Export" EntitySet="NS_Export" />
           </AssociationSet>
-          <AssociationSet Name="FK_NS_Export_NS_NeedlePosition" Association="Self.FK_NS_Export_NS_NeedlePosition">
-            <End Role="NS_NeedlePosition" EntitySet="NS_NeedlePosition" />
-            <End Role="NS_Export" EntitySet="NS_Export" />
-          </AssociationSet>
           <AssociationSet Name="FK_NS_Export_NS_Staffs" Association="Self.FK_NS_Export_NS_Staffs">
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_Stocks" Association="Self.FK_NS_Export_NS_Stocks">
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
             <End Role="NS_Export" EntitySet="NS_Export" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Imports_NS_Buildings" Association="Self.FK_NS_Imports_NS_Buildings">
             <End Role="NS_Buildings" EntitySet="NS_Buildings" />
             <End Role="NS_Imports" EntitySet="NS_Imports" />
           </AssociationSet>
-          <AssociationSet Name="FK_NS_Imports_NS_NeedlePosition" Association="Self.FK_NS_Imports_NS_NeedlePosition">
-            <End Role="NS_NeedlePosition" EntitySet="NS_NeedlePosition" />
+          <AssociationSet Name="FK_NS_Imports_NS_Stocks" Association="Self.FK_NS_Imports_NS_Stocks">
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
             <End Role="NS_Imports" EntitySet="NS_Imports" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_PostRecord_NS_Buildings" Association="Self.FK_NS_PostRecord_NS_Buildings">
@@ -422,10 +410,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_NS_Stocks_NS_Devices" Association="Self.FK_NS_Stocks_NS_Devices">
             <End Role="NS_Devices" EntitySet="NS_Devices" />
-            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NS_Stocks_NS_NeedlePosition" Association="Self.FK_NS_Stocks_NS_NeedlePosition">
-            <End Role="NS_NeedlePosition" EntitySet="NS_NeedlePosition" />
             <End Role="NS_Stocks" EntitySet="NS_Stocks" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Stocks_NS_Needles" Association="Self.FK_NS_Stocks_NS_Needles">
@@ -534,16 +518,16 @@
             <End Role="NS_Needles" EntitySet="NS_Needles" />
             <End Role="NS_Export" EntitySet="NS_Export" />
           </AssociationSet>
-          <AssociationSet Name="FK_NS_Export_NS_NeedlePosition" Association="NeedleSupplierModel.FK_NS_Export_NS_NeedlePosition">
-            <End Role="NS_NeedlePosition" EntitySet="NS_NeedlePosition" />
-            <End Role="NS_Export" EntitySet="NS_Export" />
-          </AssociationSet>
           <AssociationSet Name="FK_NS_Export_NS_Staffs" Association="NeedleSupplierModel.FK_NS_Export_NS_Staffs">
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
             <End Role="NS_Export" EntitySet="NS_Export" />
           </AssociationSet>
-          <AssociationSet Name="FK_NS_Imports_NS_NeedlePosition" Association="NeedleSupplierModel.FK_NS_Imports_NS_NeedlePosition">
-            <End Role="NS_NeedlePosition" EntitySet="NS_NeedlePosition" />
+          <AssociationSet Name="FK_NS_Export_NS_Stocks" Association="NeedleSupplierModel.FK_NS_Export_NS_Stocks">
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Imports_NS_Stocks" Association="NeedleSupplierModel.FK_NS_Imports_NS_Stocks">
+            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
             <End Role="NS_Imports" EntitySet="NS_Imports" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Tracking_NS_Needles" Association="NeedleSupplierModel.FK_NS_Tracking_NS_Needles">
@@ -553,10 +537,6 @@
           <AssociationSet Name="FK_NS_Tracking_NS_Staffs" Association="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs">
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
             <End Role="NS_Imports" EntitySet="NS_Imports" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NS_Stocks_NS_NeedlePosition" Association="NeedleSupplierModel.FK_NS_Stocks_NS_NeedlePosition">
-            <End Role="NS_NeedlePosition" EntitySet="NS_NeedlePosition" />
-            <End Role="NS_Stocks" EntitySet="NS_Stocks" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Stocks_NS_Needles" Association="NeedleSupplierModel.FK_NS_Stocks_NS_Needles">
             <End Role="NS_Needles" EntitySet="NS_Needles" />
@@ -614,12 +594,12 @@
           <Property Name="ExprtTimeString" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="StaffID" Type="Int32" Nullable="false" />
-          <Property Name="NeedlePositionID" Type="Int32" Nullable="false" />
+          <Property Name="StockID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Buildings" FromRole="NS_Export" ToRole="NS_Buildings" />
           <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Devices" FromRole="NS_Export" ToRole="NS_Devices" />
           <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Export" FromRole="NS_Export" ToRole="NS_Needles" />
-          <NavigationProperty Name="NS_NeedlePosition" Relationship="NeedleSupplierModel.FK_NS_Export_NS_NeedlePosition" FromRole="NS_Export" ToRole="NS_NeedlePosition" />
           <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Staffs" FromRole="NS_Export" ToRole="NS_Staffs" />
+          <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Stocks" FromRole="NS_Export" ToRole="NS_Stocks" />
         </EntityType>
         <EntityType Name="NS_Imports">
           <Key>
@@ -633,10 +613,10 @@
           <Property Name="ImportTimeStr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="StaffID" Type="Int32" Nullable="false" />
-          <Property Name="NeedlePositionID" Type="Int32" Nullable="false" />
+          <Property Name="StockID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_Buildings" FromRole="NS_Imports" ToRole="NS_Buildings" />
           <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Devices" FromRole="NS_Imports" ToRole="NS_Devices" />
-          <NavigationProperty Name="NS_NeedlePosition" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_NeedlePosition" FromRole="NS_Imports" ToRole="NS_NeedlePosition" />
+          <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_Stocks" FromRole="NS_Imports" ToRole="NS_Stocks" />
           <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" FromRole="NS_Imports" ToRole="NS_Needles" />
           <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" FromRole="NS_Imports" ToRole="NS_Staffs" />
         </EntityType>
@@ -646,16 +626,13 @@
           </Key>
           <Property Name="NeedlePositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NeedlePosition" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_NeedlePosition" FromRole="NS_NeedlePosition" ToRole="NS_Export" />
-          <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_NeedlePosition" FromRole="NS_NeedlePosition" ToRole="NS_Imports" />
-          <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_NeedlePosition" FromRole="NS_NeedlePosition" ToRole="NS_Stocks" />
         </EntityType>
         <EntityType Name="NS_Needles">
           <Key>
             <PropertyRef Name="NeedleID" />
           </Key>
           <Property Name="NeedleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NeedleName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NeedleName" Type="Int32" Nullable="false" />
           <Property Name="NeedleCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NeedleSize" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NeedlePoint" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -701,12 +678,13 @@
             <PropertyRef Name="StockID" />
           </Key>
           <Property Name="StockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="DeviceID" Type="Int32" Nullable="false" />
-          <Property Name="NeedleID" Type="Int32" />
-          <Property Name="CurrentQuantity" Type="Int32" />
-          <Property Name="NeedlePositionID" Type="Int32" Nullable="false" />
+          <Property Name="NeedleID" Type="Int32" Nullable="false" />
+          <Property Name="CurrentQuantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Devices" FromRole="NS_Stocks" ToRole="NS_Devices" />
-          <NavigationProperty Name="NS_NeedlePosition" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_NeedlePosition" FromRole="NS_Stocks" ToRole="NS_NeedlePosition" />
+          <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Stocks" FromRole="NS_Stocks" ToRole="NS_Export" />
+          <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_Stocks" FromRole="NS_Stocks" ToRole="NS_Imports" />
           <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" FromRole="NS_Stocks" ToRole="NS_Needles" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -851,18 +829,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NS_Export_NS_NeedlePosition">
-          <End Type="NeedleSupplierModel.NS_NeedlePosition" Role="NS_NeedlePosition" Multiplicity="1" />
-          <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NS_NeedlePosition">
-              <PropertyRef Name="NeedlePositionID" />
-            </Principal>
-            <Dependent Role="NS_Export">
-              <PropertyRef Name="NeedlePositionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NS_Export_NS_Staffs">
           <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="1" />
           <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
@@ -875,15 +841,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NS_Imports_NS_NeedlePosition">
-          <End Type="NeedleSupplierModel.NS_NeedlePosition" Role="NS_NeedlePosition" Multiplicity="1" />
+        <Association Name="FK_NS_Export_NS_Stocks">
+          <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Stocks">
+              <PropertyRef Name="StockID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Imports_NS_Stocks">
+          <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="1" />
           <End Type="NeedleSupplierModel.NS_Imports" Role="NS_Imports" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="NS_NeedlePosition">
-              <PropertyRef Name="NeedlePositionID" />
+            <Principal Role="NS_Stocks">
+              <PropertyRef Name="StockID" />
             </Principal>
             <Dependent Role="NS_Imports">
-              <PropertyRef Name="NeedlePositionID" />
+              <PropertyRef Name="StockID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -911,20 +889,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NS_Stocks_NS_NeedlePosition">
-          <End Type="NeedleSupplierModel.NS_NeedlePosition" Role="NS_NeedlePosition" Multiplicity="1" />
-          <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NS_NeedlePosition">
-              <PropertyRef Name="NeedlePositionID" />
-            </Principal>
-            <Dependent Role="NS_Stocks">
-              <PropertyRef Name="NeedlePositionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NS_Stocks_NS_Needles">
-          <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="0..1" />
+          <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="1" />
           <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NS_Needles">
@@ -987,7 +953,7 @@
           <EntitySetMapping Name="NS_Export">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Export">
               <MappingFragment StoreEntitySet="NS_Export">
-                <ScalarProperty Name="NeedlePositionID" ColumnName="NeedlePositionID" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
                 <ScalarProperty Name="StaffID" ColumnName="StaffID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ExprtTimeString" ColumnName="ExprtTimeString" />
@@ -1002,7 +968,7 @@
           <EntitySetMapping Name="NS_Imports">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Imports">
               <MappingFragment StoreEntitySet="NS_Imports">
-                <ScalarProperty Name="NeedlePositionID" ColumnName="NeedlePositionID" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
                 <ScalarProperty Name="StaffID" ColumnName="StaffID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ImportTimeStr" ColumnName="ImportTimeStr" />
@@ -1065,10 +1031,10 @@
           <EntitySetMapping Name="NS_Stocks">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Stocks">
               <MappingFragment StoreEntitySet="NS_Stocks">
-                <ScalarProperty Name="NeedlePositionID" ColumnName="NeedlePositionID" />
                 <ScalarProperty Name="CurrentQuantity" ColumnName="CurrentQuantity" />
                 <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
                 <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="StockName" ColumnName="StockName" />
                 <ScalarProperty Name="StockID" ColumnName="StockID" />
               </MappingFragment>
             </EntityTypeMapping>

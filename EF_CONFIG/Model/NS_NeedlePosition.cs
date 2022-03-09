@@ -14,22 +14,7 @@ namespace EF_CONFIG.Model
     
     public partial class NS_NeedlePosition
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NS_NeedlePosition()
-        {
-            this.NS_Export = new HashSet<NS_Export>();
-            this.NS_Imports = new HashSet<NS_Imports>();
-            this.NS_Stocks = new HashSet<NS_Stocks>();
-        }
-    
         public int NeedlePositionID { get; set; }
         public string NeedlePosition { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NS_Export> NS_Export { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NS_Imports> NS_Imports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NS_Stocks> NS_Stocks { get; set; }
     }
 }

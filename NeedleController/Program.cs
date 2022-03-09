@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using WinFormsMvp.Binder;
 using WinFormsMvp.Unity;
+using Infralution.Localization;
+using System.Globalization;
 
 namespace NeedleController
 {
@@ -18,6 +20,7 @@ namespace NeedleController
         [STAThread]
         static void Main()
         {
+            CultureManager.ApplicationUICulture = CultureInfo.CurrentCulture;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainView());

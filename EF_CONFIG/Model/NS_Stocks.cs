@@ -14,14 +14,24 @@ namespace EF_CONFIG.Model
     
     public partial class NS_Stocks
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public NS_Stocks()
+        {
+            this.NS_Export = new HashSet<NS_Export>();
+            this.NS_Imports = new HashSet<NS_Imports>();
+        }
+    
         public int StockID { get; set; }
+        public string StockName { get; set; }
         public int DeviceID { get; set; }
-        public Nullable<int> NeedleID { get; set; }
-        public Nullable<int> CurrentQuantity { get; set; }
-        public int NeedlePositionID { get; set; }
+        public int NeedleID { get; set; }
+        public int CurrentQuantity { get; set; }
     
         public virtual NS_Devices NS_Devices { get; set; }
-        public virtual NS_NeedlePosition NS_NeedlePosition { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_Export> NS_Export { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_Imports> NS_Imports { get; set; }
         public virtual NS_Needles NS_Needles { get; set; }
     }
 }

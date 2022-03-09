@@ -40,6 +40,7 @@ namespace NeedleController.Views
             this.Name = "CameraSettingView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CameraSettingView";
+            this.Load += new System.EventHandler(this.CameraSettingView_Load);
             this.ResumeLayout(false);
 
         }

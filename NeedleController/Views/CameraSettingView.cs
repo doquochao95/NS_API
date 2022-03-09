@@ -16,5 +16,10 @@ namespace NeedleController.Views
         {
             InitializeComponent();
         }
+
+        private void CameraSettingView_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -15,6 +15,9 @@ using System.Windows.Markup;
 
 using NeedleController.Views;
 using EF_CONFIG.DataTransform;
+using System.Resources;
+using System.Globalization;
+using Infralution.Localization;
 
 namespace NeedleController.Views
 {
@@ -26,6 +29,7 @@ namespace NeedleController.Views
         public RFIDCheckingView()
         {
             InitializeComponent();
+            SetLanguage();
             this.KeyPress += new KeyPressEventHandler(RFID_KeyPress);
         }
         private void RFID_KeyPress(object sender, KeyPressEventArgs e)
@@ -77,15 +81,9 @@ namespace NeedleController.Views
 
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, MapType uMapType);
-
-        private void RFIDCheckingView_Load(object sender, EventArgs e)
+        private void SetLanguage ()
         {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            CultureManager.ApplicationUICulture = new CultureInfo(NeedleController.Properties.Settings.Default.language_set);
         }
     }
 }

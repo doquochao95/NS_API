@@ -30,9 +30,10 @@ namespace NeedleController.Views.NeedlePickingUCs
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.PositionLabel = new System.Windows.Forms.Label();
+            this.NeedleNameLabel = new System.Windows.Forms.Label();
             this.GetButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.NeedleQtyTextbox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,55 +42,72 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.PositionLabel, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.NeedleNameLabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.GetButton, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.NeedleQtyTextbox, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 80);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(235, 70);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
+            // PositionLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.tableLayoutPanel1.SetRowSpan(this.label1, 2);
-            this.label1.Size = new System.Drawing.Size(125, 80);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "705836";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.PositionLabel.AutoSize = true;
+            this.PositionLabel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PositionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PositionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PositionLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.PositionLabel.Location = new System.Drawing.Point(0, 35);
+            this.PositionLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.PositionLabel.Name = "PositionLabel";
+            this.PositionLabel.Size = new System.Drawing.Size(117, 35);
+            this.PositionLabel.TabIndex = 2;
+            this.PositionLabel.Text = "A1";
+            this.PositionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // NeedleNameLabel
+            // 
+            this.NeedleNameLabel.AutoSize = true;
+            this.NeedleNameLabel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.NeedleNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NeedleNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NeedleNameLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.NeedleNameLabel.Location = new System.Drawing.Point(0, 0);
+            this.NeedleNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.NeedleNameLabel.Name = "NeedleNameLabel";
+            this.NeedleNameLabel.Size = new System.Drawing.Size(117, 35);
+            this.NeedleNameLabel.TabIndex = 0;
+            this.NeedleNameLabel.Text = "705836";
+            this.NeedleNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // GetButton
             // 
             this.GetButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GetButton.Location = new System.Drawing.Point(145, 48);
-            this.GetButton.Margin = new System.Windows.Forms.Padding(20, 8, 20, 8);
+            this.GetButton.Location = new System.Drawing.Point(127, 40);
+            this.GetButton.Margin = new System.Windows.Forms.Padding(10, 5, 10, 5);
             this.GetButton.Name = "GetButton";
-            this.GetButton.Size = new System.Drawing.Size(85, 24);
+            this.GetButton.Size = new System.Drawing.Size(98, 25);
             this.GetButton.TabIndex = 1;
             this.GetButton.Text = "Get";
             this.GetButton.UseVisualStyleBackColor = true;
+            this.GetButton.Click += new System.EventHandler(this.GetButton_Click);
             // 
-            // textBox1
+            // NeedleQtyTextbox
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(133, 8);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(8);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(109, 26);
-            this.textBox1.TabIndex = 0;
+            this.NeedleQtyTextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NeedleQtyTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NeedleQtyTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NeedleQtyTextbox.Location = new System.Drawing.Point(125, 8);
+            this.NeedleQtyTextbox.Margin = new System.Windows.Forms.Padding(8);
+            this.NeedleQtyTextbox.Name = "NeedleQtyTextbox";
+            this.NeedleQtyTextbox.Size = new System.Drawing.Size(102, 24);
+            this.NeedleQtyTextbox.TabIndex = 0;
+            this.NeedleQtyTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // NeedlePickingForm
             // 
@@ -99,7 +117,9 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "NeedlePickingForm";
+            this.Padding = new System.Windows.Forms.Padding(10, 5, 5, 5);
             this.Size = new System.Drawing.Size(250, 80);
+            this.Load += new System.EventHandler(this.NeedlePickingForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -109,8 +129,9 @@ namespace NeedleController.Views.NeedlePickingUCs
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label NeedleNameLabel;
         private System.Windows.Forms.Button GetButton;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox NeedleQtyTextbox;
+        private System.Windows.Forms.Label PositionLabel;
     }
 }

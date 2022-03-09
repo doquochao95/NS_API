@@ -72,6 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\NeedlePickingPresenters\CameraViewerPresenter.cs" />
+    <Compile Include="Presenters\NeedlePickingPresenters\DeviceToolboxPresenter.cs" />
+    <Compile Include="Presenters\NeedlePickingPresenter.cs" />
+    <Compile Include="Presenters\NeedlePickingPresenters\NeedlePickingFormPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,6 +129,9 @@
     <Compile Include="Views\NeedlePickingUCs\DeviceToolboxUC.Designer.cs">
       <DependentUpon>DeviceToolboxUC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\NeedlePickingUCs\ICameraViewerUC.cs" />
+    <Compile Include="Views\NeedlePickingUCs\IDeviceToolboxUC.cs" />
+    <Compile Include="Views\NeedlePickingUCs\INeedlePickingForm.cs" />
     <Compile Include="Views\NeedlePickingUCs\NeedlePickingForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -162,6 +169,12 @@
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainView.vi.resx">
+      <DependentUpon>MainView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainView.zh.resx">
+      <DependentUpon>MainView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\NeedleInfoView.resx">
       <DependentUpon>NeedleInfoView.cs</DependentUpon>
     </EmbeddedResource>
@@ -169,6 +182,12 @@
       <DependentUpon>CameraViewerUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\NeedlePickingUCs\DeviceToolboxUC.resx">
+      <DependentUpon>DeviceToolboxUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NeedlePickingUCs\DeviceToolboxUC.vi.resx">
+      <DependentUpon>DeviceToolboxUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NeedlePickingUCs\DeviceToolboxUC.zh.resx">
       <DependentUpon>DeviceToolboxUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\NeedlePickingUCs\NeedlePickingForm.resx">
@@ -181,6 +200,12 @@
       <DependentUpon>NeedlePickingView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RFIDCheckingView.resx">
+      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RFIDCheckingView.vi.resx">
+      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RFIDCheckingView.zh.resx">
       <DependentUpon>RFIDCheckingView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -196,6 +221,10 @@
     <ProjectReference Include="..\EF_CONFIG\EF_CONFIG.csproj">
       <Project>{bf4f4ae8-2170-4a30-93fe-625954b1bc76}</Project>
       <Name>EF_CONFIG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infralution.Localization\Infralution.Localization.csproj">
+      <Project>{62E6C7EA-AB84-4E44-B05A-AF648E60FA6D}</Project>
+      <Name>Infralution.Localization</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +253,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Techlogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MachineLightIconOFF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MachineLightIconON.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableLightIconOFF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableLightIconON.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -33,19 +33,19 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.ResetDeviceLabel = new System.Windows.Forms.ToolStripLabel();
+            this.ResetDeviceButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ParkingDeviceLabel = new System.Windows.Forms.ToolStripLabel();
-            this.ResetDeviceButton = new System.Windows.Forms.ToolStripButton();
             this.ParkingDeviceButton = new System.Windows.Forms.ToolStripButton();
             this.UnparkingDeviceButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.MachineLightLabel = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.MachineLightOnButton = new System.Windows.Forms.ToolStripButton();
+            this.MachineLightOffButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.TableLightOnButton = new System.Windows.Forms.ToolStripButton();
+            this.TableLightOffButton = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
@@ -53,17 +53,14 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.AutoSize = true;
+            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Controls.Add(this.toolStrip1);
             this.flowLayoutPanel1.Controls.Add(this.toolStrip2);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1122, 33);
-            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // toolStrip1
             // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ResetDeviceLabel,
             this.ResetDeviceButton,
@@ -71,142 +68,113 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.ParkingDeviceLabel,
             this.ParkingDeviceButton,
             this.UnparkingDeviceButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(190, 33);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
             // 
             // ResetDeviceLabel
             // 
+            resources.ApplyResources(this.ResetDeviceLabel, "ResetDeviceLabel");
             this.ResetDeviceLabel.Name = "ResetDeviceLabel";
-            this.ResetDeviceLabel.Size = new System.Drawing.Size(35, 30);
-            this.ResetDeviceLabel.Text = "Reset";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 33);
-            // 
-            // ParkingDeviceLabel
-            // 
-            this.ParkingDeviceLabel.Name = "ParkingDeviceLabel";
-            this.ParkingDeviceLabel.Size = new System.Drawing.Size(47, 30);
-            this.ParkingDeviceLabel.Text = "Parking";
-            this.ParkingDeviceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ResetDeviceButton
             // 
-            this.ResetDeviceButton.AutoSize = false;
+            resources.ApplyResources(this.ResetDeviceButton, "ResetDeviceButton");
             this.ResetDeviceButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.ResetDeviceButton.Image = global::NeedleController.Properties.Resources.ResetIcon;
-            this.ResetDeviceButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ResetDeviceButton.Name = "ResetDeviceButton";
-            this.ResetDeviceButton.Size = new System.Drawing.Size(30, 30);
-            this.ResetDeviceButton.Text = "toolStripButton1";
+            this.ResetDeviceButton.Click += new System.EventHandler(this.ResetDeviceButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            // 
+            // ParkingDeviceLabel
+            // 
+            resources.ApplyResources(this.ParkingDeviceLabel, "ParkingDeviceLabel");
+            this.ParkingDeviceLabel.Name = "ParkingDeviceLabel";
             // 
             // ParkingDeviceButton
             // 
-            this.ParkingDeviceButton.AutoSize = false;
+            resources.ApplyResources(this.ParkingDeviceButton, "ParkingDeviceButton");
             this.ParkingDeviceButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.ParkingDeviceButton.Image = global::NeedleController.Properties.Resources.ParkingIcon;
-            this.ParkingDeviceButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ParkingDeviceButton.Name = "ParkingDeviceButton";
-            this.ParkingDeviceButton.Size = new System.Drawing.Size(30, 30);
-            this.ParkingDeviceButton.Text = "toolStripButton2";
+            this.ParkingDeviceButton.Click += new System.EventHandler(this.ParkingDeviceButton_Click);
             // 
             // UnparkingDeviceButton
             // 
-            this.UnparkingDeviceButton.AutoSize = false;
+            resources.ApplyResources(this.UnparkingDeviceButton, "UnparkingDeviceButton");
             this.UnparkingDeviceButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.UnparkingDeviceButton.Image = global::NeedleController.Properties.Resources.UnParkingIcon;
-            this.UnparkingDeviceButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.UnparkingDeviceButton.Name = "UnparkingDeviceButton";
-            this.UnparkingDeviceButton.Size = new System.Drawing.Size(30, 30);
-            this.UnparkingDeviceButton.Text = "toolStripButton3";
+            this.UnparkingDeviceButton.Click += new System.EventHandler(this.UnparkingDeviceButton_Click);
             // 
             // toolStrip2
             // 
+            resources.ApplyResources(this.toolStrip2, "toolStrip2");
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MachineLightLabel,
-            this.toolStripButton1,
-            this.toolStripButton2,
+            this.MachineLightOnButton,
+            this.MachineLightOffButton,
             this.toolStripSeparator2,
             this.toolStripLabel2,
-            this.toolStripButton3,
-            this.toolStripButton4});
-            this.toolStrip2.Location = new System.Drawing.Point(190, 0);
+            this.TableLightOnButton,
+            this.TableLightOffButton});
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(271, 33);
-            this.toolStrip2.TabIndex = 1;
-            this.toolStrip2.Text = "toolStrip2";
             // 
             // MachineLightLabel
             // 
+            resources.ApplyResources(this.MachineLightLabel, "MachineLightLabel");
             this.MachineLightLabel.Name = "MachineLightLabel";
-            this.MachineLightLabel.Size = new System.Drawing.Size(76, 30);
-            this.MachineLightLabel.Text = "Machine LED";
             // 
-            // toolStripButton1
+            // MachineLightOnButton
             // 
-            this.toolStripButton1.AutoSize = false;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(30, 30);
-            this.toolStripButton1.Text = "toolStripButton1";
+            resources.ApplyResources(this.MachineLightOnButton, "MachineLightOnButton");
+            this.MachineLightOnButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MachineLightOnButton.Image = global::NeedleController.Properties.Resources.MachineLightIconON;
+            this.MachineLightOnButton.Name = "MachineLightOnButton";
+            this.MachineLightOnButton.Click += new System.EventHandler(this.MachineLightOnButton_Click);
             // 
-            // toolStripButton2
+            // MachineLightOffButton
             // 
-            this.toolStripButton2.AutoSize = false;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(30, 30);
-            this.toolStripButton2.Text = "toolStripButton2";
+            resources.ApplyResources(this.MachineLightOffButton, "MachineLightOffButton");
+            this.MachineLightOffButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MachineLightOffButton.Image = global::NeedleController.Properties.Resources.MachineLightIconOFF;
+            this.MachineLightOffButton.Name = "MachineLightOffButton";
+            this.MachineLightOffButton.Click += new System.EventHandler(this.MachineLightOffButton_Click);
             // 
             // toolStripSeparator2
             // 
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 33);
             // 
             // toolStripLabel2
             // 
+            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(57, 30);
-            this.toolStripLabel2.Text = "Table LED";
             // 
-            // toolStripButton3
+            // TableLightOnButton
             // 
-            this.toolStripButton3.AutoSize = false;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(30, 30);
-            this.toolStripButton3.Text = "toolStripButton3";
+            resources.ApplyResources(this.TableLightOnButton, "TableLightOnButton");
+            this.TableLightOnButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TableLightOnButton.Image = global::NeedleController.Properties.Resources.TableLightIconON;
+            this.TableLightOnButton.Name = "TableLightOnButton";
+            this.TableLightOnButton.Click += new System.EventHandler(this.TableLightOnButton_Click);
             // 
-            // toolStripButton4
+            // TableLightOffButton
             // 
-            this.toolStripButton4.AutoSize = false;
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(30, 30);
-            this.toolStripButton4.Text = "toolStripButton4";
+            resources.ApplyResources(this.TableLightOffButton, "TableLightOffButton");
+            this.TableLightOffButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TableLightOffButton.Image = global::NeedleController.Properties.Resources.TableLightIconOFF;
+            this.TableLightOffButton.Name = "TableLightOffButton";
+            this.TableLightOffButton.Click += new System.EventHandler(this.TableLightOffButton_Click);
             // 
             // DeviceToolboxUC
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "DeviceToolboxUC";
-            this.Padding = new System.Windows.Forms.Padding(2);
-            this.Size = new System.Drawing.Size(1126, 37);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -230,11 +198,11 @@ namespace NeedleController.Views.NeedlePickingUCs
         private System.Windows.Forms.ToolStripButton UnparkingDeviceButton;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripLabel MachineLightLabel;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton MachineLightOnButton;
+        private System.Windows.Forms.ToolStripButton MachineLightOffButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton TableLightOnButton;
+        private System.Windows.Forms.ToolStripButton TableLightOffButton;
     }
 }
