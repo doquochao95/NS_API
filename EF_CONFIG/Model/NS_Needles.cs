@@ -23,7 +23,7 @@ namespace EF_CONFIG.Model
         }
     
         public int NeedleID { get; set; }
-        public string NeedleName { get; set; }
+        public int NeedleName { get; set; }
         public string NeedleCode { get; set; }
         public string NeedleSize { get; set; }
         public string NeedlePoint { get; set; }

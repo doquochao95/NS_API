@@ -55,12 +55,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseModel\NeedlePickingFormModel.cs" />
     <Compile Include="BaseModel\VolatilityLiveChartModel.cs" />
     <Compile Include="BaseModel\VotatilityDatagridModel.cs" />
     <Compile Include="DataTransform\ImplementBase.cs" />
     <Compile Include="DataTransform\NeedleBase.cs" />
     <Compile Include="DataTransform\QuantityBase.cs" />
     <Compile Include="DataTransform\StaffBase.cs" />
+    <Compile Include="DataTransform\StockBase.cs" />
     <Compile Include="Extends\SysExtendBase.cs" />
     <Compile Include="Model\NSModel.Context.cs">
       <AutoGen>True</AutoGen>

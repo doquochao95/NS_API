@@ -40,5 +40,17 @@ namespace NeedleController.Properties {
                 return ((int)(this["port"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
+        public string language_set {
+            get {
+                return ((string)(this["language_set"]));
+            }
+            set {
+                this["language_set"] = value;
+            }
+        }
     }
 }

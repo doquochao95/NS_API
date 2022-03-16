@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NeedleController.Resources" GeneratedClassName="DeviceSettings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NeedleController.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="local_ip" Type="System.String" Scope="Application">
@@ -7,6 +7,9 @@
     </Setting>
     <Setting Name="port" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">8080</Value>
+    </Setting>
+    <Setting Name="language_set" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en-US</Value>
     </Setting>
   </Settings>
 </SettingsFile>

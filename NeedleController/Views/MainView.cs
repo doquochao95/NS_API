@@ -13,8 +13,11 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 
+using WinFormsMvp;
 using WinFormsMvp.Forms;
 using System.Net.NetworkInformation;
+using System.Globalization;
+using Infralution.Localization;
 
 namespace NeedleController.Views
 {
@@ -24,10 +27,19 @@ namespace NeedleController.Views
         public static bool _deviceConnection;
         public static string _message { get; set; }
         public static bool _confirmRFID { get; set; }
+        public static string para_name;
+        public static string para_value_str;
+        public static int device_id { get; set; }
+        public static string building_name { get; set; }
+
+        public static string device_name { get; set; }
+
 
         public MainView()
         {
             InitializeComponent();
+            SetInitalLanguage();
+            UpdateLanguageMenus();
             InitializeTimer();
         }
         public event EventHandler GetNeedleClicked;
@@ -36,13 +48,19 @@ namespace NeedleController.Views
         public event EventHandler CameraSettingClicked;
         public event EventHandler MainViewLoaded;
         public event EventHandler ConnectDeviceButtonClicked;
+        public event EventHandler ConnectDeviceToolStripMenuClicked;
+        public event EventHandler ExitToolStripMenuClicked;
+        public event EventHandler EnglishToolStripMenuClicked;
+        public event EventHandler VietnameseToolStripMenuClicked;
+        public event EventHandler ChineseToolStripMenuClicked;
+        public event EventHandler UIcultureChanged;
 
         private void MainView_Load(object sender, EventArgs e)
         {
             MainViewLoaded(this, EventArgs.Empty);
         }
         private void GetNeedleButton_Click(object sender, EventArgs e)
-        {           
+        {
             GetNeedleClicked(this, EventArgs.Empty);
         }
         private void NeedleInfoButton_Click(object sender, EventArgs e)
@@ -61,6 +79,31 @@ namespace NeedleController.Views
         {
             ConnectDeviceButtonClicked(this, EventArgs.Empty);
         }
+        private void ConnectDeviceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConnectDeviceToolStripMenuClicked(this, EventArgs.Empty);
+        }
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitToolStripMenuClicked(this, EventArgs.Empty);
+        }
+        private void EnglishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnglishToolStripMenuClicked(this, EventArgs.Empty);
+        }
+        private void VietnameseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VietnameseToolStripMenuClicked(this, EventArgs.Empty);
+        }
+        private void ChineseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChineseToolStripMenuClicked(this, EventArgs.Empty);
+        }
+        private void CultureManagerMainForm_UICultureChanged(CultureInfo newCulture)
+        {
+            UIcultureChanged(this, EventArgs.Empty);
+        }
+
         private void InitializeTimer()
         {
             Timer1.Interval = 500;
@@ -75,9 +118,10 @@ namespace NeedleController.Views
             {
                 Timer1.Enabled = false;
                 ConnectDeviceButton.Enabled = true;
-                StatusLabel.Text = "Disconnected";
-                StatusLabel.ForeColor = System.Drawing.Color.Red;
-                DialogResult dlr = MessageBox.Show("Please to check connection again", "Communication Error", MessageBoxButtons.RetryCancel);
+                ConnectDeviceToolStripMenuItem.Enabled = true;
+                ConnectedStatusLabel.Visible = false;
+                DisconnectedStatusLabel.Visible = true;
+                DialogResult dlr = MessageBox.Show("Check connection again", "Error: Communication", MessageBoxButtons.RetryCancel);
                 if (dlr == DialogResult.Retry)
                 {
                     Timer1.Enabled = true;
@@ -88,11 +132,54 @@ namespace NeedleController.Views
             {
                 if (_deviceConnection)
                 {
+                    DisconnectedStatusLabel.Visible = false;
+                    ConnectedStatusLabel.Visible = true;
                     ConnectDeviceButton.Enabled = false;
-                    StatusLabel.Text = "Connected";
-                    StatusLabel.ForeColor = System.Drawing.Color.Green;
+                    ConnectDeviceToolStripMenuItem.Enabled = false;
+
                 }
             }
+        }
+        private void SetInitalLanguage()
+        {
+            CultureManager.ApplicationUICulture = new CultureInfo(NeedleController.Properties.Settings.Default.language_set);
+        }
+        private void CheckParameterThread()
+        {
+            if (_message == null)
+            {
+                return;
+            }
+            para_name = Getparametername_frombuffer(_message, "<", ":");
+            para_value_str = Getparametervalue_frombuffer(_message, ":", ">");
+            if (para_name == "buildingname")
+            {
+                building_name = para_value_str;
+            }
+            if (para_name == "deviceid")
+            {
+                device_id = int.Parse(para_value_str);
+            }
+            if (para_name == "devicename")
+            {
+                device_name = para_value_str;
+            }
+        }
+        private string Getparametername_frombuffer(string STR, string FirstString, string LastString)
+        {
+            string FinalString;
+            int Pos1 = STR.IndexOf(FirstString) + FirstString.Length;
+            int Pos2 = STR.IndexOf(LastString);
+            FinalString = STR.Substring(Pos1, Pos2 - Pos1);
+            return FinalString;
+        }
+        private string Getparametervalue_frombuffer(string STR, string FirstString, string LastString)
+        {
+            string FinalString;
+            int Pos1 = STR.IndexOf(FirstString) + FirstString.Length;
+            int Pos2 = STR.IndexOf(LastString);
+            FinalString = STR.Substring(Pos1, Pos2 - Pos1);
+            return FinalString;
         }
 
 
@@ -108,7 +195,11 @@ namespace NeedleController.Views
                 SetString_message();
                 if (_confirmRFID)
                 {
-                    new NeedlePickingView().Show();
+
+                    Timer1.Enabled = false;
+                    new NeedlePickingView(this).ShowDialog();
+                    Timer1.Enabled = true;
+                    _confirmRFID = false;
                 }
                 else
                 {
@@ -161,25 +252,62 @@ namespace NeedleController.Views
                 }
             }
         }
+        public void CloseForm()
+        {
+            this.Close();
+            Application.Exit();
+            Environment.Exit(0);
+        }
+        public void SetLanguageEnglish()
+        {
+            CultureManager.ApplicationUICulture = new CultureInfo("en-US");
+            NeedleController.Properties.Settings.Default.language_set = "en-US";
+            NeedleController.Properties.Settings.Default.Save();
+        }
+        public void SetLanguageVietnamese()
+        {
+            CultureManager.ApplicationUICulture = new CultureInfo("vi-VN");
+            NeedleController.Properties.Settings.Default.language_set = "vi-VN";
+            NeedleController.Properties.Settings.Default.Save();
+        }
+        public void SetLanguageChinese()
+        {
+            CultureManager.ApplicationUICulture = new CultureInfo("zh-TW");
+            NeedleController.Properties.Settings.Default.language_set = "zh-TW";
+            NeedleController.Properties.Settings.Default.Save();
+        }
+        public void UpdateLanguageMenus()
+        {
+            CultureInfo culture = CultureManager.ApplicationUICulture;
+            EnglishToolStripMenuItem.Checked = (culture.TwoLetterISOLanguageName == "en");
+            VietnameseToolStripMenuItem.Checked = (culture.TwoLetterISOLanguageName == "vi");
+            ChineseToolStripMenuItem.Checked = (culture.TwoLetterISOLanguageName == "zh");
+
+        }
 
         public void ServerThread()
         {
-            UdpClient udpClient = new UdpClient(NeedleController.Properties.Settings.Default.port);
-            while (true)
+            using (UdpClient udpClient = new UdpClient(NeedleController.Properties.Settings.Default.port))
             {
-                IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, NeedleController.Properties.Settings.Default.port);
-                Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
-                string returnData = Encoding.ASCII.GetString(receiveBytes);
-                this.Invoke(new MethodInvoker(delegate ()
+                while (true)
                 {
-                    _message=returnData;
-                    SetString_message();
-                    if (returnData == "<msg:setting_success>")
+                    IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, NeedleController.Properties.Settings.Default.port);
+                    Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
+                    string returnData = Encoding.ASCII.GetString(receiveBytes);
+                    this.Invoke(new MethodInvoker(delegate ()
                     {
-                        _deviceConnection = true;
-                    }
-                }));
-
+                        string msg = returnData;
+                        _message = msg;
+                        SetString_message();
+                        CheckParameterThread();
+                        if (returnData == "<msg:setting_success>")
+                        {
+                            _deviceConnection = true;
+                            BuildingNameLabel.Text = building_name;
+                            DeviceNameLabel.Text = device_name;
+                        }
+                    }));
+                }
             }
         }
         public bool PingHost(string nameOrAddress)
@@ -212,6 +340,11 @@ namespace NeedleController.Views
             listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + _message.ToString());
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
             listBox1.SelectedIndex = -1;
+        }
+
+        private void BuildingNameLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

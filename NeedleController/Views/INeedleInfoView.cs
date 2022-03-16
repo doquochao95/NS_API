@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeedleController.Views
 {
-    class INeedleInfoView
+    public class INeedleInfoView
     {
     }
 }

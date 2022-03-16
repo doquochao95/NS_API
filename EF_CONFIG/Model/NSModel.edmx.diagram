@@ -5,16 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e5f008b7738c4d72a210656c33f027fe" Name="Diagram1" ZoomLevel="85">
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Buildings" Width="1.5" PointX="0.75" PointY="7.625" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Devices" Width="1.5" PointX="3" PointY="7.25" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Export" Width="1.5" PointX="5.25" PointY="7" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Imports" Width="1.5" PointX="10.5" PointY="7" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_NeedlePosition" Width="1.5" PointX="2" PointY="3.75" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Needles" Width="1.5" PointX="3" PointY="11.75" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_PostRecords" Width="1.5" PointX="5.25" PointY="3.625" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Staffs" Width="1.5" PointX="8.25" PointY="7" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Stocks" Width="1.5" PointX="8" PointY="11.75" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Buildings" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Devices" Width="1.5" PointX="3" PointY="7.375" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Export" Width="1.5" PointX="8.25" PointY="7.125" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Imports" Width="1.5" PointX="10.5" PointY="6.875" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_NeedlePosition" Width="1.5" PointX="2.5" PointY="1.25" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Needles" Width="1.5" PointX="3" PointY="11.5" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_PostRecords" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Staffs" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Stocks" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Devices_NS_Buildings" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Buildings" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Imports_NS_Buildings" />
@@ -26,12 +26,11 @@
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Devices" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Devices" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Export" />
-        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_NeedlePosition" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Staffs" />
-        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Imports_NS_NeedlePosition" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Stocks" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Imports_NS_Stocks" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" />
-        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_NeedlePosition" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" />
       </Diagram>
     </edmx:Diagrams>

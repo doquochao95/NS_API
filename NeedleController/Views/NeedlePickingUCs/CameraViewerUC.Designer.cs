@@ -29,10 +29,13 @@ namespace NeedleController.Views.NeedlePickingUCs
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CameraViewerUC));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.CameraControllergroupBox = new System.Windows.Forms.GroupBox();
+            this.FailButton = new System.Windows.Forms.Button();
+            this.SuccessButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -66,113 +69,87 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // pictureBox1
             // 
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.pictureBox1.BackgroundImage = global::NeedleController.Properties.Resources.Techlogo;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(10, 20);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(10, 20, 10, 20);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(345, 281);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.pictureBox2.BackgroundImage = global::NeedleController.Properties.Resources.Techlogo;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(375, 20);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(10, 20, 10, 20);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(361, 281);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
             // CameraControllergroupBox
             // 
-            this.CameraControllergroupBox.AutoSize = true;
+            resources.ApplyResources(this.CameraControllergroupBox, "CameraControllergroupBox");
+            this.CameraControllergroupBox.Controls.Add(this.FailButton);
+            this.CameraControllergroupBox.Controls.Add(this.SuccessButton);
             this.CameraControllergroupBox.Controls.Add(this.label4);
             this.CameraControllergroupBox.Controls.Add(this.label3);
             this.CameraControllergroupBox.Controls.Add(this.label2);
             this.CameraControllergroupBox.Controls.Add(this.label1);
             this.CameraControllergroupBox.Controls.Add(this.trackBar2);
             this.CameraControllergroupBox.Controls.Add(this.trackBar1);
-            this.CameraControllergroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CameraControllergroupBox.Location = new System.Drawing.Point(756, 10);
-            this.CameraControllergroupBox.Margin = new System.Windows.Forms.Padding(10);
             this.CameraControllergroupBox.Name = "CameraControllergroupBox";
-            this.CameraControllergroupBox.Size = new System.Drawing.Size(355, 301);
-            this.CameraControllergroupBox.TabIndex = 2;
             this.CameraControllergroupBox.TabStop = false;
-            this.CameraControllergroupBox.Text = "Camera Controller";
+            // 
+            // FailButton
+            // 
+            resources.ApplyResources(this.FailButton, "FailButton");
+            this.FailButton.Name = "FailButton";
+            this.FailButton.UseVisualStyleBackColor = true;
+            this.FailButton.Click += new System.EventHandler(this.FailButton_Click);
+            // 
+            // SuccessButton
+            // 
+            resources.ApplyResources(this.SuccessButton, "SuccessButton");
+            this.SuccessButton.Name = "SuccessButton";
+            this.SuccessButton.UseVisualStyleBackColor = true;
+            this.SuccessButton.Click += new System.EventHandler(this.SuccessButton_Click);
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.label4, "label4");
             this.label4.ForeColor = System.Drawing.Color.SpringGreen;
-            this.label4.Location = new System.Drawing.Point(145, 197);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 35);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Success";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(65, 212);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Status :";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 111);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Contrast";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 56);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Bright";
             // 
             // trackBar2
             // 
-            this.trackBar2.Location = new System.Drawing.Point(100, 111);
+            resources.ApplyResources(this.trackBar2, "trackBar2");
             this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(233, 50);
-            this.trackBar2.TabIndex = 1;
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(100, 55);
+            resources.ApplyResources(this.trackBar1, "trackBar1");
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(233, 50);
-            this.trackBar1.TabIndex = 0;
             // 
             // CameraViewerUC
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "CameraViewerUC";
-            this.Padding = new System.Windows.Forms.Padding(2);
-            this.Size = new System.Drawing.Size(1125, 325);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -197,5 +174,7 @@ namespace NeedleController.Views.NeedlePickingUCs
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Button FailButton;
+        private System.Windows.Forms.Button SuccessButton;
     }
 }

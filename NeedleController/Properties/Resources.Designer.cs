@@ -93,6 +93,26 @@ namespace NeedleController.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MachineLightIconOFF {
+            get {
+                object obj = ResourceManager.GetObject("MachineLightIconOFF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MachineLightIconON {
+            get {
+                object obj = ResourceManager.GetObject("MachineLightIconON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ParkingIcon {
             get {
                 object obj = ResourceManager.GetObject("ParkingIcon", resourceCulture);
@@ -126,6 +146,26 @@ namespace NeedleController.Properties {
         internal static System.Drawing.Bitmap Table2 {
             get {
                 object obj = ResourceManager.GetObject("Table2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableLightIconOFF {
+            get {
+                object obj = ResourceManager.GetObject("TableLightIconOFF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableLightIconON {
+            get {
+                object obj = ResourceManager.GetObject("TableLightIconON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
