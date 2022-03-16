@@ -44,6 +44,7 @@ namespace NeedleController.Views
             this.LanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnglishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VietnameseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChineseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -54,7 +55,10 @@ namespace NeedleController.Views
             this.GetNeedleButton = new System.Windows.Forms.Button();
             this.ConnectedStatusLabel = new System.Windows.Forms.Label();
             this.CultureManagerMainForm = new Infralution.Localization.CultureManager(this.components);
-            this.ChineseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BuildingNameLabel = new System.Windows.Forms.Label();
+            this.DeviceNameLabel = new System.Windows.Forms.Label();
+            this.BuldingTilteLabel = new System.Windows.Forms.Label();
+            this.DeviceTilteLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -143,6 +147,12 @@ namespace NeedleController.Views
             resources.ApplyResources(this.VietnameseToolStripMenuItem, "VietnameseToolStripMenuItem");
             this.VietnameseToolStripMenuItem.Click += new System.EventHandler(this.VietnameseToolStripMenuItem_Click);
             // 
+            // ChineseToolStripMenuItem
+            // 
+            this.ChineseToolStripMenuItem.Name = "ChineseToolStripMenuItem";
+            resources.ApplyResources(this.ChineseToolStripMenuItem, "ChineseToolStripMenuItem");
+            this.ChineseToolStripMenuItem.Click += new System.EventHandler(this.ChineseToolStripMenuItem_Click);
+            // 
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -218,11 +228,26 @@ namespace NeedleController.Views
             this.CultureManagerMainForm.ManagedControl = this;
             this.CultureManagerMainForm.UICultureChanged += new Infralution.Localization.CultureManager.CultureChangedHandler(this.CultureManagerMainForm_UICultureChanged);
             // 
-            // ChineseToolStripMenuItem
+            // BuildingNameLabel
             // 
-            this.ChineseToolStripMenuItem.Name = "ChineseToolStripMenuItem";
-            resources.ApplyResources(this.ChineseToolStripMenuItem, "ChineseToolStripMenuItem");
-            this.ChineseToolStripMenuItem.Click += new System.EventHandler(this.ChineseToolStripMenuItem_Click);
+            resources.ApplyResources(this.BuildingNameLabel, "BuildingNameLabel");
+            this.BuildingNameLabel.Name = "BuildingNameLabel";
+            this.BuildingNameLabel.Click += new System.EventHandler(this.BuildingNameLabel_Click);
+            // 
+            // DeviceNameLabel
+            // 
+            resources.ApplyResources(this.DeviceNameLabel, "DeviceNameLabel");
+            this.DeviceNameLabel.Name = "DeviceNameLabel";
+            // 
+            // BuldingTilteLabel
+            // 
+            resources.ApplyResources(this.BuldingTilteLabel, "BuldingTilteLabel");
+            this.BuldingTilteLabel.Name = "BuldingTilteLabel";
+            // 
+            // DeviceTilteLabel
+            // 
+            resources.ApplyResources(this.DeviceTilteLabel, "DeviceTilteLabel");
+            this.DeviceTilteLabel.Name = "DeviceTilteLabel";
             // 
             // MainView
             // 
@@ -230,6 +255,10 @@ namespace NeedleController.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ControlBox = false;
+            this.Controls.Add(this.DeviceTilteLabel);
+            this.Controls.Add(this.BuldingTilteLabel);
+            this.Controls.Add(this.DeviceNameLabel);
+            this.Controls.Add(this.BuildingNameLabel);
             this.Controls.Add(this.ConnectedStatusLabel);
             this.Controls.Add(this.ConnectDeviceButton);
             this.Controls.Add(this.listBox1);
@@ -280,6 +309,10 @@ namespace NeedleController.Views
         private System.Windows.Forms.Label ConnectedStatusLabel;
         private Infralution.Localization.CultureManager CultureManagerMainForm;
         private System.Windows.Forms.ToolStripMenuItem ChineseToolStripMenuItem;
+        private System.Windows.Forms.Label DeviceNameLabel;
+        private System.Windows.Forms.Label BuildingNameLabel;
+        private System.Windows.Forms.Label DeviceTilteLabel;
+        private System.Windows.Forms.Label BuldingTilteLabel;
     }
 }
 

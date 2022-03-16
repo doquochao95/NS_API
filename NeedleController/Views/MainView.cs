@@ -27,6 +27,13 @@ namespace NeedleController.Views
         public static bool _deviceConnection;
         public static string _message { get; set; }
         public static bool _confirmRFID { get; set; }
+        public static string para_name;
+        public static string para_value_str;
+        public static int device_id { get; set; }
+        public static string building_name { get; set; }
+
+        public static string device_name { get; set; }
+
 
         public MainView()
         {
@@ -137,7 +144,46 @@ namespace NeedleController.Views
         {
             CultureManager.ApplicationUICulture = new CultureInfo(NeedleController.Properties.Settings.Default.language_set);
         }
-        
+        private void CheckParameterThread()
+        {
+            if (_message == null)
+            {
+                return;
+            }
+            para_name = Getparametername_frombuffer(_message, "<", ":");
+            para_value_str = Getparametervalue_frombuffer(_message, ":", ">");
+            if (para_name == "buildingname")
+            {
+                building_name = para_value_str;
+            }
+            if (para_name == "deviceid")
+            {
+                device_id = int.Parse(para_value_str);
+            }
+            if (para_name == "devicename")
+            {
+                device_name = para_value_str;
+            }
+        }
+        private string Getparametername_frombuffer(string STR, string FirstString, string LastString)
+        {
+            string FinalString;
+            int Pos1 = STR.IndexOf(FirstString) + FirstString.Length;
+            int Pos2 = STR.IndexOf(LastString);
+            FinalString = STR.Substring(Pos1, Pos2 - Pos1);
+            return FinalString;
+        }
+        private string Getparametervalue_frombuffer(string STR, string FirstString, string LastString)
+        {
+            string FinalString;
+            int Pos1 = STR.IndexOf(FirstString) + FirstString.Length;
+            int Pos2 = STR.IndexOf(LastString);
+            FinalString = STR.Substring(Pos1, Pos2 - Pos1);
+            return FinalString;
+        }
+
+
+
         public void ShowNeedlePickingView()
         {
             if (_deviceConnection)
@@ -250,11 +296,15 @@ namespace NeedleController.Views
                     string returnData = Encoding.ASCII.GetString(receiveBytes);
                     this.Invoke(new MethodInvoker(delegate ()
                     {
-                        _message = returnData;
+                        string msg = returnData;
+                        _message = msg;
                         SetString_message();
+                        CheckParameterThread();
                         if (returnData == "<msg:setting_success>")
                         {
                             _deviceConnection = true;
+                            BuildingNameLabel.Text = building_name;
+                            DeviceNameLabel.Text = device_name;
                         }
                     }));
                 }
@@ -292,5 +342,9 @@ namespace NeedleController.Views
             listBox1.SelectedIndex = -1;
         }
 
+        private void BuildingNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

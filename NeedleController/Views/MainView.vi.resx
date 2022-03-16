@@ -208,4 +208,10 @@
   <data name="ChineseToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Tiếng Trung</value>
   </data>
+  <data name="BuldingTilteLabel.Text" xml:space="preserve">
+    <value>Tòa Nhà :</value>
+  </data>
+  <data name="DeviceTilteLabel.Text" xml:space="preserve">
+    <value>Thiết Bị :</value>
+  </data>
 </root>

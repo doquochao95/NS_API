@@ -9,14 +9,31 @@ namespace EF_CONFIG.DataTransform
 {
     public static class StockBase
     {
-        public static List<NS_Stocks>  Get_NeedleQtyInStock()
+        public static List<NS_Stocks> Get_NeedleQtyInStock()
         {
             try
             {
                 using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
                 {
                     return DataContext.NS_Stocks
-                        .Where(i=>i.CurrentQuantity > 0)
+                        .Where(i => i.CurrentQuantity > 0)
+                        .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+        public static List<NS_Stocks> Get_NeedleQtyInStockWithDeviceID(int deviceid)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Stocks
+                        .Where(i => i.CurrentQuantity > 0 && i.DeviceID == deviceid)
                         .ToList();
                 }
             }

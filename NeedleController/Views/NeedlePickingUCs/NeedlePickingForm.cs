@@ -72,9 +72,8 @@ namespace NeedleController.Views.NeedlePickingUCs
         }
         public void LoadNeedlePickingForm()
         {
-            NeedleNameLabel.Text = NeedleQtyStock.NeedleName.ToString();
-            NeedleQtyTextbox.Text = NeedleQtyStock.TotalQuantity.ToString();
-            PositionLabel.Text = NeedleQtyStock.StockName;
+            GetButton.Text = NeedleQtyStock.NeedleName.ToString();
+            QuantityLabel.Text = NeedleQtyStock.TotalQuantity.ToString();
         }
     }
 }

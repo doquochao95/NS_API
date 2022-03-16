@@ -86,7 +86,7 @@ namespace NeedleController.Views
         {
             Mess = MainView._message;
             NeedleQtyList = new ObservableCollection<NeedlePickingFormModel>();
-            var db = StockBase.Get_NeedleQtyInStock();
+            var db = StockBase.Get_NeedleQtyInStockWithDeviceID(MainView.device_id);
             NeedleQtyList.Clear();
             foreach (var item in db)
             {
@@ -109,7 +109,9 @@ namespace NeedleController.Views
                     TotalQuantity = p.Sum(a => a.CurrentQuantity),
                     StockName = p.First().StockName
                 })
-                .OrderBy(i => i.NeedleName);
+                .OrderBy(a => a.NeedleID);
+
+
             foreach (var item in NeedleList)
             {
                 NeedlePickingForm needlePickingForm = new NeedlePickingForm(item);
