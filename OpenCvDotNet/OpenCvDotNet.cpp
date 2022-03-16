@@ -8,12 +8,27 @@ using namespace std;
 
 typedef unsigned char byte;
 //VideoCapture videoCapture("http://192.168.50.130:4747/video");
-VideoCapture videoCapture(0);
-UMat videoFrame, videoFrame1, videoFrame2, videoFrame3, videoFrame4, videoFrame5, videoFrame6;
-UMat mask;
-int th1, th2, color;
-UMat imgGray, imgBlur, imgCanny, imgDilate, imgErode;
+//VideoCapture videoCapture(0);
+VideoCapture videoCapture;
+UMat imgSource, imgGray, imgGaussianBlur, imgCanny, imgDilate, imgErode, imgEqualizeHist, mask;
+int color;
 double output;
+
+void MyOpenCvWrapper::startCamera()
+{
+    videoCapture.open(0);
+    //videoCapture.open("http://192.168.50.130:4747/video");
+}
+
+bool MyOpenCvWrapper::checkCamera()
+{
+    return videoCapture.isOpened();
+}
+
+void MyOpenCvWrapper::stopCamera()
+{
+    videoCapture.release();
+}
 
 struct compareContourAreas
 {
@@ -25,7 +40,7 @@ struct compareContourAreas
     }
 };
 
-void MyOpenCvWrapper::getContours(UMat imgDilate, UMat img)
+void MyOpenCvWrapper::getContours(UMat imgErode, UMat img)
 {
     vector<vector<cv::Point>>contours;
     vector<Vec4i>hierarchy;
@@ -35,7 +50,7 @@ void MyOpenCvWrapper::getContours(UMat imgDilate, UMat img)
     int t = 0;
     P1 = 1;
     P2 = 1;
-    findContours(imgDilate, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    findContours(imgErode, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
     sort(contours.begin(), contours.end(), compareContourAreas());
     
     //drawContours(img, contours, -1, Scalar(255, 0, 255), 2);
@@ -111,44 +126,20 @@ void MyOpenCvWrapper::getContours(UMat imgDilate, UMat img)
     }
 }
 
-void MyOpenCvWrapper::Image()
+void MyOpenCvWrapper::getNeedleLength(int gaussianBlurKsize, int threshold1, int threshold2, double width, double height)
 {
-    string path = "/Users/MyPC/Desktop/testopencv/test8.png";
-    //string path = "/Users/MyPC/Desktop/testopencv/test.png";
-    Mat img;// = imread(path);
-    videoCapture.read(img);
-    UMat test = img.getUMat(ACCESS_READ);
-    cvtColor(test, imgGray, COLOR_BGR2GRAY);
-    GaussianBlur(imgGray, imgBlur, cv::Size(3, 3), 3, 0);
-    //bilateralFilter(imgGray, imgBlur, 1, 10, 0);
-    //adaptiveThreshold(imgGray, imgBlur, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 3, 2);
-    //threshold(imgGray, imgBlur, ADAPTIVE_THRESH_MEAN_C, 255, THRESH_BINARY);
-    Canny(imgBlur, imgCanny, th1, th2);
+    videoCapture.read(imgSource);
+    resize(imgSource, imgSource, cv::Size(imgSource.size().width * width / 100, imgSource.size().height * height / 100), INTER_LINEAR);
+
+    cvtColor(imgSource, imgGray, COLOR_RGB2GRAY);
+    equalizeHist(imgGray, imgEqualizeHist);
+    GaussianBlur(imgEqualizeHist, imgGaussianBlur, cv::Size(gaussianBlurKsize, gaussianBlurKsize), 0);
+
+    Canny(imgGaussianBlur, imgCanny, threshold1, threshold2);
     Mat kernel = getStructuringElement(MORPH_RECT, cv::Size(3, 3));
     dilate(imgCanny, imgDilate, kernel);
     erode(imgDilate, imgErode, kernel);
-    getContours(imgErode, test);
-     
-    imshow("Image", test);
-}
-
-void MyOpenCvWrapper::ApplyFilter1() 
-{
-    videoCapture.read(videoFrame);
-    resize(videoFrame, videoFrame, cv::Size(videoFrame.size().width * 60 / 100, videoFrame.size().height * 60 / 100), INTER_LINEAR);
-
-    //inRange(videoFrame, Scalar(lowB, lowG, lowR), Scalar(highB, highG, highR), mask);
-    
-    cvtColor(videoFrame, videoFrame1, COLOR_RGB2GRAY); 
-    equalizeHist(videoFrame1, videoFrame6);
-    GaussianBlur(videoFrame6, videoFrame2, cv::Size(5, 5), 0);
-    
-    //threshold(videoFrame1, videoFrame2, 50, 255, THRESH_BINARY);
-    Canny(videoFrame2, videoFrame3, th1, th2);
-    Mat kernel = getStructuringElement(MORPH_RECT, cv::Size(3, 3));
-    dilate(videoFrame3, videoFrame4, kernel);
-    erode(videoFrame4, videoFrame5, kernel);    
-    getContours(videoFrame5, videoFrame);        
+    getContours(imgErode, imgSource);
 }
 
 Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image)
@@ -158,12 +149,11 @@ Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image)
         return nullptr;
     if (img.type() != CV_8UC3 && img.type() != CV_8UC4 && img.type() != CV_8UC1)
     {
-        throw gcnew NotSupportedException("Only images of type CV_8UC3 are supported for conversion to Bitmap");
+        throw gcnew NotSupportedException("Only images of type CV_8UC3, CV_8UC4, CV_8UC1 are supported for conversion to Bitmap");
     }
 
     //create the bitmap and get the pointer to the data
     Bitmap^ bmpimg = gcnew Bitmap(img.cols, img.rows, PixelFormat::Format24bppRgb);
-
     BitmapData^ data;
 
     if (img.type() == CV_8UC3)
@@ -188,12 +178,13 @@ Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image)
     return bmpimg;
 }
 
-void MyOpenCvWrapper::getColor()
+void MyOpenCvWrapper::getColor(int LowR, int LowG, int LowB, int HighR, int HighG, int HighB)
 {
     vector<vector<cv::Point>>imgColor;
-    vector<Vec4i>hierarchy;    
+    vector<Vec4i>hierarchy;
     //inRange(videoFrame, Scalar(50, 90, 130), Scalar(80, 100, 145), mask);
-    inRange(videoFrame, Scalar(50, 90, 130), Scalar(80, 110, 150), mask);
+    inRange(imgSource, Scalar(LowB, LowG, LowR), Scalar(HighB, HighG, HighR), mask);
+    //inRange(videoFrame, Scalar(50, 90, 130), Scalar(80, 110, 150), mask);
     dilate(mask, mask, getStructuringElement(MORPH_RECT, cv::Size(3, 3)));
     erode(mask, mask, getStructuringElement(MORPH_RECT, cv::Size(3, 3)));
     findContours(mask, imgColor, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
@@ -201,7 +192,7 @@ void MyOpenCvWrapper::getColor()
         color = 1;
     else
         color = 0;
-    drawContours(videoFrame, imgColor, -1, Scalar(255, 0, 255), 2);
+    drawContours(imgSource, imgColor, -1, Scalar(255, 0, 255), 2);
 }
 
 int MyOpenCvWrapper::Color()
@@ -209,15 +200,9 @@ int MyOpenCvWrapper::Color()
     return color;
 }
 
-double MyOpenCvWrapper::ApplyFilter()
+double MyOpenCvWrapper::needleLength()
 {    
     return output;
-}
-
-void MyOpenCvWrapper::trackbar(int threshold1, int threshold2)
-{
-    th1 = threshold1;
-    th2 = threshold2;    
 }
 
 void MyOpenCvWrapper::captureCam()
@@ -229,10 +214,10 @@ void MyOpenCvWrapper::captureCam()
 
 Bitmap^ MyOpenCvWrapper::displaySrc()
 {
-    return MatToBitmap(videoFrame);
+    return MatToBitmap(imgSource);
 }
 
-Bitmap^ MyOpenCvWrapper::display()
+Bitmap^ MyOpenCvWrapper::displayCanny()
 {    
-    return MatToBitmap(videoFrame3);
+    return MatToBitmap(imgCanny);
 }

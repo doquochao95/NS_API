@@ -42,9 +42,7 @@ namespace NeedleController.Views
             MainViewLoaded(this, EventArgs.Empty);
         }
         private void GetNeedleButton_Click(object sender, EventArgs e)
-        {
-            
-            
+        {           
             GetNeedleClicked(this, EventArgs.Empty);
         }
         private void NeedleInfoButton_Click(object sender, EventArgs e)
@@ -67,7 +65,7 @@ namespace NeedleController.Views
         {
             Timer1.Interval = 500;
             Timer1.Tick += new EventHandler(Timer1_Tick);
-            Timer1.Enabled = true;
+            Timer1.Enabled = true; 
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
@@ -100,7 +98,7 @@ namespace NeedleController.Views
 
 
         public void ShowNeedlePickingView()
-        {
+        {            
             if (_deviceConnection)
             {
                 using (RFIDCheckingView checkingView = new RFIDCheckingView())

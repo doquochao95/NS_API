@@ -13,15 +13,16 @@ namespace OpenCvDotNet {
 	public ref class MyOpenCvWrapper
 	{
 	public:
-		double ApplyFilter();
-		void ApplyFilter1();
-		void trackbar(int threshold1, int threshold2);
+		void startCamera();
+		void stopCamera();
+		bool checkCamera();
+		double needleLength();
+		void getNeedleLength(int gaussianBlurKsize, int threshold1, int threshold2, double width, double height);
 		void captureCam();
 		Bitmap^ displaySrc();
-		Bitmap^ display();
+		Bitmap^ displayCanny();
 		Bitmap^ MatToBitmap(cv::UMat image);
-		void Image();
-		void getColor();
+		void getColor(int LowR, int LowG, int LowB, int HighR, int HighG, int HighB);
 		int Color();
 	private:
 		void getContours(cv::UMat imgDilate, cv::UMat img);

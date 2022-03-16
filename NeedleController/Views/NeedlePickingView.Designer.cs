@@ -74,20 +74,20 @@ namespace NeedleController.Views
             this.cameraViewerUC1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.cameraViewerUC1, 2);
             this.cameraViewerUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraViewerUC1.Location = new System.Drawing.Point(3, 503);
+            this.cameraViewerUC1.Location = new System.Drawing.Point(3, 504);
             this.cameraViewerUC1.Name = "cameraViewerUC1";
             this.cameraViewerUC1.Padding = new System.Windows.Forms.Padding(2);
-            this.cameraViewerUC1.Size = new System.Drawing.Size(1030, 223);
+            this.cameraViewerUC1.Size = new System.Drawing.Size(1030, 222);
             this.cameraViewerUC1.TabIndex = 1;
             // 
             // needleSearchingUC1
             // 
             this.needleSearchingUC1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.needleSearchingUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.needleSearchingUC1.Location = new System.Drawing.Point(1039, 503);
+            this.needleSearchingUC1.Location = new System.Drawing.Point(1039, 504);
             this.needleSearchingUC1.Name = "needleSearchingUC1";
             this.needleSearchingUC1.Padding = new System.Windows.Forms.Padding(10);
-            this.needleSearchingUC1.Size = new System.Drawing.Size(222, 223);
+            this.needleSearchingUC1.Size = new System.Drawing.Size(222, 222);
             this.needleSearchingUC1.TabIndex = 2;
             // 
             // flowLayoutPanel1
@@ -97,7 +97,7 @@ namespace NeedleController.Views
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 48);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1258, 449);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1258, 450);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
             // NeedlePickingView
