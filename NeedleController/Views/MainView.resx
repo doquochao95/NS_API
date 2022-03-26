@@ -130,7 +130,7 @@
     <value>NoControl</value>
   </data>
   <data name="ConnectionStatusLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 380</value>
+    <value>521, 380</value>
   </data>
   <data name="ConnectionStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>141, 18</value>
@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ConnectionStatusLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="DisconnectedStatusLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="DisconnectedStatusLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>633, 380</value>
+    <value>661, 380</value>
   </data>
   <data name="DisconnectedStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 18</value>
@@ -184,10 +184,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;DisconnectedStatusLabel.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="listBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>496, 117</value>
+    <value>524, 117</value>
   </data>
   <data name="listBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>236, 251</value>
@@ -205,7 +205,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;listBox1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="ConnectDeviceButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -214,7 +214,7 @@
     <value>NoControl</value>
   </data>
   <data name="ConnectDeviceButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>536, 403</value>
+    <value>564, 403</value>
   </data>
   <data name="ConnectDeviceButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>162, 27</value>
@@ -238,7 +238,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ConnectDeviceButton.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <metadata name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -246,6 +246,72 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>106, 17</value>
   </metadata>
+  <data name="ConnectDeviceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 22</value>
+  </data>
+  <data name="ConnectDeviceToolStripMenuItem.Text" xml:space="preserve">
+    <value>Connect Device</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 6</value>
+  </data>
+  <data name="ExitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 22</value>
+  </data>
+  <data name="ExitToolStripMenuItem.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="FileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="FileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="EnglishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 22</value>
+  </data>
+  <data name="EnglishToolStripMenuItem.Text" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="VietnameseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 22</value>
+  </data>
+  <data name="VietnameseToolStripMenuItem.Text" xml:space="preserve">
+    <value>Vietnamese</value>
+  </data>
+  <data name="ChineseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 22</value>
+  </data>
+  <data name="ChineseToolStripMenuItem.Text" xml:space="preserve">
+    <value>Chinese</value>
+  </data>
+  <data name="LanguageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 20</value>
+  </data>
+  <data name="LanguageToolStripMenuItem.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="ContactToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
+  </data>
+  <data name="ContactToolStripMenuItem.Text" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 6</value>
+  </data>
+  <data name="AboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
+  </data>
+  <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -268,229 +334,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="FileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="FileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="ConnectDeviceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
-  </data>
-  <data name="ConnectDeviceToolStripMenuItem.Text" xml:space="preserve">
-    <value>Connect Device</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 6</value>
-  </data>
-  <data name="ExitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 22</value>
-  </data>
-  <data name="ExitToolStripMenuItem.Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="LanguageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 20</value>
-  </data>
-  <data name="LanguageToolStripMenuItem.Text" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="EnglishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 22</value>
-  </data>
-  <data name="EnglishToolStripMenuItem.Text" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="VietnameseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 22</value>
-  </data>
-  <data name="VietnameseToolStripMenuItem.Text" xml:space="preserve">
-    <value>Vietnamese</value>
-  </data>
-  <data name="ChineseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 22</value>
-  </data>
-  <data name="ChineseToolStripMenuItem.Text" xml:space="preserve">
-    <value>Chinese</value>
-  </data>
-  <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="ContactToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
-  </data>
-  <data name="ContactToolStripMenuItem.Text" xml:space="preserve">
-    <value>Contact</value>
-  </data>
-  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 6</value>
-  </data>
-  <data name="AboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
-  </data>
-  <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="DeviceSettingButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Open Sans, 9.75pt</value>
-  </data>
-  <data name="DeviceSettingButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopCenter</value>
-  </data>
-  <data name="DeviceSettingButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="DeviceSettingButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 245</value>
-  </data>
-  <data name="DeviceSettingButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="DeviceSettingButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="DeviceSettingButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="DeviceSettingButton.Text" xml:space="preserve">
-    <value>Device Setting</value>
-  </data>
-  <data name="DeviceSettingButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="&gt;&gt;DeviceSettingButton.Name" xml:space="preserve">
-    <value>DeviceSettingButton</value>
-  </data>
-  <data name="&gt;&gt;DeviceSettingButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DeviceSettingButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;DeviceSettingButton.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="CameraSettingButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Open Sans, 9.75pt</value>
-  </data>
-  <data name="CameraSettingButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopCenter</value>
-  </data>
-  <data name="CameraSettingButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="CameraSettingButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>271, 245</value>
-  </data>
-  <data name="CameraSettingButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="CameraSettingButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="CameraSettingButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="CameraSettingButton.Text" xml:space="preserve">
-    <value>Camera Setting</value>
-  </data>
-  <data name="CameraSettingButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="&gt;&gt;CameraSettingButton.Name" xml:space="preserve">
-    <value>CameraSettingButton</value>
-  </data>
-  <data name="&gt;&gt;CameraSettingButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CameraSettingButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;CameraSettingButton.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="NeedleInfoButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Open Sans, 9.75pt</value>
-  </data>
-  <data name="NeedleInfoButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopCenter</value>
-  </data>
-  <data name="NeedleInfoButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="NeedleInfoButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 60</value>
-  </data>
-  <data name="NeedleInfoButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="NeedleInfoButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="NeedleInfoButton.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="NeedleInfoButton.Text" xml:space="preserve">
-    <value>Needle Information</value>
-  </data>
-  <data name="NeedleInfoButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="&gt;&gt;NeedleInfoButton.Name" xml:space="preserve">
-    <value>NeedleInfoButton</value>
-  </data>
-  <data name="&gt;&gt;NeedleInfoButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;NeedleInfoButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;NeedleInfoButton.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="GetNeedleButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Open Sans, 9.75pt</value>
-  </data>
-  <data name="GetNeedleButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopCenter</value>
-  </data>
-  <data name="GetNeedleButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="GetNeedleButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 59</value>
-  </data>
-  <data name="GetNeedleButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="GetNeedleButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="GetNeedleButton.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="GetNeedleButton.Text" xml:space="preserve">
-    <value>Get Needle</value>
-  </data>
-  <data name="GetNeedleButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="&gt;&gt;GetNeedleButton.Name" xml:space="preserve">
-    <value>GetNeedleButton</value>
-  </data>
-  <data name="&gt;&gt;GetNeedleButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GetNeedleButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GetNeedleButton.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="ConnectedStatusLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -502,7 +346,7 @@
     <value>NoControl</value>
   </data>
   <data name="ConnectedStatusLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>633, 380</value>
+    <value>661, 380</value>
   </data>
   <data name="ConnectedStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 18</value>
@@ -526,115 +370,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ConnectedStatusLabel.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <metadata name="CultureManagerMainForm.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>221, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>47</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>784, 439</value>
-  </data>
-  <data name="DeviceTilteLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="DeviceTilteLabel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="DeviceTilteLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 83</value>
-  </data>
-  <data name="DeviceTilteLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 20</value>
-  </data>
-  <data name="DeviceTilteLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="DeviceTilteLabel.Text" xml:space="preserve">
-    <value>Device :</value>
-  </data>
-  <data name="&gt;&gt;DeviceTilteLabel.Name" xml:space="preserve">
-    <value>DeviceTilteLabel</value>
-  </data>
-  <data name="&gt;&gt;DeviceTilteLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DeviceTilteLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;DeviceTilteLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="BuldingTilteLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="BuldingTilteLabel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="BuldingTilteLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 59</value>
-  </data>
-  <data name="BuldingTilteLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 20</value>
-  </data>
-  <data name="BuldingTilteLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="BuldingTilteLabel.Text" xml:space="preserve">
-    <value>Building :</value>
-  </data>
-  <data name="&gt;&gt;BuldingTilteLabel.Name" xml:space="preserve">
-    <value>BuldingTilteLabel</value>
-  </data>
-  <data name="&gt;&gt;BuldingTilteLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BuldingTilteLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;BuldingTilteLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="DeviceNameLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="DeviceNameLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>564, 88</value>
-  </data>
-  <data name="DeviceNameLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 13</value>
-  </data>
-  <data name="DeviceNameLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="DeviceNameLabel.Text" xml:space="preserve">
-    <value>devicename</value>
-  </data>
-  <data name="&gt;&gt;DeviceNameLabel.Name" xml:space="preserve">
-    <value>DeviceNameLabel</value>
-  </data>
-  <data name="&gt;&gt;DeviceNameLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DeviceNameLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;DeviceNameLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="BuildingNameLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="BuildingNameLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="BuildingNameLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>572, 64</value>
+    <value>600, 64</value>
   </data>
   <data name="BuildingNameLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 13</value>
@@ -655,7 +400,310 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BuildingNameLabel.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="DeviceNameLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DeviceNameLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="DeviceNameLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>592, 88</value>
+  </data>
+  <data name="DeviceNameLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="DeviceNameLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="DeviceNameLabel.Text" xml:space="preserve">
+    <value>devicename</value>
+  </data>
+  <data name="&gt;&gt;DeviceNameLabel.Name" xml:space="preserve">
+    <value>DeviceNameLabel</value>
+  </data>
+  <data name="&gt;&gt;DeviceNameLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DeviceNameLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;DeviceNameLabel.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="BuldingTilteLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BuldingTilteLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="BuldingTilteLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BuldingTilteLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>521, 59</value>
+  </data>
+  <data name="BuldingTilteLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 20</value>
+  </data>
+  <data name="BuldingTilteLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="BuldingTilteLabel.Text" xml:space="preserve">
+    <value>Building :</value>
+  </data>
+  <data name="&gt;&gt;BuldingTilteLabel.Name" xml:space="preserve">
+    <value>BuldingTilteLabel</value>
+  </data>
+  <data name="&gt;&gt;BuldingTilteLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BuldingTilteLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;BuldingTilteLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DeviceTilteLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DeviceTilteLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="DeviceTilteLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="DeviceTilteLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>521, 83</value>
+  </data>
+  <data name="DeviceTilteLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 20</value>
+  </data>
+  <data name="DeviceTilteLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="DeviceTilteLabel.Text" xml:space="preserve">
+    <value>Device :</value>
+  </data>
+  <data name="&gt;&gt;DeviceTilteLabel.Name" xml:space="preserve">
+    <value>DeviceTilteLabel</value>
+  </data>
+  <data name="&gt;&gt;DeviceTilteLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DeviceTilteLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;DeviceTilteLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="AddNeedleButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Open Sans, 9.75pt</value>
+  </data>
+  <data name="AddNeedleButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="AddNeedleButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AddNeedleButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 78</value>
+  </data>
+  <data name="AddNeedleButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 140</value>
+  </data>
+  <data name="AddNeedleButton.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="AddNeedleButton.Text" xml:space="preserve">
+    <value>Add Needle</value>
+  </data>
+  <data name="AddNeedleButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;AddNeedleButton.Name" xml:space="preserve">
+    <value>AddNeedleButton</value>
+  </data>
+  <data name="&gt;&gt;AddNeedleButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AddNeedleButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;AddNeedleButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="DeviceSettingButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Open Sans, 9.75pt</value>
+  </data>
+  <data name="DeviceSettingButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="DeviceSettingButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="DeviceSettingButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>101, 244</value>
+  </data>
+  <data name="DeviceSettingButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="DeviceSettingButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 150</value>
+  </data>
+  <data name="DeviceSettingButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="DeviceSettingButton.Text" xml:space="preserve">
+    <value>Device Setting</value>
+  </data>
+  <data name="DeviceSettingButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;DeviceSettingButton.Name" xml:space="preserve">
+    <value>DeviceSettingButton</value>
+  </data>
+  <data name="&gt;&gt;DeviceSettingButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DeviceSettingButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;DeviceSettingButton.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="CameraSettingButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Open Sans, 9.75pt</value>
+  </data>
+  <data name="CameraSettingButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="CameraSettingButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CameraSettingButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>276, 244</value>
+  </data>
+  <data name="CameraSettingButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="CameraSettingButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 150</value>
+  </data>
+  <data name="CameraSettingButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="CameraSettingButton.Text" xml:space="preserve">
+    <value>Camera Setting</value>
+  </data>
+  <data name="CameraSettingButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;CameraSettingButton.Name" xml:space="preserve">
+    <value>CameraSettingButton</value>
+  </data>
+  <data name="&gt;&gt;CameraSettingButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CameraSettingButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CameraSettingButton.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="NeedleInfoButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Open Sans, 9.75pt</value>
+  </data>
+  <data name="NeedleInfoButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="NeedleInfoButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="NeedleInfoButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 78</value>
+  </data>
+  <data name="NeedleInfoButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="NeedleInfoButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 140</value>
+  </data>
+  <data name="NeedleInfoButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="NeedleInfoButton.Text" xml:space="preserve">
+    <value>Needle Information</value>
+  </data>
+  <data name="NeedleInfoButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;NeedleInfoButton.Name" xml:space="preserve">
+    <value>NeedleInfoButton</value>
+  </data>
+  <data name="&gt;&gt;NeedleInfoButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NeedleInfoButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;NeedleInfoButton.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="GetNeedleButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Open Sans, 9.75pt</value>
+  </data>
+  <data name="GetNeedleButton.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="GetNeedleButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="GetNeedleButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>33, 78</value>
+  </data>
+  <data name="GetNeedleButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="GetNeedleButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 140</value>
+  </data>
+  <data name="GetNeedleButton.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="GetNeedleButton.Text" xml:space="preserve">
+    <value>Get Needle</value>
+  </data>
+  <data name="GetNeedleButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;GetNeedleButton.Name" xml:space="preserve">
+    <value>GetNeedleButton</value>
+  </data>
+  <data name="&gt;&gt;GetNeedleButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GetNeedleButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GetNeedleButton.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <metadata name="CultureManagerMainForm.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>221, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>47</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>784, 439</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

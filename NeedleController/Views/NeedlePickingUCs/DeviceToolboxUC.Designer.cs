@@ -46,6 +46,9 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.TableLightOnButton = new System.Windows.Forms.ToolStripButton();
             this.TableLightOffButton = new System.Windows.Forms.ToolStripButton();
+            this.IdLabel = new System.Windows.Forms.Label();
+            this.UserNameLabel = new System.Windows.Forms.Label();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.flowLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
@@ -56,11 +59,12 @@ namespace NeedleController.Views.NeedlePickingUCs
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Controls.Add(this.toolStrip1);
             this.flowLayoutPanel1.Controls.Add(this.toolStrip2);
+            this.flowLayoutPanel1.Controls.Add(this.IdLabel);
+            this.flowLayoutPanel1.Controls.Add(this.UserNameLabel);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ResetDeviceLabel,
             this.ResetDeviceButton,
@@ -68,12 +72,13 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.ParkingDeviceLabel,
             this.ParkingDeviceButton,
             this.UnparkingDeviceButton});
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // ResetDeviceLabel
             // 
-            resources.ApplyResources(this.ResetDeviceLabel, "ResetDeviceLabel");
             this.ResetDeviceLabel.Name = "ResetDeviceLabel";
+            resources.ApplyResources(this.ResetDeviceLabel, "ResetDeviceLabel");
             // 
             // ResetDeviceButton
             // 
@@ -85,13 +90,13 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // toolStripSeparator1
             // 
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // ParkingDeviceLabel
             // 
-            resources.ApplyResources(this.ParkingDeviceLabel, "ParkingDeviceLabel");
             this.ParkingDeviceLabel.Name = "ParkingDeviceLabel";
+            resources.ApplyResources(this.ParkingDeviceLabel, "ParkingDeviceLabel");
             // 
             // ParkingDeviceButton
             // 
@@ -111,7 +116,6 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // toolStrip2
             // 
-            resources.ApplyResources(this.toolStrip2, "toolStrip2");
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MachineLightLabel,
             this.MachineLightOnButton,
@@ -119,13 +123,15 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.toolStripSeparator2,
             this.toolStripLabel2,
             this.TableLightOnButton,
-            this.TableLightOffButton});
+            this.TableLightOffButton,
+            this.toolStripSeparator3});
+            resources.ApplyResources(this.toolStrip2, "toolStrip2");
             this.toolStrip2.Name = "toolStrip2";
             // 
             // MachineLightLabel
             // 
-            resources.ApplyResources(this.MachineLightLabel, "MachineLightLabel");
             this.MachineLightLabel.Name = "MachineLightLabel";
+            resources.ApplyResources(this.MachineLightLabel, "MachineLightLabel");
             // 
             // MachineLightOnButton
             // 
@@ -145,13 +151,13 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // toolStripSeparator2
             // 
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
             // toolStripLabel2
             // 
-            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
             this.toolStripLabel2.Name = "toolStripLabel2";
+            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
             // 
             // TableLightOnButton
             // 
@@ -168,6 +174,21 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.TableLightOffButton.Image = global::NeedleController.Properties.Resources.TableLightIconOFF;
             this.TableLightOffButton.Name = "TableLightOffButton";
             this.TableLightOffButton.Click += new System.EventHandler(this.TableLightOffButton_Click);
+            // 
+            // IdLabel
+            // 
+            resources.ApplyResources(this.IdLabel, "IdLabel");
+            this.IdLabel.Name = "IdLabel";
+            // 
+            // UserNameLabel
+            // 
+            resources.ApplyResources(this.UserNameLabel, "UserNameLabel");
+            this.UserNameLabel.Name = "UserNameLabel";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
             // DeviceToolboxUC
             // 
@@ -204,5 +225,8 @@ namespace NeedleController.Views.NeedlePickingUCs
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripButton TableLightOnButton;
         private System.Windows.Forms.ToolStripButton TableLightOffButton;
+        private System.Windows.Forms.Label IdLabel;
+        private System.Windows.Forms.Label UserNameLabel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

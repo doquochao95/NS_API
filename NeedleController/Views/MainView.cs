@@ -21,28 +21,72 @@ using Infralution.Localization;
 
 namespace NeedleController.Views
 {
-    public partial class MainView : MvpForm, IMainView
+    public partial class MainView :  MvpForm, IMainView
     {
-        public static bool _cableConnection;
-        public static bool _deviceConnection;
+        private static string lastlistbox_string;
+        public static bool _cableConnection = false;
+        public static bool _deviceConnection = false;
+        public static bool _confirmRFID { get; set; } = false;
+        public static bool needlepickingviewloaded_status { get; set; }
+        public static bool addneedleviewloaded_status { get; set; }
+        public static bool check_camera { get; set; } = false;
+        public static bool post_onlinestatus { get; set; } = false;
+        public static bool check_databaseconnection { get; set; } = false;
+
         public static string _message { get; set; }
-        public static bool _confirmRFID { get; set; }
+        public static string replied_buffer { get; set; }
+
+        public static string listbox_string { get; set; }
         public static string para_name;
         public static string para_value_str;
         public static int device_id { get; set; }
-        public static string building_name { get; set; }
-
         public static string device_name { get; set; }
+        public static int building_id { get; set; }
+        public static string building_name { get; set; }
+        public static int needlesupplied_status { get; set; } = 2; //0: Failed, 1:Success, 2: Null
+
+        public static int selected_stockid { get; set; }
+        public static int selected_needleid { get; set; }
+        public static int current_qty { get; set; }
+
+        public static int user_id { get; set; }
+        public static int user_cardnumber { get; set; }
+        public static string user_name { get; set; }
+        public static int user_deviceid { get; set; }
+        public static string user_layer { get; set; }
 
 
         public MainView()
         {
+            this.Hide();
+            Thread thread = new Thread(new ThreadStart(Loading));
+            thread.Start();
+            SplashScreenView.loading_status = "InitializeComponent";
             InitializeComponent();
             SetInitalLanguage();
             UpdateLanguageMenus();
             InitializeTimer();
+            Thread.Sleep(2000);
+            SplashScreenView.loading_status = "CheckForDatabaseConnection";
+            bool status = CheckForDatabaseConnection();
+            for (int i = 0; i <= 500; i++) Thread.Sleep(10);
+            while(true)
+            {
+                if (status)
+                {
+                    thread.Abort();
+                    this.Show();
+                    this.TopMost = true;
+                    break;
+                }
+                else
+                {
+                    status = CheckForDatabaseConnection();
+                }
+            }
         }
         public event EventHandler GetNeedleClicked;
+        public event EventHandler AddNeedleButtonCLicked;
         public event EventHandler NeedleInfoClicked;
         public event EventHandler DeviceSettingClicked;
         public event EventHandler CameraSettingClicked;
@@ -62,6 +106,10 @@ namespace NeedleController.Views
         private void GetNeedleButton_Click(object sender, EventArgs e)
         {
             GetNeedleClicked(this, EventArgs.Empty);
+        }
+        private void AddNeedleButton_Click(object sender, EventArgs e)
+        {
+            AddNeedleButtonCLicked(this, EventArgs.Empty);
         }
         private void NeedleInfoButton_Click(object sender, EventArgs e)
         {
@@ -108,12 +156,39 @@ namespace NeedleController.Views
         {
             Timer1.Interval = 500;
             Timer1.Tick += new EventHandler(Timer1_Tick);
-            Timer1.Enabled = true; 
+            Timer1.Enabled = true;
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
+            if (needlepickingviewloaded_status || addneedleviewloaded_status)
+            {
+                return;
+            }
+            else
+            {
+                if (replied_buffer == "<led2:1><table:1>")
+                {
+                    using (UdpClient udpClient = new UdpClient())
+                    {
+                        try
+                        {
+                            replied_buffer = "<table:0><led2:0>";
+                            udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                            Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
+                            udpClient.Send(senddata, senddata.Length);
+                        }
+                        catch (Exception i)
+                        {
+                            Console.WriteLine(i.ToString());
+                        }
+                    }
+                }
+                if (!this.Visible)
+                {
+                    this.Visible = true;
+                }
+            }
             _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
-
             if (!_cableConnection)
             {
                 Timer1.Enabled = false;
@@ -159,10 +234,25 @@ namespace NeedleController.Views
             if (para_name == "deviceid")
             {
                 device_id = int.Parse(para_value_str);
+                var device = EF_CONFIG.DataTransform.DeviceBase.Get_DeviceWithDeviceId(device_id);
+                building_id = device.BuildingID;
+                bool status = EF_CONFIG.DataTransform.DeviceBase.Update_OnlineStatus(device_id, "ONLINE");
+                if (!status)
+                {
+                    return;
+                }
             }
             if (para_name == "devicename")
             {
                 device_name = para_value_str;
+            }
+            if (para_name == "msg")
+            {
+                listbox_string = para_value_str;
+            }
+            if (para_name == "status")
+            {
+                needlesupplied_status = int.Parse(para_value_str);
             }
         }
         private string Getparametername_frombuffer(string STR, string FirstString, string LastString)
@@ -183,28 +273,85 @@ namespace NeedleController.Views
         }
 
 
-
         public void ShowNeedlePickingView()
-        {            
+        {
+
             if (_deviceConnection)
             {
                 using (RFIDCheckingView checkingView = new RFIDCheckingView())
                 {
                     checkingView.ShowDialog();
                 }
-                SetString_message();
                 if (_confirmRFID)
                 {
-
-                    Timer1.Enabled = false;
-                    new NeedlePickingView(this).ShowDialog();
-                    Timer1.Enabled = true;
-                    _confirmRFID = false;
+                    if (device_id != user_deviceid)
+                    {
+                        MessageBox.Show("Your ID card is not acceptable in this device");
+                    }
+                    else
+                    {
+                        this.Visible = false;
+                        new NeedlePickingView(this).Show();
+                    }
                 }
                 else
                 {
-
+                    MessageBox.Show("Invalid ID Card");
                 }
+                _confirmRFID = false;
+            }
+            else
+            {
+                MessageBox.Show("Connect to device first");
+            }
+        }
+        public void ShowAddNeedleView()
+        {
+          
+            if (_deviceConnection)
+            {
+                using (RFIDCheckingView checkingView = new RFIDCheckingView())
+                {
+                    checkingView.ShowDialog();
+                }
+                if (_confirmRFID)
+                {
+                    if (device_id != user_deviceid)
+                    {
+                        MessageBox.Show("Your ID card is not acceptable in this device");
+                    }
+                    else
+                    {
+                        if (user_layer == "user")
+                        {
+                            MessageBox.Show("You need adminstrator permission to access this funtion");
+                        }
+                        else
+                        {
+                            this.Visible = false;
+                            using (UdpClient udpClient = new UdpClient())
+                            {
+                                try
+                                {
+                                    replied_buffer = "<led2:1><table:1>";
+                                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                                    Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
+                                    udpClient.Send(senddata, senddata.Length);
+                                }
+                                catch (Exception i)
+                                {
+                                    Console.WriteLine(i.ToString());
+                                }
+                            }
+                            new AddNeedleView().Show();
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid ID Card");
+                }
+                _confirmRFID = false;
             }
             else
             {
@@ -232,7 +379,7 @@ namespace NeedleController.Views
         }
         public void MainViewLoad()
         {
-
+            this.TopMost = false;
         }
         public void ConnectDevice()
         {
@@ -254,9 +401,27 @@ namespace NeedleController.Views
         }
         public void CloseForm()
         {
-            this.Close();
-            Application.Exit();
-            Environment.Exit(0);
+            if (device_id==0)
+            {
+                this.Close();
+                Application.Exit();
+                Environment.Exit(0);
+            }
+            else
+            {
+                using (LeavingProcessView leavingProcessView = new LeavingProcessView())
+                {
+                    leavingProcessView.ShowDialog();
+                }
+                if (!post_onlinestatus)
+                {
+                    return;
+                }
+                this.Close();
+                Application.Exit();
+                Environment.Exit(0);
+            }
+            
         }
         public void SetLanguageEnglish()
         {
@@ -298,8 +463,8 @@ namespace NeedleController.Views
                     {
                         string msg = returnData;
                         _message = msg;
-                        SetString_message();
                         CheckParameterThread();
+                        SetString_message();
                         if (returnData == "<msg:setting_success>")
                         {
                             _deviceConnection = true;
@@ -337,14 +502,30 @@ namespace NeedleController.Views
         }
         public void SetString_message()
         {
-            listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + _message.ToString());
+            if (lastlistbox_string == listbox_string)
+            {
+                return;
+            }
+            lastlistbox_string = listbox_string;
+            listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + listbox_string.ToString());
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
             listBox1.SelectedIndex = -1;
         }
-
+        public void Loading()
+        {
+            SplashScreenView splashScreen = new SplashScreenView();
+            splashScreen.ShowDialog();
+            Application.Exit();
+            Environment.Exit(0);
+        }
+        public bool CheckForDatabaseConnection()
+        {
+            return EF_CONFIG.Extends.SysExtendBase.IsAvailable();     
+        }
         private void BuildingNameLabel_Click(object sender, EventArgs e)
         {
 
         }
+
     }
 }

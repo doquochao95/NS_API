@@ -70,7 +70,22 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
-       
+        public static List<NS_Needles>Get_AllNeedle()
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Needles
+                        .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
         public static List<NS_Stocks> Get_StockNeedleChanged(int NeedleID)
         {
             try

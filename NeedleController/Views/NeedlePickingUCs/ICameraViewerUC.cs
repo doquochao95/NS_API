@@ -9,10 +9,6 @@ namespace NeedleController.Views.NeedlePickingUCs
 {
     public interface ICameraViewerUC : IView
     {
-        event EventHandler SuccessButtonClicked;
-        event EventHandler FailButtonClicked;
 
-        void FeedbackSuccess();
-        void FeedbackFail();
     }
 }

@@ -96,5 +96,22 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
+        public static NS_Staffs Get_UserWithRfid(string rfidcode)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Staffs
+                        .Where(i => i.RFIDCode == rfidcode)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
     }
 }

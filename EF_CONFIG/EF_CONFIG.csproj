@@ -55,10 +55,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseModel\AddImportModel.cs" />
     <Compile Include="BaseModel\NeedlePickingFormModel.cs" />
+    <Compile Include="BaseModel\StockUpdateModel.cs" />
     <Compile Include="BaseModel\VolatilityLiveChartModel.cs" />
     <Compile Include="BaseModel\VotatilityDatagridModel.cs" />
+    <Compile Include="DataTransform\BuildingBase.cs" />
+    <Compile Include="DataTransform\DeviceBase.cs" />
+    <Compile Include="DataTransform\ExportBase.cs" />
     <Compile Include="DataTransform\ImplementBase.cs" />
+    <Compile Include="DataTransform\ImportBase.cs" />
     <Compile Include="DataTransform\NeedleBase.cs" />
     <Compile Include="DataTransform\QuantityBase.cs" />
     <Compile Include="DataTransform\StaffBase.cs" />

@@ -11,6 +11,7 @@ namespace EF_CONFIG.BaseModel
     {
         public int NeedleID { get; set; }
         public int NeedleName { get; set; }
+        public int StockId { get; set; }
         public string StockName { get; set; }
         public int CurrentQuantity { get; set; }
         public int TotalQuantity { get; set; }

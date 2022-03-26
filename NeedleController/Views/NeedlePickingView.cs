@@ -26,9 +26,15 @@ namespace NeedleController.Views
 {
     public partial class NeedlePickingView : MvpForm, INeedlePickingView
     {
-        private ObservableCollection<NeedlePickingFormModel> NeedleQtyList { get; set; }
+        public static ObservableCollection<NeedlePickingFormModel> NeedleQtyList { get; set; }
         private readonly MainView MainView1;
-        private static string Mess;
+        private static string listbox_string;
+
+        public static bool getneedle_flag { get; set; }
+        public static bool retry_flag { get; set; } = true;
+        public static bool needlesupplied_status { get; set; } = false;
+
+
 
         public NeedlePickingView(MainView mainView)
         {
@@ -38,11 +44,15 @@ namespace NeedleController.Views
         }
 
         public event EventHandler NeedlePickingViewLoaded;
+        public event EventHandler NeedlePickingViewExited;
 
         private void NeedlePickingView_Load(object sender, EventArgs e)
         {
             NeedlePickingViewLoaded(this, EventArgs.Empty);
-
+        }
+        private void NeedlePickingView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            NeedlePickingViewExited(this, EventArgs.Empty);
         }
         private void InitializeTimer()
         {
@@ -51,18 +61,16 @@ namespace NeedleController.Views
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (Mess != MainView._message)
+            if (listbox_string != MainView.listbox_string)
             {
-                Mess = MainView._message;
-                listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + Mess.ToString());
+                listbox_string = MainView.listbox_string;
+                listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + listbox_string.ToString());
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 listBox1.SelectedIndex = -1;
             }
             MainView._cableConnection = MainView1.PingHost(Properties.Settings.Default.local_ip);
             if (!MainView._cableConnection)
             {
-                this.TopMost = false;
-                this.Enabled = false;
                 Timer1.Enabled = false;
                 DialogResult dlr = MessageBox.Show("Please to check connection again", "Communication Error", MessageBoxButtons.RetryCancel);
                 if (dlr == DialogResult.Retry)
@@ -75,16 +83,47 @@ namespace NeedleController.Views
                     this.Close();
                 }
             }
-            else
+            if (getneedle_flag)
             {
-                this.TopMost = true;
-                this.Enabled = true;
+                getneedle_flag = false;
+                MachineProcessView machineProcessView = new MachineProcessView();
+                machineProcessView.ShowDialog();
+                if (needlesupplied_status)
+                {
+                    NS_Export export = new NS_Export
+                    {
+                        DeviceID = MainView.device_id,
+                        BuildingID = MainView.building_id,
+                        NeedleID = MainView.selected_needleid,
+                        ExportTime = DateTime.Now,
+                        ExprtTimeString = DateTime.Now.ToString("HH:mm, dd/MM/yyyy"),
+                        Quantity = 1,
+                        StaffID = MainView.user_id,
+                        StockID = MainView.selected_stockid
+                    };
+                    bool status = EF_CONFIG.DataTransform.ExportBase.Add_NewExport(export);
+                    if (!status)
+                    {
+                        return;
+                    }
+                }
             }
+            if (listbox_string == "check_camera")
+            {
+                MainView.check_camera = true;
+            }
+            if (!retry_flag)
+            {
+                this.Close();
+                retry_flag = true;
+            }
+
         }
 
         public void NeedlePickingViewLoad()
         {
-            Mess = MainView._message;
+            MainView.needlepickingviewloaded_status = true;
+            listbox_string = MainView._message;
             NeedleQtyList = new ObservableCollection<NeedlePickingFormModel>();
             var db = StockBase.Get_NeedleQtyInStockWithDeviceID(MainView.device_id);
             NeedleQtyList.Clear();
@@ -94,6 +133,7 @@ namespace NeedleController.Views
                 {
                     NeedleID = item.NeedleID,
                     NeedleName = NeedleBase.Get_Needles(item.NeedleID).NeedleName,
+                    StockId = item.StockID,
                     StockName = item.StockName,
                     CurrentQuantity = item.CurrentQuantity
                 };
@@ -107,6 +147,7 @@ namespace NeedleController.Views
                     NeedleName = p.First().NeedleName,
                     CurrentQuantity = p.First().CurrentQuantity,
                     TotalQuantity = p.Sum(a => a.CurrentQuantity),
+                    StockId = p.First().StockId,
                     StockName = p.First().StockName
                 })
                 .OrderBy(a => a.NeedleID);
@@ -117,6 +158,11 @@ namespace NeedleController.Views
                 NeedlePickingForm needlePickingForm = new NeedlePickingForm(item);
                 flowLayoutPanel1.Controls.Add(needlePickingForm);
             }
+        }
+        public void NeedlePickingViewExit()
+        {
+            MainView.check_camera = false;
+            MainView.needlepickingviewloaded_status = false;
         }
 
     }

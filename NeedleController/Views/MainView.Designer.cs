@@ -49,16 +49,17 @@ namespace NeedleController.Views
             this.ContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DeviceSettingButton = new System.Windows.Forms.Button();
-            this.CameraSettingButton = new System.Windows.Forms.Button();
-            this.NeedleInfoButton = new System.Windows.Forms.Button();
-            this.GetNeedleButton = new System.Windows.Forms.Button();
             this.ConnectedStatusLabel = new System.Windows.Forms.Label();
-            this.CultureManagerMainForm = new Infralution.Localization.CultureManager(this.components);
             this.BuildingNameLabel = new System.Windows.Forms.Label();
             this.DeviceNameLabel = new System.Windows.Forms.Label();
             this.BuldingTilteLabel = new System.Windows.Forms.Label();
             this.DeviceTilteLabel = new System.Windows.Forms.Label();
+            this.AddNeedleButton = new System.Windows.Forms.Button();
+            this.DeviceSettingButton = new System.Windows.Forms.Button();
+            this.CameraSettingButton = new System.Windows.Forms.Button();
+            this.NeedleInfoButton = new System.Windows.Forms.Button();
+            this.GetNeedleButton = new System.Windows.Forms.Button();
+            this.CultureManagerMainForm = new Infralution.Localization.CultureManager(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -177,6 +178,41 @@ namespace NeedleController.Views
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
             resources.ApplyResources(this.AboutToolStripMenuItem, "AboutToolStripMenuItem");
             // 
+            // ConnectedStatusLabel
+            // 
+            resources.ApplyResources(this.ConnectedStatusLabel, "ConnectedStatusLabel");
+            this.ConnectedStatusLabel.ForeColor = System.Drawing.Color.Green;
+            this.ConnectedStatusLabel.Name = "ConnectedStatusLabel";
+            // 
+            // BuildingNameLabel
+            // 
+            resources.ApplyResources(this.BuildingNameLabel, "BuildingNameLabel");
+            this.BuildingNameLabel.Name = "BuildingNameLabel";
+            this.BuildingNameLabel.Click += new System.EventHandler(this.BuildingNameLabel_Click);
+            // 
+            // DeviceNameLabel
+            // 
+            resources.ApplyResources(this.DeviceNameLabel, "DeviceNameLabel");
+            this.DeviceNameLabel.Name = "DeviceNameLabel";
+            // 
+            // BuldingTilteLabel
+            // 
+            resources.ApplyResources(this.BuldingTilteLabel, "BuldingTilteLabel");
+            this.BuldingTilteLabel.Name = "BuldingTilteLabel";
+            // 
+            // DeviceTilteLabel
+            // 
+            resources.ApplyResources(this.DeviceTilteLabel, "DeviceTilteLabel");
+            this.DeviceTilteLabel.Name = "DeviceTilteLabel";
+            // 
+            // AddNeedleButton
+            // 
+            resources.ApplyResources(this.AddNeedleButton, "AddNeedleButton");
+            this.AddNeedleButton.Image = global::NeedleController.Properties.Resources.ADD_B_100x100;
+            this.AddNeedleButton.Name = "AddNeedleButton";
+            this.AddNeedleButton.UseVisualStyleBackColor = true;
+            this.AddNeedleButton.Click += new System.EventHandler(this.AddNeedleButton_Click);
+            // 
             // DeviceSettingButton
             // 
             this.DeviceSettingButton.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
@@ -217,37 +253,10 @@ namespace NeedleController.Views
             this.GetNeedleButton.UseVisualStyleBackColor = true;
             this.GetNeedleButton.Click += new System.EventHandler(this.GetNeedleButton_Click);
             // 
-            // ConnectedStatusLabel
-            // 
-            resources.ApplyResources(this.ConnectedStatusLabel, "ConnectedStatusLabel");
-            this.ConnectedStatusLabel.ForeColor = System.Drawing.Color.Green;
-            this.ConnectedStatusLabel.Name = "ConnectedStatusLabel";
-            // 
             // CultureManagerMainForm
             // 
             this.CultureManagerMainForm.ManagedControl = this;
             this.CultureManagerMainForm.UICultureChanged += new Infralution.Localization.CultureManager.CultureChangedHandler(this.CultureManagerMainForm_UICultureChanged);
-            // 
-            // BuildingNameLabel
-            // 
-            resources.ApplyResources(this.BuildingNameLabel, "BuildingNameLabel");
-            this.BuildingNameLabel.Name = "BuildingNameLabel";
-            this.BuildingNameLabel.Click += new System.EventHandler(this.BuildingNameLabel_Click);
-            // 
-            // DeviceNameLabel
-            // 
-            resources.ApplyResources(this.DeviceNameLabel, "DeviceNameLabel");
-            this.DeviceNameLabel.Name = "DeviceNameLabel";
-            // 
-            // BuldingTilteLabel
-            // 
-            resources.ApplyResources(this.BuldingTilteLabel, "BuldingTilteLabel");
-            this.BuldingTilteLabel.Name = "BuldingTilteLabel";
-            // 
-            // DeviceTilteLabel
-            // 
-            resources.ApplyResources(this.DeviceTilteLabel, "DeviceTilteLabel");
-            this.DeviceTilteLabel.Name = "DeviceTilteLabel";
             // 
             // MainView
             // 
@@ -255,6 +264,7 @@ namespace NeedleController.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ControlBox = false;
+            this.Controls.Add(this.AddNeedleButton);
             this.Controls.Add(this.DeviceTilteLabel);
             this.Controls.Add(this.BuldingTilteLabel);
             this.Controls.Add(this.DeviceNameLabel);
@@ -313,6 +323,7 @@ namespace NeedleController.Views
         private System.Windows.Forms.Label BuildingNameLabel;
         private System.Windows.Forms.Label DeviceTilteLabel;
         private System.Windows.Forms.Label BuldingTilteLabel;
+        private System.Windows.Forms.Button AddNeedleButton;
     }
 }
 

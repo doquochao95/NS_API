@@ -14,10 +14,15 @@ namespace NeedleController.Presenters
             : base(view)
         {
             View.NeedlePickingViewLoaded += View_NeedlePickingViewLoaded;
+            View.NeedlePickingViewExited += View_NeedlePickingViewExited;
         }
         void View_NeedlePickingViewLoaded(object sender, EventArgs e)
         {
             View.NeedlePickingViewLoad();
+        }
+        void View_NeedlePickingViewExited(object sender, EventArgs e)
+        {
+            View.NeedlePickingViewExit();
         }
     }
 }

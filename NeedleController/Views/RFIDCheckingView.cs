@@ -15,19 +15,22 @@ using System.Windows.Markup;
 
 using NeedleController.Views;
 using EF_CONFIG.DataTransform;
+using EF_CONFIG.Model;
+
 using System.Resources;
 using System.Globalization;
 using Infralution.Localization;
 
 namespace NeedleController.Views
 {
-    public partial class RFIDCheckingView : Form
+    public partial class RFIDCheckingView : MetroFramework.Forms.MetroForm
     {
         DateTime _lastKeystroke = new DateTime(0);
         List<char> _barcode = new List<char>();
 
         public RFIDCheckingView()
         {
+            this.TopMost = true;
             InitializeComponent();
             SetLanguage();
             this.KeyPress += new KeyPressEventHandler(RFID_KeyPress);
@@ -46,12 +49,18 @@ namespace NeedleController.Views
                 bool flag = StaffBase.Check_User(msg);
                 if (flag)
                 {
-                    MainView._message = "Confirmed Success";
+                    NS_Staffs nS_Staffs = EF_CONFIG.DataTransform.StaffBase.Get_UserWithRfid(msg);
+                    MainView.user_id = nS_Staffs.StaffID;
+                    MainView.user_name = nS_Staffs.StaffName;
+                    MainView.user_cardnumber = nS_Staffs.CardNumber;
+                    MainView.user_deviceid = nS_Staffs.DeviceID;
+                    MainView.user_layer = nS_Staffs.UserLayer;
+                    MainView.listbox_string = "Confirmed Success";
                     MainView._confirmRFID=true;
                 }
                 else
                 {
-                    MainView._message = "Invalid ID Card";
+                    MainView.listbox_string = "Invalid ID Card";
                     MainView._confirmRFID = false;
                 }
                 _barcode.Clear();

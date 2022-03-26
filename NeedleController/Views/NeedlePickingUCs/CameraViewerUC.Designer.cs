@@ -34,8 +34,6 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.CameraControllergroupBox = new System.Windows.Forms.GroupBox();
-            this.FailButton = new System.Windows.Forms.Button();
-            this.SuccessButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,35 +50,26 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.64463F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.02204F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.CameraControllergroupBox, 2, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1121, 321);
-            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // pictureBox1
             // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.pictureBox1.BackgroundImage = global::NeedleController.Properties.Resources.Techlogo;
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.pictureBox2.BackgroundImage = global::NeedleController.Properties.Resources.Techlogo;
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.TabStop = false;
@@ -88,8 +77,6 @@ namespace NeedleController.Views.NeedlePickingUCs
             // CameraControllergroupBox
             // 
             resources.ApplyResources(this.CameraControllergroupBox, "CameraControllergroupBox");
-            this.CameraControllergroupBox.Controls.Add(this.FailButton);
-            this.CameraControllergroupBox.Controls.Add(this.SuccessButton);
             this.CameraControllergroupBox.Controls.Add(this.label4);
             this.CameraControllergroupBox.Controls.Add(this.label3);
             this.CameraControllergroupBox.Controls.Add(this.label2);
@@ -98,20 +85,6 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.CameraControllergroupBox.Controls.Add(this.trackBar1);
             this.CameraControllergroupBox.Name = "CameraControllergroupBox";
             this.CameraControllergroupBox.TabStop = false;
-            // 
-            // FailButton
-            // 
-            resources.ApplyResources(this.FailButton, "FailButton");
-            this.FailButton.Name = "FailButton";
-            this.FailButton.UseVisualStyleBackColor = true;
-            this.FailButton.Click += new System.EventHandler(this.FailButton_Click);
-            // 
-            // SuccessButton
-            // 
-            resources.ApplyResources(this.SuccessButton, "SuccessButton");
-            this.SuccessButton.Name = "SuccessButton";
-            this.SuccessButton.UseVisualStyleBackColor = true;
-            this.SuccessButton.Click += new System.EventHandler(this.SuccessButton_Click);
             // 
             // label4
             // 
@@ -174,7 +147,5 @@ namespace NeedleController.Views.NeedlePickingUCs
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Button FailButton;
-        private System.Windows.Forms.Button SuccessButton;
     }
 }

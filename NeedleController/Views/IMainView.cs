@@ -10,6 +10,7 @@ namespace NeedleController.Views
     public interface IMainView : IView
     {
         event EventHandler GetNeedleClicked;
+        event EventHandler AddNeedleButtonCLicked;
         event EventHandler NeedleInfoClicked;
         event EventHandler DeviceSettingClicked;
         event EventHandler CameraSettingClicked;
@@ -24,6 +25,7 @@ namespace NeedleController.Views
 
 
         void ShowNeedlePickingView();
+        void ShowAddNeedleView();
         void ShowNeedleInfoView();
         void ShowDeviceSettingView();
         void ShowCameraSettingView();

@@ -35,6 +35,8 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.UnparkingDeviceButton.Enabled = false;
             this.MachineLightOffButton.Enabled = false;
             this.TableLightOffButton.Enabled = false;
+            this.IdLabel.Text = "ID: " + MainView.user_cardnumber.ToString();
+            this.UserNameLabel.Text = "User Name: " + MainView.user_name;
         }
 
 
@@ -167,7 +169,7 @@ namespace NeedleController.Views.NeedlePickingUCs
         }
         public void TurnOnTableLight()
         {
-            using (UdpClient udpClient = new UdpClient())
+            using (UdpClient udpClient = new UdpClient()) 
             {
                 try
                 {

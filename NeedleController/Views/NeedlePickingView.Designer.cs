@@ -141,6 +141,7 @@ namespace NeedleController.Views
             this.Name = "NeedlePickingView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NeedlePickingView";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NeedlePickingView_FormClosed);
             this.Load += new System.EventHandler(this.NeedlePickingView_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
