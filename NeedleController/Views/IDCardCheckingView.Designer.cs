@@ -1,7 +1,6 @@
-﻿
-namespace NeedleController.Views
+﻿namespace NeedleController.Views
 {
-    partial class RFIDCheckingView
+    partial class IDCardCheckingView
     {
         /// <summary>
         /// Required designer variable.
@@ -29,29 +28,36 @@ namespace NeedleController.Views
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RFIDCheckingView));
-            this.RFIDstatusLabel = new System.Windows.Forms.Label();
+            this.RFIDstatusLabel = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // RFIDstatusLabel
             // 
-            resources.ApplyResources(this.RFIDstatusLabel, "RFIDstatusLabel");
+            this.RFIDstatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.RFIDstatusLabel.AutoSize = true;
+            this.RFIDstatusLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.RFIDstatusLabel.Location = new System.Drawing.Point(65, 15);
+            this.RFIDstatusLabel.Margin = new System.Windows.Forms.Padding(0);
             this.RFIDstatusLabel.Name = "RFIDstatusLabel";
+            this.RFIDstatusLabel.Size = new System.Drawing.Size(146, 25);
+            this.RFIDstatusLabel.TabIndex = 3;
+            this.RFIDstatusLabel.Text = "Scan your ID card";
+            this.RFIDstatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // RFIDCheckingView
+            // IDCardCheckingView
             // 
-            resources.ApplyResources(this, "$this");
-            this.ControlBox = false;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(280, 50);
             this.Controls.Add(this.RFIDstatusLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.DisplayHeader = false;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Movable = false;
-            this.Name = "RFIDCheckingView";
+            this.Name = "IDCardCheckingView";
+            this.Padding = new System.Windows.Forms.Padding(0, 30, 0, 0);
             this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -59,6 +65,6 @@ namespace NeedleController.Views
 
         #endregion
 
-        private System.Windows.Forms.Label RFIDstatusLabel;
+        private MetroFramework.Controls.MetroLabel RFIDstatusLabel;
     }
 }

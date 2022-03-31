@@ -117,16 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MachineLightLabel.Text" xml:space="preserve">
-    <value>Đèn Nền</value>
-  </data>
-  <data name="ParkingDeviceLabel.Text" xml:space="preserve">
-    <value>Bảo Dưỡng</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ResetDeviceLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 30</value>
   </data>
   <data name="ResetDeviceLabel.Text" xml:space="preserve">
     <value>Thiết Lập Lại</value>
   </data>
+  <data name="ParkingDeviceLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 30</value>
+  </data>
+  <data name="ParkingDeviceLabel.Text" xml:space="preserve">
+    <value>Bảo Dưỡng</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>247, 33</value>
+  </data>
+  <data name="MachineLightLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 30</value>
+  </data>
+  <data name="MachineLightLabel.Text" xml:space="preserve">
+    <value>Đèn Nền</value>
+  </data>
+  <data name="toolStripLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 30</value>
+  </data>
   <data name="toolStripLabel2.Text" xml:space="preserve">
     <value>Đèn Bàn</value>
+  </data>
+  <data name="toolStrip2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>247, 0</value>
+  </data>
+  <data name="toolStrip2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 33</value>
+  </data>
+  <data name="IdLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>498, 0</value>
+  </data>
+  <data name="UserNameLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>526, 0</value>
   </data>
 </root>

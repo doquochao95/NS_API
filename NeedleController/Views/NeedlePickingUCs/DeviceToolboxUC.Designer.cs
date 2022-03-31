@@ -46,9 +46,9 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.TableLightOnButton = new System.Windows.Forms.ToolStripButton();
             this.TableLightOffButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.IdLabel = new System.Windows.Forms.Label();
             this.UserNameLabel = new System.Windows.Forms.Label();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.flowLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
@@ -65,6 +65,7 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // toolStrip1
             // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ResetDeviceLabel,
             this.ResetDeviceButton,
@@ -72,13 +73,12 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.ParkingDeviceLabel,
             this.ParkingDeviceButton,
             this.UnparkingDeviceButton});
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // ResetDeviceLabel
             // 
-            this.ResetDeviceLabel.Name = "ResetDeviceLabel";
             resources.ApplyResources(this.ResetDeviceLabel, "ResetDeviceLabel");
+            this.ResetDeviceLabel.Name = "ResetDeviceLabel";
             // 
             // ResetDeviceButton
             // 
@@ -90,13 +90,13 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
             resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
             // 
             // ParkingDeviceLabel
             // 
-            this.ParkingDeviceLabel.Name = "ParkingDeviceLabel";
             resources.ApplyResources(this.ParkingDeviceLabel, "ParkingDeviceLabel");
+            this.ParkingDeviceLabel.Name = "ParkingDeviceLabel";
             // 
             // ParkingDeviceButton
             // 
@@ -116,6 +116,7 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // toolStrip2
             // 
+            resources.ApplyResources(this.toolStrip2, "toolStrip2");
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MachineLightLabel,
             this.MachineLightOnButton,
@@ -125,13 +126,12 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.TableLightOnButton,
             this.TableLightOffButton,
             this.toolStripSeparator3});
-            resources.ApplyResources(this.toolStrip2, "toolStrip2");
             this.toolStrip2.Name = "toolStrip2";
             // 
             // MachineLightLabel
             // 
-            this.MachineLightLabel.Name = "MachineLightLabel";
             resources.ApplyResources(this.MachineLightLabel, "MachineLightLabel");
+            this.MachineLightLabel.Name = "MachineLightLabel";
             // 
             // MachineLightOnButton
             // 
@@ -151,13 +151,13 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
             // 
             // toolStripLabel2
             // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
             resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
+            this.toolStripLabel2.Name = "toolStripLabel2";
             // 
             // TableLightOnButton
             // 
@@ -175,6 +175,11 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.TableLightOffButton.Name = "TableLightOffButton";
             this.TableLightOffButton.Click += new System.EventHandler(this.TableLightOffButton_Click);
             // 
+            // toolStripSeparator3
+            // 
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            // 
             // IdLabel
             // 
             resources.ApplyResources(this.IdLabel, "IdLabel");
@@ -184,11 +189,6 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             resources.ApplyResources(this.UserNameLabel, "UserNameLabel");
             this.UserNameLabel.Name = "UserNameLabel";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
             // DeviceToolboxUC
             // 

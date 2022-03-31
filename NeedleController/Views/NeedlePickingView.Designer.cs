@@ -30,6 +30,7 @@ namespace NeedleController.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NeedlePickingView));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.deviceToolboxUC1 = new NeedleController.Views.NeedlePickingUCs.DeviceToolboxUC();
             this.cameraViewerUC1 = new NeedleController.Views.NeedlePickingUCs.CameraViewerUC();
@@ -44,88 +45,53 @@ namespace NeedleController.Views
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.deviceToolboxUC1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.cameraViewerUC1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.needleSearchingUC1, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1264, 729);
-            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // deviceToolboxUC1
             // 
-            this.deviceToolboxUC1.AutoSize = true;
+            resources.ApplyResources(this.deviceToolboxUC1, "deviceToolboxUC1");
             this.deviceToolboxUC1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.deviceToolboxUC1, 3);
-            this.deviceToolboxUC1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.deviceToolboxUC1.Location = new System.Drawing.Point(3, 3);
             this.deviceToolboxUC1.Name = "deviceToolboxUC1";
-            this.deviceToolboxUC1.Padding = new System.Windows.Forms.Padding(2);
-            this.deviceToolboxUC1.Size = new System.Drawing.Size(1258, 39);
-            this.deviceToolboxUC1.TabIndex = 0;
             // 
             // cameraViewerUC1
             // 
             this.cameraViewerUC1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.cameraViewerUC1, 2);
-            this.cameraViewerUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraViewerUC1.Location = new System.Drawing.Point(3, 504);
+            resources.ApplyResources(this.cameraViewerUC1, "cameraViewerUC1");
             this.cameraViewerUC1.Name = "cameraViewerUC1";
-            this.cameraViewerUC1.Padding = new System.Windows.Forms.Padding(2);
-            this.cameraViewerUC1.Size = new System.Drawing.Size(953, 222);
-            this.cameraViewerUC1.TabIndex = 1;
             // 
             // needleSearchingUC1
             // 
             this.needleSearchingUC1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.needleSearchingUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.needleSearchingUC1.Location = new System.Drawing.Point(962, 504);
+            resources.ApplyResources(this.needleSearchingUC1, "needleSearchingUC1");
             this.needleSearchingUC1.Name = "needleSearchingUC1";
-            this.needleSearchingUC1.Padding = new System.Windows.Forms.Padding(10);
-            this.needleSearchingUC1.Size = new System.Drawing.Size(299, 222);
-            this.needleSearchingUC1.TabIndex = 2;
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
+            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.flowLayoutPanel1, 2);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 48);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(953, 450);
-            this.flowLayoutPanel1.TabIndex = 3;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.listBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(962, 48);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(10);
-            this.panel1.Size = new System.Drawing.Size(299, 450);
-            this.panel1.TabIndex = 4;
             // 
             // listBox1
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            resources.ApplyResources(this.listBox1, "listBox1");
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(10, 10);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(277, 428);
-            this.listBox1.TabIndex = 0;
             // 
             // Timer1
             // 
@@ -133,14 +99,11 @@ namespace NeedleController.Views
             // 
             // NeedlePickingView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 729);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimizeBox = false;
             this.Name = "NeedlePickingView";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NeedlePickingView";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NeedlePickingView_FormClosed);
             this.Load += new System.EventHandler(this.NeedlePickingView_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

@@ -23,12 +23,12 @@ using Infralution.Localization;
 
 namespace NeedleController.Views
 {
-    public partial class RFIDCheckingView : MetroFramework.Forms.MetroForm
+    public partial class IDCardCheckingView : MetroFramework.Forms.MetroForm
     {
         DateTime _lastKeystroke = new DateTime(0);
         List<char> _barcode = new List<char>();
 
-        public RFIDCheckingView()
+        public IDCardCheckingView()
         {
             this.TopMost = true;
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace NeedleController.Views
         {
             TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
             if (elapsed.TotalMilliseconds > 100)
-            _barcode.Clear();
+                _barcode.Clear();
             _barcode.Add(e.KeyChar);
             _lastKeystroke = DateTime.Now;
 
@@ -56,13 +56,14 @@ namespace NeedleController.Views
                     MainView.user_deviceid = nS_Staffs.DeviceID;
                     MainView.user_layer = nS_Staffs.UserLayer;
                     MainView.listbox_string = "Confirmed Success";
-                    MainView._confirmRFID=true;
+                    MainView._confirmRFID = true;
                 }
                 else
                 {
                     MainView.listbox_string = "Invalid ID Card";
                     MainView._confirmRFID = false;
                 }
+                MainView.card_checkingprogress = true;
                 _barcode.Clear();
                 this.Hide();
                 this.Close();
@@ -90,7 +91,7 @@ namespace NeedleController.Views
 
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, MapType uMapType);
-        private void SetLanguage ()
+        private void SetLanguage()
         {
             CultureManager.ApplicationUICulture = new CultureInfo(NeedleController.Properties.Settings.Default.language_set);
         }

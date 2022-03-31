@@ -21,7 +21,7 @@ using Infralution.Localization;
 
 namespace NeedleController.Views
 {
-    public partial class MainView :  MvpForm, IMainView
+    public partial class MainView : MvpForm, IMainView
     {
         private static string lastlistbox_string;
         public static bool _cableConnection = false;
@@ -29,9 +29,11 @@ namespace NeedleController.Views
         public static bool _confirmRFID { get; set; } = false;
         public static bool needlepickingviewloaded_status { get; set; }
         public static bool addneedleviewloaded_status { get; set; }
+        public static bool needleinfoviewloaded_status { get; set; }
         public static bool check_camera { get; set; } = false;
         public static bool post_onlinestatus { get; set; } = false;
         public static bool check_databaseconnection { get; set; } = false;
+        public static bool card_checkingprogress { get; set; } = false;
 
         public static string _message { get; set; }
         public static string replied_buffer { get; set; }
@@ -70,7 +72,7 @@ namespace NeedleController.Views
             SplashScreenView.loading_status = "CheckForDatabaseConnection";
             bool status = CheckForDatabaseConnection();
             for (int i = 0; i <= 500; i++) Thread.Sleep(10);
-            while(true)
+            while (true)
             {
                 if (status)
                 {
@@ -160,7 +162,7 @@ namespace NeedleController.Views
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (needlepickingviewloaded_status || addneedleviewloaded_status)
+            if (needlepickingviewloaded_status || addneedleviewloaded_status || needleinfoviewloaded_status)
             {
                 return;
             }
@@ -278,7 +280,7 @@ namespace NeedleController.Views
 
             if (_deviceConnection)
             {
-                using (RFIDCheckingView checkingView = new RFIDCheckingView())
+                using (IDCardCheckingView checkingView = new IDCardCheckingView())
                 {
                     checkingView.ShowDialog();
                 }
@@ -307,10 +309,10 @@ namespace NeedleController.Views
         }
         public void ShowAddNeedleView()
         {
-          
+
             if (_deviceConnection)
             {
-                using (RFIDCheckingView checkingView = new RFIDCheckingView())
+                using (IDCardCheckingView checkingView = new IDCardCheckingView())
                 {
                     checkingView.ShowDialog();
                 }
@@ -360,6 +362,7 @@ namespace NeedleController.Views
         }
         public void ShowNeedleInfoView()
         {
+            this.Visible = false;
             new NeedleInfoView().Show();
         }
         public void ShowDeviceSettingView()
@@ -401,7 +404,7 @@ namespace NeedleController.Views
         }
         public void CloseForm()
         {
-            if (device_id==0)
+            if (device_id == 0)
             {
                 this.Close();
                 Application.Exit();
@@ -409,9 +412,9 @@ namespace NeedleController.Views
             }
             else
             {
-                using (LeavingProcessView leavingProcessView = new LeavingProcessView())
+                using (WaitingProcessView waitingProcessView = new WaitingProcessView())
                 {
-                    leavingProcessView.ShowDialog();
+                    waitingProcessView.ShowDialog();
                 }
                 if (!post_onlinestatus)
                 {
@@ -421,7 +424,7 @@ namespace NeedleController.Views
                 Application.Exit();
                 Environment.Exit(0);
             }
-            
+
         }
         public void SetLanguageEnglish()
         {
@@ -520,7 +523,7 @@ namespace NeedleController.Views
         }
         public bool CheckForDatabaseConnection()
         {
-            return EF_CONFIG.Extends.SysExtendBase.IsAvailable();     
+            return EF_CONFIG.Extends.SysExtendBase.IsAvailable();
         }
         private void BuildingNameLabel_Click(object sender, EventArgs e)
         {

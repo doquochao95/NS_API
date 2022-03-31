@@ -24,9 +24,9 @@ using System.Collections.ObjectModel;
 
 namespace NeedleController.Views
 {
-    public partial class LeavingProcessView : MetroFramework.Forms.MetroForm
+    public partial class WaitingProcessView : MetroFramework.Forms.MetroForm
     {
-        public LeavingProcessView()
+        public WaitingProcessView()
         {
             this.TopMost = true;
             InitializeComponent();

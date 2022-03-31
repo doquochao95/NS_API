@@ -77,6 +77,7 @@ namespace EF_CONFIG.DataTransform
                 using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
                 {
                     return DataContext.NS_Needles
+                        .OrderBy(a => a.NeedleName)
                         .ToList();
                 }
             }
@@ -103,24 +104,6 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
-
-        /*public static List<NS_Stocks> Get_StockChangedByUser(int StaffID)
-        {
-            try
-            {
-                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
-                {
-                    return DataContext.NS_Stocks
-                        .Where(i => i.StaffID == StaffID)
-                        .ToList();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return null;
-            }
-        }*/
         public static List<NS_Stocks> Get_LastStockOfNeedle(int NeedleID)
         {
             try
@@ -172,6 +155,47 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
+        public static bool Check_AvailableNeedleName(int needlename)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    var rfaccCount = DataContext.NS_Needles.Where(i => i.NeedleName == needlename).Count();
+                    if (rfaccCount > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
 
+        public static bool Add_NewNeedle(NS_Needles nS_Needles)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    DataContext.NS_Needles.Add(nS_Needles);
+                    DataContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
+    
     }
 }

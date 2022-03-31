@@ -68,6 +68,8 @@
           <Property Name="NeedlePoint" Type="nvarchar(max)" Nullable="false" />
           <Property Name="NeedlePrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="NeedleLength" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="PointTypeImage" Type="varbinary(max)" />
+          <Property Name="RealityImage" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="NS_PostRecords">
           <Key>
@@ -99,7 +101,7 @@
             <PropertyRef Name="StockID" />
           </Key>
           <Property Name="StockID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StockName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="StockName" Type="nchar" MaxLength="2" Nullable="false" />
           <Property Name="DeviceID" Type="int" Nullable="false" />
           <Property Name="NeedleID" Type="int" Nullable="false" />
           <Property Name="CurrentQuantity" Type="int" Nullable="false" />
@@ -638,6 +640,8 @@
           <Property Name="NeedlePoint" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NeedlePrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="NeedleLength" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="PointTypeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="RealityImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Export" FromRole="NS_Needles" ToRole="NS_Export" />
           <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" FromRole="NS_Needles" ToRole="NS_Imports" />
           <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" FromRole="NS_Needles" ToRole="NS_Stocks" />
@@ -678,7 +682,7 @@
             <PropertyRef Name="StockID" />
           </Key>
           <Property Name="StockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StockName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="StockName" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
           <Property Name="DeviceID" Type="Int32" Nullable="false" />
           <Property Name="NeedleID" Type="Int32" Nullable="false" />
           <Property Name="CurrentQuantity" Type="Int32" Nullable="false" />
@@ -991,6 +995,8 @@
           <EntitySetMapping Name="NS_Needles">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Needles">
               <MappingFragment StoreEntitySet="NS_Needles">
+                <ScalarProperty Name="RealityImage" ColumnName="RealityImage" />
+                <ScalarProperty Name="PointTypeImage" ColumnName="PointTypeImage" />
                 <ScalarProperty Name="NeedleLength" ColumnName="NeedleLength" />
                 <ScalarProperty Name="NeedlePrice" ColumnName="NeedlePrice" />
                 <ScalarProperty Name="NeedlePoint" ColumnName="NeedlePoint" />

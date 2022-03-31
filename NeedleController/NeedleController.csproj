@@ -60,6 +60,9 @@
     <OutputPath>bin\x64\Release\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo 3.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -116,6 +119,10 @@
     <Compile Include="Presenters\CameraSettingPresenter.cs" />
     <Compile Include="Presenters\MachineProcessPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\NeedleInfoPresenter.cs" />
+    <Compile Include="Presenters\NeedleInfoPresenters\AddPresenter.cs" />
+    <Compile Include="Presenters\NeedleInfoPresenters\InfomationPresenter.cs" />
+    <Compile Include="Presenters\NeedleInfoPresenters\ModifyPresenter.cs" />
     <Compile Include="Presenters\NeedlePickingPresenters\CameraViewerPresenter.cs" />
     <Compile Include="Presenters\NeedlePickingPresenters\DeviceToolboxPresenter.cs" />
     <Compile Include="Presenters\NeedlePickingPresenter.cs" />
@@ -157,16 +164,43 @@
     </Compile>
     <Compile Include="Views\IAddNeedleView.cs" />
     <Compile Include="Views\ICameraSettingView.cs" />
+    <Compile Include="Views\IDCardCheckingView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\IDCardCheckingView.Designer.cs">
+      <DependentUpon>IDCardCheckingView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\IDeviceSettingView.cs" />
     <Compile Include="Views\IMachineProcessView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Views\INeedleInfoView.cs" />
     <Compile Include="Views\INeedlePickingView.cs" />
-    <Compile Include="Views\LeavingProcessView.cs">
+    <Compile Include="Views\NeedleInfoUCs\AddUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\NeedleInfoUCs\AddUC.Designer.cs">
+      <DependentUpon>AddUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NeedleInfoUCs\IAddUC.cs" />
+    <Compile Include="Views\NeedleInfoUCs\IInfomationUC.cs" />
+    <Compile Include="Views\NeedleInfoUCs\IModifyUC.cs" />
+    <Compile Include="Views\NeedleInfoUCs\InfomationUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\NeedleInfoUCs\InfomationUC.Designer.cs">
+      <DependentUpon>InfomationUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NeedleInfoUCs\ModifyUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\NeedleInfoUCs\ModifyUC.Designer.cs">
+      <DependentUpon>ModifyUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WaitingProcessView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\LeavingProcessView.Designer.cs">
-      <DependentUpon>LeavingProcessView.cs</DependentUpon>
+    <Compile Include="Views\WaitingProcessView.Designer.cs">
+      <DependentUpon>WaitingProcessView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MachineProcessView.cs">
       <SubType>Form</SubType>
@@ -221,12 +255,6 @@
     <Compile Include="Views\NeedlePickingView.Designer.cs">
       <DependentUpon>NeedlePickingView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\RFIDCheckingView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\RFIDCheckingView.Designer.cs">
-      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\SplashScreenView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,8 +277,20 @@
     <EmbeddedResource Include="Views\DeviceSettingView.resx">
       <DependentUpon>DeviceSettingView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\LeavingProcessView.resx">
-      <DependentUpon>LeavingProcessView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\IDCardCheckingView.resx">
+      <DependentUpon>IDCardCheckingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NeedleInfoUCs\AddUC.resx">
+      <DependentUpon>AddUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NeedleInfoUCs\InfomationUC.resx">
+      <DependentUpon>InfomationUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NeedlePickingView.vi.resx">
+      <DependentUpon>NeedlePickingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WaitingProcessView.resx">
+      <DependentUpon>WaitingProcessView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MachineProcessView.resx">
       <DependentUpon>MachineProcessView.cs</DependentUpon>
@@ -287,15 +327,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\NeedlePickingView.resx">
       <DependentUpon>NeedlePickingView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\RFIDCheckingView.resx">
-      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\RFIDCheckingView.vi.resx">
-      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\RFIDCheckingView.zh.resx">
-      <DependentUpon>RFIDCheckingView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SplashScreenView.resx">
       <DependentUpon>SplashScreenView.cs</DependentUpon>
@@ -377,6 +408,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Techlogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logo 3.ico" />
+    <Content Include="Logo blue.ico" />
+    <None Include="Resources\S.jpg" />
+    <None Include="Resources\RG.jpg" />
+    <None Include="Resources\R.jpg" />
+    <None Include="Resources\LR.jpg" />
+    <None Include="Resources\D.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
