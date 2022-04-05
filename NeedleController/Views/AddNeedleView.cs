@@ -28,14 +28,15 @@ namespace NeedleController.Views
 {
     public partial class AddNeedleView : MvpForm, IAddNeedleView
     {
-        public static ObservableCollection<NeedlePickingFormModel> _NeedleQtyList { get; set; }
-        public static ObservableCollection<NS_Stocks> _NewStock { get; set; }
+        private readonly MainView _MainView;
         public static List<NS_Stocks> Current_Stock { get; set; }
         public static bool save_flag = false;
 
-        public AddNeedleView()
+        public AddNeedleView(MainView mainView)
         {
             InitializeComponent();
+            InitializeTimer();
+            _MainView = mainView;
         }
         public event EventHandler AddNeedleViewLoaded;
         public event EventHandler AddNeedleViewExited;
@@ -54,11 +55,73 @@ namespace NeedleController.Views
         {
             AddNeedleViewLeaving(this, e);
         }
+
+        private void InitializeTimer()
+        {
+            Timer1.Interval = 500;
+            Timer1.Tick += new EventHandler(Timer1_Tick);
+            Timer1.Enabled = true;
+        }
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            bool _cableConnection = _MainView.PingHost(NeedleController.Properties.Settings.Default.local_ip);
+            while (true)
+            {
+                if (!_cableConnection)
+                {
+                    Timer1.Stop();
+                    switch (MessageBox.Show(this, "Check connection to device again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                    {
+                        case DialogResult.Retry:
+                            _cableConnection = _MainView.PingHost(NeedleController.Properties.Settings.Default.local_ip);
+                            break;
+                        case DialogResult.Cancel:
+                            this.Close();
+                            Application.Exit();
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    Timer1.Start();
+                    break;
+                }
+            }
+
+            bool database_conneciton = _MainView.CheckForDatabaseConnection();
+            while (true)
+            {
+                if (!database_conneciton)
+                {
+                    Timer1.Stop();
+                    switch (MessageBox.Show(this, "Check connection to database again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                    {
+                        //Stay on this form
+                        case DialogResult.Retry:
+                            database_conneciton = _MainView.CheckForDatabaseConnection();
+                            break;
+                        case DialogResult.Cancel:
+                            this.Close();
+                            Application.Exit();
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    Timer1.Start();
+                    break;
+                }
+            }
+
+        }
         public void AddNeedleViewLoad()
         {
             this.Text = "User: " + MainView.user_cardnumber + " " + MainView.user_name;
             MainView.addneedleviewloaded_status = true;
-            _NeedleQtyList = new ObservableCollection<NeedlePickingFormModel>();
+            var needle_list = NeedleBase.Get_AllNeedle();
+            ObservableCollection<NeedlePickingFormModel> _NeedleQtyList = new ObservableCollection<NeedlePickingFormModel>();
             Current_Stock = StockBase.Get_AllNeedleInStockWithDeviceID(MainView.device_id);
             _NeedleQtyList.Clear();
             foreach (var item in Current_Stock)
@@ -77,7 +140,7 @@ namespace NeedleController.Views
             {
                 if (needle.StockName == "A1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     A1ComboBox.DataSource = needlelist;
                     A1ComboBox.DisplayMember = "NeedleName";
                     A1ComboBox.ValueMember = "NeedleID";
@@ -86,7 +149,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "B1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     B1ComboBox.DataSource = needlelist;
                     B1ComboBox.DisplayMember = "NeedleName";
                     B1ComboBox.ValueMember = "NeedleID";
@@ -95,7 +158,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "C1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     C1ComboBox.DataSource = needlelist;
                     C1ComboBox.DisplayMember = "NeedleName";
                     C1ComboBox.ValueMember = "NeedleID";
@@ -104,7 +167,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "D1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     D1ComboBox.DataSource = needlelist;
                     D1ComboBox.DisplayMember = "NeedleName";
                     D1ComboBox.ValueMember = "NeedleID";
@@ -113,7 +176,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "E1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     E1ComboBox.DataSource = needlelist;
                     E1ComboBox.DisplayMember = "NeedleName";
                     E1ComboBox.ValueMember = "NeedleID";
@@ -122,7 +185,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "F1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     F1ComboBox.DataSource = needlelist;
                     F1ComboBox.DisplayMember = "NeedleName";
                     F1ComboBox.ValueMember = "NeedleID";
@@ -131,7 +194,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "G1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     G1ComboBox.DataSource = needlelist;
                     G1ComboBox.DisplayMember = "NeedleName";
                     G1ComboBox.ValueMember = "NeedleID";
@@ -140,7 +203,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "H1")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     H1ComboBox.DataSource = needlelist;
                     H1ComboBox.DisplayMember = "NeedleName";
                     H1ComboBox.ValueMember = "NeedleID";
@@ -150,7 +213,7 @@ namespace NeedleController.Views
                 //////////
                 else if (needle.StockName == "A2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     A2ComboBox.DataSource = needlelist;
                     A2ComboBox.DisplayMember = "NeedleName";
                     A2ComboBox.ValueMember = "NeedleID";
@@ -159,7 +222,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "B2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     B2ComboBox.DataSource = needlelist;
                     B2ComboBox.DisplayMember = "NeedleName";
                     B2ComboBox.ValueMember = "NeedleID";
@@ -168,7 +231,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "C2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     C2ComboBox.DataSource = needlelist;
                     C2ComboBox.DisplayMember = "NeedleName";
                     C2ComboBox.ValueMember = "NeedleID";
@@ -177,7 +240,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "D2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     D2ComboBox.DataSource = needlelist;
                     D2ComboBox.DisplayMember = "NeedleName";
                     D2ComboBox.ValueMember = "NeedleID";
@@ -186,7 +249,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "E2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     E2ComboBox.DataSource = needlelist;
                     E2ComboBox.DisplayMember = "NeedleName";
                     E2ComboBox.ValueMember = "NeedleID";
@@ -195,7 +258,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "F2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     F2ComboBox.DataSource = needlelist;
                     F2ComboBox.DisplayMember = "NeedleName";
                     F2ComboBox.ValueMember = "NeedleID";
@@ -204,7 +267,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "G2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     G2ComboBox.DataSource = needlelist;
                     G2ComboBox.DisplayMember = "NeedleName";
                     G2ComboBox.ValueMember = "NeedleID";
@@ -213,7 +276,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "H2")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     H2ComboBox.DataSource = needlelist;
                     H2ComboBox.DisplayMember = "NeedleName";
                     H2ComboBox.ValueMember = "NeedleID";
@@ -223,7 +286,7 @@ namespace NeedleController.Views
                 //////////
                 else if (needle.StockName == "A3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     A3ComboBox.DataSource = needlelist;
                     A3ComboBox.DisplayMember = "NeedleName";
                     A3ComboBox.ValueMember = "NeedleID";
@@ -232,7 +295,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "B3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     B3ComboBox.DataSource = needlelist;
                     B3ComboBox.DisplayMember = "NeedleName";
                     B3ComboBox.ValueMember = "NeedleID";
@@ -241,7 +304,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "C3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     C3ComboBox.DataSource = needlelist;
                     C3ComboBox.DisplayMember = "NeedleName";
                     C3ComboBox.ValueMember = "NeedleID";
@@ -250,7 +313,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "D3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     D3ComboBox.DataSource = needlelist;
                     D3ComboBox.DisplayMember = "NeedleName";
                     D3ComboBox.ValueMember = "NeedleID";
@@ -259,7 +322,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "E3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     E3ComboBox.DataSource = needlelist;
                     E3ComboBox.DisplayMember = "NeedleName";
                     E3ComboBox.ValueMember = "NeedleID";
@@ -268,7 +331,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "F3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     F3ComboBox.DataSource = needlelist;
                     F3ComboBox.DisplayMember = "NeedleName";
                     F3ComboBox.ValueMember = "NeedleID";
@@ -277,7 +340,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "G3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     G3ComboBox.DataSource = needlelist;
                     G3ComboBox.DisplayMember = "NeedleName";
                     G3ComboBox.ValueMember = "NeedleID";
@@ -286,7 +349,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "H3")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     H3ComboBox.DataSource = needlelist;
                     H3ComboBox.DisplayMember = "NeedleName";
                     H3ComboBox.ValueMember = "NeedleID";
@@ -296,7 +359,7 @@ namespace NeedleController.Views
                 //////////
                 else if (needle.StockName == "A4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     A4ComboBox.DataSource = needlelist;
                     A4ComboBox.DisplayMember = "NeedleName";
                     A4ComboBox.ValueMember = "NeedleID";
@@ -305,7 +368,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "B4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     B4ComboBox.DataSource = needlelist;
                     B4ComboBox.DisplayMember = "NeedleName";
                     B4ComboBox.ValueMember = "NeedleID";
@@ -314,7 +377,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "C4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     C4ComboBox.DataSource = needlelist;
                     C4ComboBox.DisplayMember = "NeedleName";
                     C4ComboBox.ValueMember = "NeedleID";
@@ -323,7 +386,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "D4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     D4ComboBox.DataSource = needlelist;
                     D4ComboBox.DisplayMember = "NeedleName";
                     D4ComboBox.ValueMember = "NeedleID";
@@ -332,7 +395,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "E4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     E4ComboBox.DataSource = needlelist;
                     E4ComboBox.DisplayMember = "NeedleName";
                     E4ComboBox.ValueMember = "NeedleID";
@@ -341,7 +404,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "F4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     F4ComboBox.DataSource = needlelist;
                     F4ComboBox.DisplayMember = "NeedleName";
                     F4ComboBox.ValueMember = "NeedleID";
@@ -350,7 +413,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "G4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     G4ComboBox.DataSource = needlelist;
                     G4ComboBox.DisplayMember = "NeedleName";
                     G4ComboBox.ValueMember = "NeedleID";
@@ -359,7 +422,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "H4")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     H4ComboBox.DataSource = needlelist;
                     H4ComboBox.DisplayMember = "NeedleName";
                     H4ComboBox.ValueMember = "NeedleID";
@@ -369,7 +432,7 @@ namespace NeedleController.Views
                 //////////
                 else if (needle.StockName == "A5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     A5ComboBox.DataSource = needlelist;
                     A5ComboBox.DisplayMember = "NeedleName";
                     A5ComboBox.ValueMember = "NeedleID";
@@ -378,7 +441,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "B5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     B5ComboBox.DataSource = needlelist;
                     B5ComboBox.DisplayMember = "NeedleName";
                     B5ComboBox.ValueMember = "NeedleID";
@@ -387,7 +450,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "C5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     C5ComboBox.DataSource = needlelist;
                     C5ComboBox.DisplayMember = "NeedleName";
                     C5ComboBox.ValueMember = "NeedleID";
@@ -396,7 +459,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "D5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     D5ComboBox.DataSource = needlelist;
                     D5ComboBox.DisplayMember = "NeedleName";
                     D5ComboBox.ValueMember = "NeedleID";
@@ -405,7 +468,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "E5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     E5ComboBox.DataSource = needlelist;
                     E5ComboBox.DisplayMember = "NeedleName";
                     E5ComboBox.ValueMember = "NeedleID";
@@ -414,7 +477,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "F5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     F5ComboBox.DataSource = needlelist;
                     F5ComboBox.DisplayMember = "NeedleName";
                     F5ComboBox.ValueMember = "NeedleID";
@@ -423,7 +486,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "G5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     G5ComboBox.DataSource = needlelist;
                     G5ComboBox.DisplayMember = "NeedleName";
                     G5ComboBox.ValueMember = "NeedleID";
@@ -432,7 +495,7 @@ namespace NeedleController.Views
                 }
                 else if (needle.StockName == "H5")
                 {
-                    var needlelist = NeedleBase.Get_AllNeedle();
+                    var needlelist = NeedleBase.Get_AllNeedlePickingFormModel(needle_list);
                     H5ComboBox.DataSource = needlelist;
                     H5ComboBox.DisplayMember = "NeedleName";
                     H5ComboBox.ValueMember = "NeedleID";
@@ -448,7 +511,8 @@ namespace NeedleController.Views
         }
         public void AddNeedleViewLeave(FormClosingEventArgs e)
         {
-            _NewStock = new ObservableCollection<NS_Stocks>();
+            bool post_stock_status, post_import_status, post_export_status;
+            ObservableCollection<NS_Stocks> _NewStock = new ObservableCollection<NS_Stocks>();
             int id = 0;
             Label[] StockNameLabelArray = new Label[] {
                     A1Label, A2Label, A3Label, A4Label, A5Label,
@@ -498,8 +562,8 @@ namespace NeedleController.Views
                         };
                         _NewStock.Add(new_NS_Stock);
                     }
-                    bool status = StockBase.Update_StockQuantity(_NewStock);
-                    if (status)
+                    post_stock_status = StockBase.Update_StockQuantity(_NewStock);
+                    if (post_stock_status)
                     {
                         List<NS_Imports> nS_Imports = new List<NS_Imports>();
                         List<NS_Export> nS_Exports = new List<NS_Export>();
@@ -548,10 +612,26 @@ namespace NeedleController.Views
                             }
 
                         }
-                        bool add_import = EF_CONFIG.DataTransform.ImportBase.Add_NewImport(nS_Imports);
-                        bool add_export = EF_CONFIG.DataTransform.ExportBase.Add_NewExport(nS_Exports);
-                        if (add_import && add_export)
+                        post_import_status = EF_CONFIG.DataTransform.ImportBase.Add_NewImport(nS_Imports);
+                        post_export_status = EF_CONFIG.DataTransform.ExportBase.Add_NewExport(nS_Exports);
+                        if (post_import_status && post_export_status)
                         {
+                            using (UdpClient udpClient = new UdpClient())
+                            {
+                                try
+                                {
+                                    MainView.replied_buffer = "<table:0><led2:0>";
+                                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                                    Byte[] senddata = Encoding.ASCII.GetBytes(MainView.replied_buffer);
+                                    udpClient.Send(senddata, senddata.Length);
+                                }
+                                catch (Exception i)
+                                {
+                                    Console.WriteLine(i.ToString());
+                                }
+                            }
+                            MainView.last_view = this.Name;
+                            new WaitingProcessView().Show();
                             break;
                         }
                         else
@@ -578,6 +658,22 @@ namespace NeedleController.Views
                         };
                         _NewStock.Add(new_NS_Stock);
                     }
+                    using (UdpClient udpClient = new UdpClient())
+                    {
+                        try
+                        {
+                            MainView.replied_buffer = "<table:0><led2:0>";
+                            udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                            Byte[] senddata = Encoding.ASCII.GetBytes(MainView.replied_buffer);
+                            udpClient.Send(senddata, senddata.Length);
+                        }
+                        catch (Exception i)
+                        {
+                            Console.WriteLine(i.ToString());
+                        }
+                    }
+                    MainView.last_view = this.Name;
+                    new WaitingProcessView().Show();
                     break;
                 default:
                     break;

@@ -41,18 +41,48 @@ namespace NeedleController.Views
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            bool status = EF_CONFIG.DataTransform.DeviceBase.Update_OnlineStatus(MainView.device_id, "OFFLINE");
-            if (status)
+
+            if (MainView.close_waiting)
             {
-                Thread.Sleep(3000);
-                MainView.post_onlinestatus = true;
                 this.Close();
+                MainView.close_waiting = false;
             }
-            else
+            if (MainView.last_view == "MainView")
             {
-                Thread.Sleep(3000);
-                MainView.post_onlinestatus = false;
-                this.Close();
+                if (MainView.mainview_close)
+                {
+                    bool status = EF_CONFIG.DataTransform.DeviceBase.Update_OnlineStatus(MainView.device_id, "OFFLINE");
+                    if (status)
+                    {
+                        Thread.Sleep(3000);
+                        MainView.post_onlinestatus = true;
+                        this.Close();
+                    }
+                    else
+                    {
+                        Thread.Sleep(3000);
+                        MainView.post_onlinestatus = false;
+                        this.Close();
+                    }
+                    MainView.last_view = null;
+                }
+            }
+            else if (MainView.last_view == "NeedleInfoView")
+            {
+                NeedleInfoView.needle_list = EF_CONFIG.DataTransform.NeedleBase.Get_AllNeedle();
+                if (NeedleInfoView.needle_list != null)
+                {
+                    Thread.Sleep(3000);
+                    MainView.get_onlinestatus = true;
+                    this.Close();
+                }
+                else
+                {
+                    Thread.Sleep(3000);
+                    MainView.get_onlinestatus = false;
+                    this.Close();
+                }
+                MainView.last_view = null;
             }
         }
     }

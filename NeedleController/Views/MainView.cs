@@ -24,16 +24,22 @@ namespace NeedleController.Views
     public partial class MainView : MvpForm, IMainView
     {
         private static string lastlistbox_string;
-        public static bool _cableConnection = false;
         public static bool _deviceConnection = false;
         public static bool _confirmRFID { get; set; } = false;
-        public static bool needlepickingviewloaded_status { get; set; }
-        public static bool addneedleviewloaded_status { get; set; }
-        public static bool needleinfoviewloaded_status { get; set; }
+        public static bool needlepickingviewloaded_status { get; set; } = false;
+        public static bool addneedleviewloaded_status { get; set; } = false;
+        public static bool needleinfoviewloaded_status { get; set; } = false;
         public static bool check_camera { get; set; } = false;
         public static bool post_onlinestatus { get; set; } = false;
+        public static bool get_onlinestatus { get; set; } = false;
         public static bool check_databaseconnection { get; set; } = false;
         public static bool card_checkingprogress { get; set; } = false;
+        public static bool close_waiting { get; set; } = false;
+
+        public static bool mainview_close { get; set; } = false;
+
+
+
 
         public static string _message { get; set; }
         public static string replied_buffer { get; set; }
@@ -41,6 +47,9 @@ namespace NeedleController.Views
         public static string listbox_string { get; set; }
         public static string para_name;
         public static string para_value_str;
+
+        public static string last_view { get; set; }
+
         public static int device_id { get; set; }
         public static string device_name { get; set; }
         public static int building_id { get; set; }
@@ -67,13 +76,26 @@ namespace NeedleController.Views
             InitializeComponent();
             SetInitalLanguage();
             UpdateLanguageMenus();
-            InitializeTimer();
             Thread.Sleep(2000);
             SplashScreenView.loading_status = "CheckForDatabaseConnection";
             bool status = CheckForDatabaseConnection();
             for (int i = 0; i <= 500; i++) Thread.Sleep(10);
+            int count = 0;
             while (true)
             {
+                if (count == 2)
+                {
+                    thread.Abort();
+                    this.TopMost = true;
+                    switch (MessageBox.Show(this, "Check your connection to datatabase and try againt later.", "Error: commmunication", MessageBoxButtons.OK))
+                    {
+                        case DialogResult.OK:
+                            break;
+                    }
+                    this.Close();
+                    Application.Exit();
+                    Environment.Exit(0);
+                }
                 if (status)
                 {
                     thread.Abort();
@@ -83,9 +105,11 @@ namespace NeedleController.Views
                 }
                 else
                 {
+                    count++;
                     status = CheckForDatabaseConnection();
                 }
             }
+            InitializeTimer();
         }
         public event EventHandler GetNeedleClicked;
         public event EventHandler AddNeedleButtonCLicked;
@@ -168,52 +192,178 @@ namespace NeedleController.Views
             }
             else
             {
-                if (replied_buffer == "<led2:1><table:1>")
-                {
-                    using (UdpClient udpClient = new UdpClient())
-                    {
-                        try
-                        {
-                            replied_buffer = "<table:0><led2:0>";
-                            udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
-                            Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
-                            udpClient.Send(senddata, senddata.Length);
-                        }
-                        catch (Exception i)
-                        {
-                            Console.WriteLine(i.ToString());
-                        }
-                    }
-                }
                 if (!this.Visible)
                 {
-                    this.Visible = true;
-                }
-            }
-            _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
-            if (!_cableConnection)
-            {
-                Timer1.Enabled = false;
-                ConnectDeviceButton.Enabled = true;
-                ConnectDeviceToolStripMenuItem.Enabled = true;
-                ConnectedStatusLabel.Visible = false;
-                DisconnectedStatusLabel.Visible = true;
-                DialogResult dlr = MessageBox.Show("Check connection again", "Error: Communication", MessageBoxButtons.RetryCancel);
-                if (dlr == DialogResult.Retry)
-                {
-                    Timer1.Enabled = true;
-                    return;
-                }
-            }
-            else
-            {
-                if (_deviceConnection)
-                {
-                    DisconnectedStatusLabel.Visible = false;
-                    ConnectedStatusLabel.Visible = true;
-                    ConnectDeviceButton.Enabled = false;
-                    ConnectDeviceToolStripMenuItem.Enabled = false;
+                    if (last_view == "AddNeedleView")
+                    {
+                        if (listbox_string == "close_success")
+                        {
+                            Timer1.Stop();
+                            close_waiting = true;
 
+                            switch (MessageBox.Show(this, "Needle table close success", "Error: Machine", MessageBoxButtons.OK))
+                            {
+                                case DialogResult.OK:
+                                    this.Visible = true;
+                                    Timer1.Start();
+                                    break;
+                            }
+                            listbox_string = null;
+                        }
+                        if (listbox_string == "close_fail")
+                        {
+                            Timer1.Stop();
+                            close_waiting = false;
+
+                            switch (MessageBox.Show(this, "Needle table close fail", "Error: Machine", MessageBoxButtons.OK))
+                            {
+                                case DialogResult.OK:
+                                    this.Visible = true;
+                                    Timer1.Start();
+                                    break;
+                            }
+                            listbox_string = null;
+                        }
+                    }
+                    if (last_view == "NeedlePickingView")
+                    {
+                        this.Visible = true;
+                        last_view = null;
+                    }
+                    if (last_view == "NeedleInfoView")
+                    {
+                        this.Visible = true;
+                        last_view = null;
+                    }
+                }
+            }
+
+            if (listbox_string == "table_closed")
+            {
+                using (UdpClient udpClient = new UdpClient())
+                {
+                    try
+                    {
+                        replied_buffer = "<led2:1><table:1>";
+                        udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                        Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
+                        udpClient.Send(senddata, senddata.Length);
+
+                    }
+                    catch (Exception i)
+                    {
+                        Console.WriteLine(i.ToString());
+                    }
+                }
+                this.Visible = false;
+                new WaitingProcessView().Show();
+                listbox_string = null;
+            }
+            if (listbox_string == "table_opened")
+            {
+                Timer1.Stop();
+                switch (MessageBox.Show(this, "Needle table is still open", "Error: Machine", MessageBoxButtons.OK))
+                {
+                    case DialogResult.OK:
+                        Timer1.Start();
+                        break;
+                }
+                listbox_string = null;
+
+            }
+            if (listbox_string == "table_error")
+            {
+                Timer1.Stop();
+                switch (MessageBox.Show(this, "Needle table is in right place", "Error: Machine", MessageBoxButtons.OK))
+                {
+                    case DialogResult.OK:
+                        Timer1.Start();
+                        break;
+                }
+                listbox_string = null;
+            }
+            if (listbox_string == "open_success")
+            {
+                close_waiting = true;
+                new AddNeedleView(this).Show();
+                listbox_string = null;
+            }
+            if (listbox_string == "open_fail")
+            {
+                Timer1.Stop();
+                switch (MessageBox.Show(this, "Needle table open failed", "Error: Machine", MessageBoxButtons.OK))
+                {
+                    case DialogResult.OK:
+                        Timer1.Start();
+                        break;
+                }
+                listbox_string = null;
+            }
+
+            bool _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
+            while (true)
+            {
+                if (!_cableConnection)
+                {
+                    Timer1.Stop();
+                    ConnectDeviceButton.Enabled = true;
+                    ConnectDeviceToolStripMenuItem.Enabled = true;
+                    ConnectedStatusLabel.Visible = false;
+                    DisconnectedStatusLabel.Visible = true;
+                    switch (MessageBox.Show(this, "Check connection to device again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                    {
+                        case DialogResult.Retry:
+                            _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
+                            break;
+                        case DialogResult.Cancel:
+                            this.Close();
+                            Application.Exit();
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    if (_deviceConnection)
+                    {
+                        DisconnectedStatusLabel.Visible = false;
+                        ConnectedStatusLabel.Visible = true;
+                        ConnectDeviceButton.Enabled = false;
+                        ConnectDeviceToolStripMenuItem.Enabled = false;
+                        Timer1.Start();
+                        break;
+                    }
+                    else
+                    {
+                        Timer1.Start();
+                        break;
+                    }
+                }
+            }
+
+            bool database_conneciton = CheckForDatabaseConnection();
+            while (true)
+            {
+                if (!database_conneciton)
+                {
+                    Timer1.Stop();
+                    switch (MessageBox.Show(this, "Check connection to database again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                    {
+                        //Stay on this form
+                        case DialogResult.Retry:
+                            database_conneciton = CheckForDatabaseConnection();
+                            break;
+                        case DialogResult.Cancel:
+                            this.Close();
+                            Application.Exit();
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    Timer1.Start();
+                    break;
                 }
             }
         }
@@ -330,12 +480,11 @@ namespace NeedleController.Views
                         }
                         else
                         {
-                            this.Visible = false;
                             using (UdpClient udpClient = new UdpClient())
                             {
                                 try
                                 {
-                                    replied_buffer = "<led2:1><table:1>";
+                                    replied_buffer = "<checkw:1>";
                                     udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
                                     Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
                                     udpClient.Send(senddata, senddata.Length);
@@ -345,7 +494,6 @@ namespace NeedleController.Views
                                     Console.WriteLine(i.ToString());
                                 }
                             }
-                            new AddNeedleView().Show();
                         }
                     }
                 }
@@ -363,7 +511,7 @@ namespace NeedleController.Views
         public void ShowNeedleInfoView()
         {
             this.Visible = false;
-            new NeedleInfoView().Show();
+            new NeedleInfoView(this).Show();
         }
         public void ShowDeviceSettingView()
         {
@@ -412,6 +560,8 @@ namespace NeedleController.Views
             }
             else
             {
+                last_view = this.Name;
+                mainview_close = true;
                 using (WaitingProcessView waitingProcessView = new WaitingProcessView())
                 {
                     waitingProcessView.ShowDialog();
@@ -505,7 +655,7 @@ namespace NeedleController.Views
         }
         public void SetString_message()
         {
-            if (lastlistbox_string == listbox_string)
+            if (lastlistbox_string == listbox_string || listbox_string == null)
             {
                 return;
             }
@@ -529,6 +679,7 @@ namespace NeedleController.Views
         {
 
         }
+
 
     }
 }

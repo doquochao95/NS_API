@@ -512,6 +512,7 @@
             // NeedlePointListComboBox
             // 
             this.NeedlePointListComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.NeedlePointListComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.NeedlePointListComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NeedlePointListComboBox.FormattingEnabled = true;
             this.NeedlePointListComboBox.Location = new System.Drawing.Point(98, 45);

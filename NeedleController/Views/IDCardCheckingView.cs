@@ -50,17 +50,20 @@ namespace NeedleController.Views
                 if (flag)
                 {
                     NS_Staffs nS_Staffs = EF_CONFIG.DataTransform.StaffBase.Get_UserWithRfid(msg);
-                    MainView.user_id = nS_Staffs.StaffID;
-                    MainView.user_name = nS_Staffs.StaffName;
-                    MainView.user_cardnumber = nS_Staffs.CardNumber;
-                    MainView.user_deviceid = nS_Staffs.DeviceID;
-                    MainView.user_layer = nS_Staffs.UserLayer;
-                    MainView.listbox_string = "Confirmed Success";
-                    MainView._confirmRFID = true;
+                    if (nS_Staffs != null)
+                    {
+                        MainView.user_id = nS_Staffs.StaffID;
+                        MainView.user_name = nS_Staffs.StaffName;
+                        MainView.user_cardnumber = nS_Staffs.CardNumber;
+                        MainView.user_deviceid = nS_Staffs.DeviceID;
+                        MainView.user_layer = nS_Staffs.UserLayer;
+                       /* MainView.listbox_string = "Confirmed Success";*/
+                        MainView._confirmRFID = true;
+                    }
                 }
                 else
                 {
-                    MainView.listbox_string = "Invalid ID Card";
+                   /* MainView.listbox_string = "Invalid ID Card";*/
                     MainView._confirmRFID = false;
                 }
                 MainView.card_checkingprogress = true;

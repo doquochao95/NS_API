@@ -27,7 +27,7 @@ namespace NeedleController.Views.NeedleInfoUCs
 
 
         void LoadAddUC();
-        void Change_NeedlePointListComboBoxIndex();
+        void Check_NeedlePointListComboBoxIndexChanged();
         void Open_OpenFileDialog();
 
         void CheckNameTextBoxData();

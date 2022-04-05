@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="BaseModel\AddImportModel.cs" />
     <Compile Include="BaseModel\NeedlePickingFormModel.cs" />
+    <Compile Include="BaseModel\SimpleNeedleModel.cs" />
     <Compile Include="BaseModel\StockUpdateModel.cs" />
     <Compile Include="BaseModel\VolatilityLiveChartModel.cs" />
     <Compile Include="BaseModel\VotatilityDatagridModel.cs" />

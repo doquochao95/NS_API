@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.A1Label = new System.Windows.Forms.Label();
             this.B1Label = new System.Windows.Forms.Label();
             this.C1Label = new System.Windows.Forms.Label();
@@ -148,6 +149,7 @@
             this.C5ComboBox = new System.Windows.Forms.ComboBox();
             this.A5ComboBox = new System.Windows.Forms.ComboBox();
             this.B5ComboBox = new System.Windows.Forms.ComboBox();
+            this.Timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.A5NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.E5NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.D5NumericUpDown)).BeginInit();
@@ -1590,6 +1592,10 @@
             this.B5ComboBox.Size = new System.Drawing.Size(68, 24);
             this.B5ComboBox.TabIndex = 120;
             // 
+            // Timer1
+            // 
+            this.Timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
             // AddNeedleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1896,5 +1902,6 @@
         private System.Windows.Forms.ComboBox C5ComboBox;
         private System.Windows.Forms.ComboBox A5ComboBox;
         private System.Windows.Forms.ComboBox B5ComboBox;
+        private System.Windows.Forms.Timer Timer1;
     }
 }

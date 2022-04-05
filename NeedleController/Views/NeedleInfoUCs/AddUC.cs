@@ -31,19 +31,6 @@ namespace NeedleController.Views.NeedleInfoUCs
     [PresenterBinding(typeof(AddPresenter))]
     public partial class AddUC : MvpUserControl, IAddUC
     {
-        public string[] PointList = new string[] { "D", "LR", "R", "RG", "S" };
-        public static string selected_needlepoint { get; set; }
-        public static Image selected_needlepointbitmap { get; set; }
-        public static byte[] selected_needlepointbitmap_byte { get; set; }
-        public static Image selected_needleimagebitmap { get; set; }
-        public static byte[] selected_needleimagebitmap_byte { get; set; }
-
-        public static int selected_needlename { get; set; }
-        public static string selected_needlecode { get; set; }
-        public static string selected_needlesize { get; set; }
-        public static decimal selected_needleprice { get; set; }
-        public static decimal selected_needlelength { get; set; }
-
         public AddUC()
         {
             InitializeComponent();
@@ -144,32 +131,33 @@ namespace NeedleController.Views.NeedleInfoUCs
         {
             if (NeedleInfoView.last_selectedTabindex == 1 && NeedleInfoView.adduc_load == false)
             {
-                Reset_Adduc();
+                LoadAddUC();
                 NeedleInfoView.adduc_load = true;
             }
         }
+
         public void LoadAddUC()
         {
             NeedlePointListComboBox.Items.Clear();
-            NeedlePointListComboBox.Items.AddRange(PointList);
-            NeedlePointListComboBox.Text = null;
-            NeedlePointListComboBox.SelectedItem = null;
+            NeedlePointListComboBox.Items.AddRange(NeedleInfoView.PointList);
+            Reset_Parameters();
+            
         }
-        public void Change_NeedlePointListComboBoxIndex()
+        public void Check_NeedlePointListComboBoxIndexChanged()
         {
             if (NeedlePointListComboBox.SelectedItem == null)
             {
                 NeedlePointWarningLabel.Text = "*Null data";
                 NeedlePointWarningLabel.ForeColor = Color.Red;
-                selected_needlepoint = null;
-                selected_needlepointbitmap = null;
+                NeedleInfoView.selected_needlepoint = null;
+                NeedleInfoView.selected_needlepointbitmap = null;
                 NeedlePointPictureBox.Image = null;
                 return;
             }
-            selected_needlepoint = NeedlePointListComboBox.SelectedItem.ToString();
-            selected_needlepointbitmap = (Image)Resources.ResourceManager.GetObject(selected_needlepoint);
-            NeedlePointPictureBox.Image = selected_needlepointbitmap;
-            selected_needlepointbitmap_byte = imageToByteArray(selected_needlepointbitmap);
+            NeedleInfoView.selected_needlepoint = NeedlePointListComboBox.SelectedItem.ToString();
+            NeedleInfoView.selected_needlepointbitmap = (Image)Resources.ResourceManager.GetObject(NeedleInfoView.selected_needlepoint);
+            NeedlePointPictureBox.Image = NeedleInfoView.selected_needlepointbitmap;
+            NeedleInfoView.selected_needlepointbitmap_byte = imageToByteArray(NeedleInfoView.selected_needlepointbitmap);
             NeedlePointWarningLabel.Text = "OK";
             NeedlePointWarningLabel.ForeColor = Color.Green;
         }
@@ -184,9 +172,9 @@ namespace NeedleController.Views.NeedleInfoUCs
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    selected_needleimagebitmap = new Bitmap(openFileDialog.FileName);
-                    selected_needleimagebitmap_byte = imageToByteArray(selected_needleimagebitmap);
-                    NeedleRealityPictureBox.Image = selected_needleimagebitmap;
+                    NeedleInfoView.selected_needleimagebitmap = new Bitmap(openFileDialog.FileName);
+                    NeedleInfoView.selected_needleimagebitmap_byte = imageToByteArray(NeedleInfoView.selected_needleimagebitmap);
+                    NeedleRealityPictureBox.Image = NeedleInfoView.selected_needleimagebitmap;
                     FileDirectionTextBox.Text = openFileDialog.FileName;
                 }
             }
@@ -214,7 +202,7 @@ namespace NeedleController.Views.NeedleInfoUCs
                         bool status = EF_CONFIG.DataTransform.NeedleBase.Check_AvailableNeedleName(int.Parse(needle_name));
                         if (!status)
                         {
-                            selected_needlename = int.Parse(needle_name);
+                            NeedleInfoView.selected_needlename = needle_name;
                             NameWarningLabel.Text = "OK";
                             NameWarningLabel.ForeColor = Color.Green;
                         }
@@ -243,7 +231,7 @@ namespace NeedleController.Views.NeedleInfoUCs
             }
             else
             {
-                selected_needlecode = needle_code;
+                NeedleInfoView.selected_needlecode = needle_code;
                 CodeWarningLabel.Text = "OK";
                 CodeWarningLabel.ForeColor = Color.Green;
             }
@@ -258,15 +246,15 @@ namespace NeedleController.Views.NeedleInfoUCs
             }
             else
             {
-                selected_needlesize = needle_size;
+                NeedleInfoView.selected_needlesize = needle_size;
                 SizeWarningLabel.Text = "OK";
                 SizeWarningLabel.ForeColor = Color.Green;
             }
         }
         public void CheckPriceTextBoxData()
         {
-            string needle_price = PriceTextBox.Text;
-            if (needle_price == null || needle_price == "")
+            NeedleInfoView.selected_needleprice = PriceTextBox.Text;
+            if (NeedleInfoView.selected_needleprice == null || NeedleInfoView.selected_needleprice == "")
             {
                 PriceWarningLabel.Text = "*Null data";
                 PriceWarningLabel.ForeColor = Color.Red;
@@ -274,11 +262,10 @@ namespace NeedleController.Views.NeedleInfoUCs
             else
             {
                 decimal d;
-                if (decimal.TryParse(needle_price, out d))
+                if (decimal.TryParse(NeedleInfoView.selected_needleprice, out d))
                 {
-                    if (decimal.Parse(needle_price) > 0)
+                    if (d > 0)
                     {
-                        selected_needleprice = d;
                         PriceWarningLabel.Text = "OK";
                         PriceWarningLabel.ForeColor = Color.Green;
                     }
@@ -298,8 +285,8 @@ namespace NeedleController.Views.NeedleInfoUCs
         }
         public void CheckLengthTextBoxData()
         {
-            string needle_length = LengthTextBox.Text;
-            if (needle_length == null || needle_length == "")
+            NeedleInfoView.selected_needlelength = LengthTextBox.Text;
+            if (NeedleInfoView.selected_needlelength == null || NeedleInfoView.selected_needlelength == "")
             {
                 LengthWarningLabel.Text = "*Null data";
                 LengthWarningLabel.ForeColor = Color.Red;
@@ -307,11 +294,10 @@ namespace NeedleController.Views.NeedleInfoUCs
             else
             {
                 decimal d;
-                if (decimal.TryParse(needle_length, out d))
+                if (decimal.TryParse(NeedleInfoView.selected_needlelength, out d))
                 {
-                    if (decimal.Parse(needle_length) > 0)
+                    if (d > 0)
                     {
-                        selected_needlelength = d;
                         LengthWarningLabel.Text = "OK";
                         LengthWarningLabel.ForeColor = Color.Green;
                     }
@@ -337,7 +323,7 @@ namespace NeedleController.Views.NeedleInfoUCs
             CheckSizeTextBoxData();
             CheckPriceTextBoxData();
             CheckLengthTextBoxData();
-            Change_NeedlePointListComboBoxIndex();
+            Check_NeedlePointListComboBoxIndexChanged();
 
             TextBox[] textBoxes = new TextBox[] {NameTextBox,
                                                 CodeTextBox,
@@ -374,14 +360,14 @@ namespace NeedleController.Views.NeedleInfoUCs
             {
                 NS_Needles nS_Needles = new NS_Needles()
                 {
-                    NeedleName = selected_needlename,
-                    NeedleCode = selected_needlecode,
-                    NeedleSize = selected_needlesize,
-                    NeedlePoint = selected_needlepoint,
-                    NeedlePrice = selected_needleprice,
-                    NeedleLength = selected_needlelength,
-                    PointTypeImage = selected_needlepointbitmap_byte,
-                    RealityImage = selected_needleimagebitmap_byte
+                    NeedleName = int.Parse(NeedleInfoView.selected_needlename),
+                    NeedleCode = NeedleInfoView.selected_needlecode,
+                    NeedleSize = NeedleInfoView.selected_needlesize,
+                    NeedlePoint = NeedleInfoView.selected_needlepoint,
+                    NeedlePrice = decimal.Parse(NeedleInfoView.selected_needleprice),
+                    NeedleLength = decimal.Parse(NeedleInfoView.selected_needlelength),
+                    PointTypeImage = NeedleInfoView.selected_needlepointbitmap_byte,
+                    RealityImage = NeedleInfoView.selected_needleimagebitmap_byte
                 };
                 switch (MessageBox.Show(this, "Do you want to save ?", "Attention :", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                 {
@@ -394,7 +380,7 @@ namespace NeedleController.Views.NeedleInfoUCs
                         else
                         {
                             MessageBox.Show(this, "Saved successfuly", "Attention", MessageBoxButtons.OK);
-                            Reset_Adduc();
+                            LoadAddUC();
                         }
                         break;
                     case DialogResult.No:
@@ -423,7 +409,7 @@ namespace NeedleController.Views.NeedleInfoUCs
             CheckSizeTextBoxData();
             CheckPriceTextBoxData();
             CheckLengthTextBoxData();
-            Change_NeedlePointListComboBoxIndex();
+            Check_NeedlePointListComboBoxIndexChanged();
         }
         public void Keyboard_EnterKeyPress(KeyEventArgs e)
         {
@@ -448,9 +434,10 @@ namespace NeedleController.Views.NeedleInfoUCs
             else
                 return null;
         }
-        private void Reset_Adduc ()
+        private void Reset_Parameters()
         {
-            LoadAddUC();
+            NeedlePointListComboBox.Text = null;
+            NeedlePointListComboBox.SelectedItem = null;
             NameTextBox.Text = null;
             CodeTextBox.Text = null;
             PriceTextBox.Text = null;
@@ -464,10 +451,10 @@ namespace NeedleController.Views.NeedleInfoUCs
             CheckSizeTextBoxData();
             CheckPriceTextBoxData();
             CheckLengthTextBoxData();
-            Change_NeedlePointListComboBoxIndex();
-            selected_needleimagebitmap = null;
-            selected_needleimagebitmap_byte = imageToByteArray(selected_needleimagebitmap);
-            NeedleRealityPictureBox.Image = selected_needleimagebitmap;
+            Check_NeedlePointListComboBoxIndexChanged();
+            NeedleInfoView.selected_needleimagebitmap = null;
+            NeedleInfoView.selected_needleimagebitmap_byte = imageToByteArray(NeedleInfoView.selected_needleimagebitmap);
+            NeedleRealityPictureBox.Image = NeedleInfoView.selected_needleimagebitmap;
         }
 
 

@@ -37,7 +37,7 @@ namespace NeedleController.Presenters.NeedleInfoPresenters
         }
         void View_NeedlePointListComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            View.Change_NeedlePointListComboBoxIndex();
+            View.Check_NeedlePointListComboBoxIndexChanged();
         }
         void View_OpenFileButtonClicked(object sender, EventArgs e)
         {

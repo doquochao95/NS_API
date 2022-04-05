@@ -70,7 +70,7 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
-        public static List<NS_Needles>Get_AllNeedle()
+        public static List<NS_Needles> Get_AllNeedle()
         {
             try
             {
@@ -80,6 +80,28 @@ namespace EF_CONFIG.DataTransform
                         .OrderBy(a => a.NeedleName)
                         .ToList();
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+        public static List<SimpleNeedleModel> Get_AllNeedlePickingFormModel(List<NS_Needles> nS_Needles)
+        {
+            try
+            {
+                List<SimpleNeedleModel> Models = new List<SimpleNeedleModel>();
+                foreach (NS_Needles nS_Needle in nS_Needles)
+                {
+                    SimpleNeedleModel model = new SimpleNeedleModel()
+                    {
+                        NeedleID = nS_Needle.NeedleID,
+                        NeedleName = nS_Needle.NeedleName
+                    };
+                    Models.Add(model);
+                }
+                return Models;
             }
             catch (Exception e)
             {
@@ -196,6 +218,31 @@ namespace EF_CONFIG.DataTransform
                 return false;
             }
         }
-    
+
+        public static bool Update_NeedleInformatio(NS_Needles model)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    var updateqty = DataContext.NS_Needles.First(i => i.NeedleID == model.NeedleID);
+                    updateqty.NeedleName = model.NeedleName;
+                    updateqty.NeedleCode = model.NeedleCode;
+                    updateqty.NeedleSize = model.NeedleSize;
+                    updateqty.NeedlePoint = model.NeedlePoint;
+                    updateqty.NeedlePrice = model.NeedlePrice;
+                    updateqty.NeedleLength = model.NeedleLength;
+                    updateqty.PointTypeImage = model.PointTypeImage;
+                    updateqty.RealityImage = model.RealityImage;
+                    DataContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
     }
 }

@@ -286,6 +286,9 @@
     <EmbeddedResource Include="Views\NeedleInfoUCs\InfomationUC.resx">
       <DependentUpon>InfomationUC.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\NeedleInfoUCs\ModifyUC.resx">
+      <DependentUpon>ModifyUC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\NeedlePickingView.vi.resx">
       <DependentUpon>NeedlePickingView.cs</DependentUpon>
     </EmbeddedResource>
