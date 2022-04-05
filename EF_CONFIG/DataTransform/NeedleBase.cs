@@ -70,7 +70,45 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
-       
+        public static List<NS_Needles> Get_AllNeedle()
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Needles
+                        .OrderBy(a => a.NeedleName)
+                        .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+        public static List<SimpleNeedleModel> Get_AllNeedlePickingFormModel(List<NS_Needles> nS_Needles)
+        {
+            try
+            {
+                List<SimpleNeedleModel> Models = new List<SimpleNeedleModel>();
+                foreach (NS_Needles nS_Needle in nS_Needles)
+                {
+                    SimpleNeedleModel model = new SimpleNeedleModel()
+                    {
+                        NeedleID = nS_Needle.NeedleID,
+                        NeedleName = nS_Needle.NeedleName
+                    };
+                    Models.Add(model);
+                }
+                return Models;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
         public static List<NS_Stocks> Get_StockNeedleChanged(int NeedleID)
         {
             try
@@ -88,24 +126,6 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
-
-        /*public static List<NS_Stocks> Get_StockChangedByUser(int StaffID)
-        {
-            try
-            {
-                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
-                {
-                    return DataContext.NS_Stocks
-                        .Where(i => i.StaffID == StaffID)
-                        .ToList();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return null;
-            }
-        }*/
         public static List<NS_Stocks> Get_LastStockOfNeedle(int NeedleID)
         {
             try
@@ -157,6 +177,72 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
+        public static bool Check_AvailableNeedleName(int needlename)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    var rfaccCount = DataContext.NS_Needles.Where(i => i.NeedleName == needlename).Count();
+                    if (rfaccCount > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
 
+        public static bool Add_NewNeedle(NS_Needles nS_Needles)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    DataContext.NS_Needles.Add(nS_Needles);
+                    DataContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
+
+        public static bool Update_NeedleInformatio(NS_Needles model)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    var updateqty = DataContext.NS_Needles.First(i => i.NeedleID == model.NeedleID);
+                    updateqty.NeedleName = model.NeedleName;
+                    updateqty.NeedleCode = model.NeedleCode;
+                    updateqty.NeedleSize = model.NeedleSize;
+                    updateqty.NeedlePoint = model.NeedlePoint;
+                    updateqty.NeedlePrice = model.NeedlePrice;
+                    updateqty.NeedleLength = model.NeedleLength;
+                    updateqty.PointTypeImage = model.PointTypeImage;
+                    updateqty.RealityImage = model.RealityImage;
+                    DataContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
     }
 }

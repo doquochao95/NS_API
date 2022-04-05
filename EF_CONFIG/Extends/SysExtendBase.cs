@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EF_CONFIG.Model;
+using EF_CONFIG.BaseModel;
+using System.Collections.ObjectModel;
+using System.Data.SqlClient;
+using System.Data.Entity.Core.EntityClient;
 
 namespace EF_CONFIG.Extends
 {
@@ -36,5 +41,22 @@ namespace EF_CONFIG.Extends
 
         public static DateTime FirstDayOfNextMonth(this DateTime datetime) =>
             datetime.FirstDayOfMonth().AddMonths(1);
+
+        public static bool IsAvailable()
+        {
+            NeedleSupplierDataContext needleSupplierDataContext = new NeedleSupplierDataContext();
+            using (SqlConnection connection = new SqlConnection(needleSupplierDataContext.Database.Connection.ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    return true;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

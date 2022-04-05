@@ -27,13 +27,20 @@ namespace NeedleController.Views
 {
     public partial class NeedlePickingView : MvpForm, INeedlePickingView
     {
-        private ObservableCollection<NeedlePickingFormModel> NeedleQtyList { get; set; }
+        public static ObservableCollection<NeedlePickingFormModel> NeedleQtyList { get; set; }
         private readonly MainView MainView1;
+        private static string listbox_string;
         private static string Mess;
         private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
         private Thread threadOpenCV;
         private double width;
         private double height;
+
+        public static bool getneedle_flag { get; set; }
+        public static bool retry_flag { get; set; } = true;
+        public static bool needlesupplied_status { get; set; } = false;
+
+
 
         public NeedlePickingView(MainView mainView)
         {
@@ -44,59 +51,127 @@ namespace NeedleController.Views
         }
 
         public event EventHandler NeedlePickingViewLoaded;
+        public event EventHandler NeedlePickingViewExited;
         public event EventHandler NeedlePickingViewClosed;
 
         private void NeedlePickingView_Load(object sender, EventArgs e)
         {
             NeedlePickingViewLoaded(this, EventArgs.Empty);
         }
-
         private void NeedlePickingView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            NeedlePickingViewClosed(this, EventArgs.Empty);
+            NeedlePickingViewExited(this, EventArgs.Empty);
         }
-
         private void InitializeTimer()
         {
+            Timer1.Interval = 500;
             Timer1.Tick += new EventHandler(Timer1_Tick);
             Timer1.Enabled = true;
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (Mess != MainView._message)
+            if (listbox_string != MainView.listbox_string)
             {
-                Mess = MainView._message;
-                listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + Mess.ToString());
-                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                listBox1.SelectedIndex = -1;
-            }
-            MainView._cableConnection = MainView1.PingHost(Properties.Settings.Default.local_ip);
-            if (!MainView._cableConnection)
-            {
-                this.TopMost = false;
-                this.Enabled = false;
-                Timer1.Enabled = false;
-                DialogResult dlr = MessageBox.Show("Please to check connection again", "Communication Error", MessageBoxButtons.RetryCancel);
-                if (dlr == DialogResult.Retry)
+                if (MainView.listbox_string != null)
                 {
-                    Timer1.Enabled = true;
-                    return;
-                }
-                if (dlr == DialogResult.Cancel)
-                {
-                    this.Close();
-                }
+                    listbox_string = MainView.listbox_string;
+                    listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + listbox_string.ToString());
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                    listBox1.SelectedIndex = -1;
+                }              
             }
-            else
+            bool _cableConnection = MainView1.PingHost(NeedleController.Properties.Settings.Default.local_ip);
+            while (true)
             {
-                this.TopMost = true;
-                this.Enabled = true;
+                if (!_cableConnection)
+                {
+                    Timer1.Stop();
+                    switch (MessageBox.Show(this, "Check connection to device again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                    {
+                        case DialogResult.Retry:
+                            _cableConnection = MainView1.PingHost(NeedleController.Properties.Settings.Default.local_ip);
+                            break;
+                        case DialogResult.Cancel:
+                            this.Close();
+                            Application.Exit();
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    Timer1.Start();
+                    break;
+                }
             }
+
+            bool database_conneciton = MainView1.CheckForDatabaseConnection();
+            while (true)
+            {
+                if (!database_conneciton)
+                {
+                    Timer1.Stop();
+                    switch (MessageBox.Show(this, "Check connection to database again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                    {
+                        //Stay on this form
+                        case DialogResult.Retry:
+                            database_conneciton = MainView1.CheckForDatabaseConnection();
+                            break;
+                        case DialogResult.Cancel:
+                            this.Close();
+                            Application.Exit();
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    Timer1.Start();
+                    break;
+                }
+            }
+            if (getneedle_flag)
+            {
+                getneedle_flag = false;
+                MachineProcessView machineProcessView = new MachineProcessView();
+                machineProcessView.ShowDialog();
+                if (needlesupplied_status)
+                {
+                    NS_Export export = new NS_Export
+                    {
+                        DeviceID = MainView.device_id,
+                        BuildingID = MainView.building_id,
+                        NeedleID = MainView.selected_needleid,
+                        ExportTime = DateTime.Now,
+                        ExprtTimeString = DateTime.Now.ToString("HH:mm, dd/MM/yyyy"),
+                        Quantity = 1,
+                        StaffID = MainView.user_id,
+                        StockID = MainView.selected_stockid
+                    };
+                    bool status = EF_CONFIG.DataTransform.ExportBase.Add_NewExport(export);
+                    if (!status)
+                    {
+                        return;
+                    }
+                }
+            }
+            if (listbox_string == "check_camera")
+            {
+                MainView.check_camera = true;
+            }
+            if (!retry_flag)
+            {
+                this.Close();
+                retry_flag = true;
+            }
+
         }
 
         public void NeedlePickingViewLoad()
         {
-            Mess = MainView._message;
+            MainView.last_view = this.Name;
+            MainView.needlepickingviewloaded_status = true;
+            listbox_string = MainView._message;
             NeedleQtyList = new ObservableCollection<NeedlePickingFormModel>();
             var db = StockBase.Get_NeedleQtyInStockWithDeviceID(MainView.device_id);
             NeedleQtyList.Clear();
@@ -106,6 +181,7 @@ namespace NeedleController.Views
                 {
                     NeedleID = item.NeedleID,
                     NeedleName = NeedleBase.Get_Needles(item.NeedleID).NeedleName,
+                    StockId = item.StockID,
                     StockName = item.StockName,
                     CurrentQuantity = item.CurrentQuantity
                 };
@@ -119,6 +195,7 @@ namespace NeedleController.Views
                     NeedleName = p.First().NeedleName,
                     CurrentQuantity = p.First().CurrentQuantity,
                     TotalQuantity = p.Sum(a => a.CurrentQuantity),
+                    StockId = p.First().StockId,
                     StockName = p.First().StockName
                 })
                 .OrderBy(a => a.NeedleID);
@@ -129,6 +206,12 @@ namespace NeedleController.Views
                 NeedlePickingForm needlePickingForm = new NeedlePickingForm(item);
                 flowLayoutPanel1.Controls.Add(needlePickingForm);
             }
+        }
+        public void NeedlePickingViewExit()
+        {
+            MainView.last_view = this.Name;
+            MainView.check_camera = false;
+            MainView.needlepickingviewloaded_status = false;
         }
 
         public void NeedlePickingViewClose()

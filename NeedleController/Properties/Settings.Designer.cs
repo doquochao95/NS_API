@@ -25,7 +25,7 @@ namespace NeedleController.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.177")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.177")]
         public string local_ip {
             get {
                 return ((string)(this["local_ip"]));

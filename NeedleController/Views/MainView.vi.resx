@@ -214,4 +214,13 @@
   <data name="DeviceTilteLabel.Text" xml:space="preserve">
     <value>Thiết Bị :</value>
   </data>
+  <data name="AddNeedleButton.Text" xml:space="preserve">
+    <value>Thêm Kim</value>
+  </data>
+  <data name="BuildingNameLabel.Text" xml:space="preserve">
+    <value>Tên tòa nhà</value>
+  </data>
+  <data name="DeviceNameLabel.Text" xml:space="preserve">
+    <value>Tên thiết bị</value>
+  </data>
 </root>

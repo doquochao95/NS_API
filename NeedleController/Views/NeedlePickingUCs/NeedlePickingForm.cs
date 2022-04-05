@@ -25,12 +25,12 @@ namespace NeedleController.Views.NeedlePickingUCs
     [PresenterBinding(typeof(NeedlePickingFormPresenter))]
     public partial class NeedlePickingForm : MvpUserControl, INeedlePickingForm
     {
-        private readonly NeedlePickingFormModel NeedleQtyStock;
+        private readonly NeedlePickingFormModel _NeedleQtyStock;
 
         public NeedlePickingForm(NeedlePickingFormModel NeedleStock)
         {
             InitializeComponent();
-            NeedleQtyStock = NeedleStock;
+            _NeedleQtyStock = NeedleStock;
         }
         public event EventHandler GetButtonClicked;
         public event EventHandler NeedlePickingFormLoaded;
@@ -48,32 +48,35 @@ namespace NeedleController.Views.NeedlePickingUCs
 
         public void GetNeedle()
         {
-            try
+            using (UdpClient udpClient = new UdpClient())
             {
-                using (UdpClient udpClient = new UdpClient())
+                try
                 {
-                    try
+                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                    Byte[] senddata = Encoding.ASCII.GetBytes("<" + _NeedleQtyStock.StockName.ToLower() + ":" + _NeedleQtyStock.CurrentQuantity + ">");
+                    udpClient.Send(senddata, senddata.Length);
+                    NeedlePickingView.getneedle_flag = true;
+                    foreach(var item in NeedlePickingView.NeedleQtyList)
                     {
-                        udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
-                        Byte[] senddata = Encoding.ASCII.GetBytes("<"+NeedleQtyStock.StockName.ToLower()+":"+NeedleQtyStock.CurrentQuantity+">");
-                        udpClient.Send(senddata, senddata.Length);
-                    }
-                    catch (Exception i)
-                    {
-                        Console.WriteLine(i.ToString());
+                        if (item.StockId == _NeedleQtyStock.StockId)
+                        {
+                            MainView.selected_stockid = item.StockId;
+                            MainView.selected_needleid = item.NeedleID;
+                            MainView.current_qty = item.CurrentQuantity;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
+                catch (Exception i)
+                {
+                    Console.WriteLine(i.ToString());
+                }
             }
 
         }
         public void LoadNeedlePickingForm()
         {
-            GetButton.Text = NeedleQtyStock.NeedleName.ToString();
-            QuantityLabel.Text = NeedleQtyStock.TotalQuantity.ToString();
+            GetButton.Text = _NeedleQtyStock.NeedleName.ToString();
+            QuantityLabel.Text = _NeedleQtyStock.TotalQuantity.ToString();
         }
     }
 }

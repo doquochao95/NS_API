@@ -14,7 +14,9 @@ namespace NeedleController.Presenters
             : base(view)
         {
             View.GetNeedleClicked += View_GetNeedleClicked;
+            
             View.NeedleInfoClicked += View_NeedleInfoClicked;
+            View.AddNeedleButtonCLicked += View_AddNeedleButtonClicked;
             View.DeviceSettingClicked += View_DeviceSettingClicked;
             View.CameraSettingClicked += View_CameraSettingClicked;
             View.MainViewLoaded += View_MainViewLoaded;
@@ -29,6 +31,10 @@ namespace NeedleController.Presenters
         void View_GetNeedleClicked(object sender, EventArgs e)
         {
             View.ShowNeedlePickingView();
+        }
+        void View_AddNeedleButtonClicked(object sender, EventArgs e)
+        {
+            View.ShowAddNeedleView();
         }
         void View_NeedleInfoClicked(object sender, EventArgs e)
         {
