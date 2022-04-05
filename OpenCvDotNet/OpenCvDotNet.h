@@ -18,7 +18,7 @@ namespace OpenCvDotNet {
 		bool checkCamera();
 		int countCamera();
 		double needleLength();
-		void getNeedleLength(int gaussianBlurKsize, int threshold1, int threshold2, double width, double height);
+		bool getNeedleLength(int gaussianBlurKsize, int threshold1, int threshold2, double width, double height);
 		void captureCam();
 		void Display_Mode(char mode, int brightness, float contrast, bool onoffDetect);
 		void User_Display_Mode(char mode, int brightness, float contrast, int user_brightness, float user_contrast);

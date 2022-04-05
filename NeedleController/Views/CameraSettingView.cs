@@ -31,6 +31,9 @@ namespace NeedleController.Views
         public static bool on_off_detect { get; set; } = true;
         public Thread threadOpenCV;
 
+        private static bool camera_connected = false;
+        private static bool retry_connect_camera = false;
+
         public CameraSettingView()
         {
             InitializeComponent();
@@ -44,12 +47,12 @@ namespace NeedleController.Views
 
         private void CameraSettingView_Load(object sender, EventArgs e)
         {
-            CameraSettingViewLoaded(this, EventArgs.Empty);            
+            CameraSettingViewLoaded(this, EventArgs.Empty);
         }
 
         private void CameraSettingView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            CameraSettingViewClosed(this, EventArgs.Empty); 
+            CameraSettingViewClosed(this, EventArgs.Empty);
         }
 
         private void DefaultParaButton_Click(object sender, EventArgs e)
@@ -71,13 +74,24 @@ namespace NeedleController.Views
             cameraParaSetting1.LoadOpencvPara();
             cameraImgParaSetting1.LoadImgPara();
             load_flag = true;
+            MainView.last_view = this.Name;
+            MainView.camerasettingviewloaded_status = true;
         }
 
         public void CameraSettingViewClose()
         {
+            if (camera_connected)
+            {
+                if (threadOpenCV.IsBackground)
+                {
+                    threadOpenCV.Abort();
+                }
+            }
             opencv.stopCamera();
             Properties.Settings.Default.Reload();
             load_flag = false;
+            MainView.last_view = this.Name;
+            MainView.camerasettingviewloaded_status = false;
         }
 
         public void DefaultPara()
@@ -98,27 +112,49 @@ namespace NeedleController.Views
         private void InitializeCamera()
         {
             opencv.startCamera(Properties.Settings.Default.IDCamera);
-            threadOpenCV = new Thread(() => Display(opencv));
-            threadOpenCV.IsBackground = true;
-            threadOpenCV.Start();
-            thread_flag = true;
+            CheckCamera_Connection();
+            if (camera_connected)
+            {
+                threadOpenCV = new Thread(() => Display(opencv));
+                threadOpenCV.IsBackground = true;
+                threadOpenCV.Start();
+                thread_flag = true;
+            }
+            else
+            {
+                switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
+                {
+                    case DialogResult.Retry:
+                        retry_connect_camera = true;
+                        break;
+                    case DialogResult.Cancel:
+                        this.Close();
+                        break;
+                }
+            }
         }
-
+        private void CheckCamera_Connection()
+        {
+            if (!opencv.checkCamera())
+            {
+                camera_connected = false;
+            }
+            else
+            {
+                camera_connected = true;
+            }
+        }
         private void Display(MyOpenCvWrapper opencv)
         {
-            try
+            while (true)
             {
-                if (!opencv.checkCamera())
-                    MessageBox.Show("Can't open Camera");
-
-                while (opencv.checkCamera())
+                SetImgPosition();
+                bool status = opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
+                    width, height);
+                if (status)
                 {
-                    SetImgPosition();
-                    opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2, 
-                        width, height);
-                    
                     opencv.getColor(Properties.Settings.Default.colorLowR, Properties.Settings.Default.colorLowG, Properties.Settings.Default.colorLowB,
-                        Properties.Settings.Default.colorHighR, Properties.Settings.Default.colorHighG, Properties.Settings.Default.colorHighB);
+                   Properties.Settings.Default.colorHighR, Properties.Settings.Default.colorHighG, Properties.Settings.Default.colorHighB);
 
                     opencv.Display_Mode((sbyte)Properties.Settings.Default.displayImgMode, Properties.Settings.Default.brightness, Properties.Settings.Default.contrast, on_off_detect);
 
@@ -130,16 +166,16 @@ namespace NeedleController.Views
                         CannyVideo.Image = canny;
                     }));
                 }
-            }
-            catch
-            {
-                threadOpenCV.Abort();
+                else
+                {
+                    opencv.stopCamera();
+                }
             }
         }
 
         private void SetImgPosition()
         {
-            switch(Properties.Settings.Default.imgPosition)
+            switch (Properties.Settings.Default.imgPosition)
             {
                 case "Center":
                     width = 100;
@@ -186,9 +222,9 @@ namespace NeedleController.Views
 
             if (change_flag)
                 SaveParaButton.Enabled = true;
-            else 
+            else
                 SaveParaButton.Enabled = false;
-            
+
             if (default_flag)
                 DefaultParaButton.Enabled = true;
             else
@@ -198,8 +234,38 @@ namespace NeedleController.Views
                     DefaultParaButton.Enabled = false;
                 }
             }
-            
+            if (!camera_connected)
+            {
+                timer1.Stop();
+
+                if (threadOpenCV.IsAlive)
+                {
+                    if (threadOpenCV.IsBackground)
+                    {
+                        threadOpenCV.Abort();
+                    }
+                }  
+                switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
+                {
+                    case DialogResult.Retry:
+                        retry_connect_camera = true;
+                        break;
+                    case DialogResult.Cancel:
+                        this.Close();
+                        break;
+                }
+            }
+            else
+            {
+                CheckCamera_Connection();
+            }
+            if (retry_connect_camera)
+            {
+                InitializeCamera();
+                retry_connect_camera = false;
+                timer1.Start();
+            }
         }
-        
+
     }
 }

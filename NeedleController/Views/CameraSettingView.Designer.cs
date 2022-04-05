@@ -65,7 +65,7 @@ namespace NeedleController.Views
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1264, 729);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 561);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -74,16 +74,16 @@ namespace NeedleController.Views
             this.panel1.Controls.Add(this.SaveParaButton);
             this.panel1.Controls.Add(this.DefaultParaButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 681);
+            this.panel1.Location = new System.Drawing.Point(3, 513);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1258, 45);
+            this.panel1.Size = new System.Drawing.Size(978, 45);
             this.panel1.TabIndex = 7;
             // 
             // SaveParaButton
             // 
             this.SaveParaButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.SaveParaButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveParaButton.Location = new System.Drawing.Point(734, 9);
+            this.SaveParaButton.Location = new System.Drawing.Point(594, 9);
             this.SaveParaButton.Name = "SaveParaButton";
             this.SaveParaButton.Size = new System.Drawing.Size(150, 30);
             this.SaveParaButton.TabIndex = 22;
@@ -95,7 +95,7 @@ namespace NeedleController.Views
             // 
             this.DefaultParaButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.DefaultParaButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DefaultParaButton.Location = new System.Drawing.Point(374, 9);
+            this.DefaultParaButton.Location = new System.Drawing.Point(234, 9);
             this.DefaultParaButton.Name = "DefaultParaButton";
             this.DefaultParaButton.Size = new System.Drawing.Size(150, 30);
             this.DefaultParaButton.TabIndex = 21;
@@ -111,7 +111,7 @@ namespace NeedleController.Views
             this.Preview_grBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Preview_grBox.Location = new System.Drawing.Point(3, 3);
             this.Preview_grBox.Name = "Preview_grBox";
-            this.Preview_grBox.Size = new System.Drawing.Size(1258, 265);
+            this.Preview_grBox.Size = new System.Drawing.Size(978, 198);
             this.Preview_grBox.TabIndex = 8;
             this.Preview_grBox.TabStop = false;
             this.Preview_grBox.Text = "Preview";
@@ -124,12 +124,12 @@ namespace NeedleController.Views
             this.tableLayoutPanel2.Controls.Add(this.OutputVideo, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.CannyVideo, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 20);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 18);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1252, 242);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(972, 177);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // OutputVideo
@@ -138,10 +138,10 @@ namespace NeedleController.Views
             this.OutputVideo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.OutputVideo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OutputVideo.Image = global::NeedleController.Properties.Resources.Techlogo;
-            this.OutputVideo.Location = new System.Drawing.Point(631, 5);
+            this.OutputVideo.Location = new System.Drawing.Point(491, 5);
             this.OutputVideo.Margin = new System.Windows.Forms.Padding(5);
             this.OutputVideo.Name = "OutputVideo";
-            this.OutputVideo.Size = new System.Drawing.Size(616, 232);
+            this.OutputVideo.Size = new System.Drawing.Size(476, 167);
             this.OutputVideo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.OutputVideo.TabIndex = 8;
             this.OutputVideo.TabStop = false;
@@ -155,7 +155,7 @@ namespace NeedleController.Views
             this.CannyVideo.Location = new System.Drawing.Point(5, 5);
             this.CannyVideo.Margin = new System.Windows.Forms.Padding(5);
             this.CannyVideo.Name = "CannyVideo";
-            this.CannyVideo.Size = new System.Drawing.Size(616, 232);
+            this.CannyVideo.Size = new System.Drawing.Size(476, 167);
             this.CannyVideo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.CannyVideo.TabIndex = 7;
             this.CannyVideo.TabStop = false;
@@ -163,17 +163,17 @@ namespace NeedleController.Views
             // cameraImgParaSetting1
             // 
             this.cameraImgParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraImgParaSetting1.Location = new System.Drawing.Point(635, 274);
+            this.cameraImgParaSetting1.Location = new System.Drawing.Point(495, 207);
             this.cameraImgParaSetting1.Name = "cameraImgParaSetting1";
-            this.cameraImgParaSetting1.Size = new System.Drawing.Size(626, 401);
+            this.cameraImgParaSetting1.Size = new System.Drawing.Size(486, 300);
             this.cameraImgParaSetting1.TabIndex = 9;
             // 
             // cameraParaSetting1
             // 
             this.cameraParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraParaSetting1.Location = new System.Drawing.Point(3, 274);
+            this.cameraParaSetting1.Location = new System.Drawing.Point(3, 207);
             this.cameraParaSetting1.Name = "cameraParaSetting1";
-            this.cameraParaSetting1.Size = new System.Drawing.Size(626, 401);
+            this.cameraParaSetting1.Size = new System.Drawing.Size(486, 300);
             this.cameraParaSetting1.TabIndex = 10;
             // 
             // timer1
@@ -184,9 +184,10 @@ namespace NeedleController.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 729);
+            this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1000, 600);
             this.Name = "CameraSettingView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CameraSettingView";

@@ -31,9 +31,12 @@ namespace NeedleController.Views
         private readonly MainView MainView1;
         private static string listbox_string;
         private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
-        private Thread threadOpenCV;
+        private static Thread threadOpenCV;
         private double width;
         private double height;
+        private static bool camera_connected = false;
+        private static bool retry_connect_camera = false;
+
 
         public static bool getneedle_flag { get; set; }
         public static bool retry_flag { get; set; } = true;
@@ -44,8 +47,8 @@ namespace NeedleController.Views
         public NeedlePickingView(MainView mainView)
         {
             InitializeComponent();
-            InitializeTimer();
             InitializeCamera();
+            InitializeTimer();
             MainView1 = mainView;
         }
 
@@ -76,7 +79,7 @@ namespace NeedleController.Views
                     listBox1.Items.Add(DateTime.Now.ToString("yy/MM/dd HH:mm:ss ") + ":" + listbox_string.ToString());
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                     listBox1.SelectedIndex = -1;
-                }              
+                }
             }
             bool _cableConnection = MainView1.PingHost(NeedleController.Properties.Settings.Default.local_ip);
             while (true)
@@ -162,10 +165,46 @@ namespace NeedleController.Views
                 this.Close();
                 retry_flag = true;
             }
-
-
+            if (!camera_connected)
+            {
+                Timer1.Stop();
+                if (threadOpenCV.IsBackground)
+                {
+                    threadOpenCV.Abort();
+                }
+                switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
+                {
+                    case DialogResult.Retry:
+                        retry_connect_camera = true;
+                        break;
+                    case DialogResult.Cancel:
+                        this.Close();
+                        MainView.last_view = this.Name;
+                        MainView.check_camera = false;
+                        MainView.needlepickingviewloaded_status = false;
+                        break;
+                }
+            }
+            else
+            {
+                CheckCamera_Connection();
+                if (!camera_connected)
+                {
+                    return;
+                }
+                if (!threadOpenCV.IsBackground)
+                {
+                    threadOpenCV.IsBackground = true;
+                    threadOpenCV.Start();
+                }
+            }
+            if (retry_connect_camera)
+            {
+                InitializeCamera();
+                retry_connect_camera = false;
+                Timer1.Start();
+            }
         }
-
         public void NeedlePickingViewLoad()
         {
             MainView.last_view = this.Name;
@@ -211,32 +250,46 @@ namespace NeedleController.Views
             MainView.last_view = this.Name;
             MainView.check_camera = false;
             MainView.needlepickingviewloaded_status = false;
+            if(camera_connected)
+            {
+                if (threadOpenCV.IsBackground)
+                {
+                    threadOpenCV.Abort();
+                }
+            }  
             opencv.stopCamera();
         }
 
         private void InitializeCamera()
         {
             opencv.startCamera(Properties.Settings.Default.IDCamera);
+            CheckCamera_Connection();
             threadOpenCV = new Thread(() => Display(opencv));
-            threadOpenCV.IsBackground = true;
-            threadOpenCV.Start();
-        }
 
+        }
+        private void CheckCamera_Connection()
+        {
+            if (!opencv.checkCamera())
+            {
+                camera_connected = false;
+            }
+            else
+            {
+                camera_connected = true;
+            }
+        }
         private void Display(MyOpenCvWrapper opencv)
         {
-            try
+            while (true)
             {
-                if (!opencv.checkCamera())
-                    MessageBox.Show("Can't open Camera");
+                SetImgPosition();
+                bool status = opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
+                    width, height);
 
-                while (opencv.checkCamera())
+                if (status)
                 {
-                    SetImgPosition();
-                    opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
-                        width, height);
-
                     opencv.getColor(Properties.Settings.Default.colorLowR, Properties.Settings.Default.colorLowG, Properties.Settings.Default.colorLowB,
-                        Properties.Settings.Default.colorHighR, Properties.Settings.Default.colorHighG, Properties.Settings.Default.colorHighB);
+                    Properties.Settings.Default.colorHighR, Properties.Settings.Default.colorHighG, Properties.Settings.Default.colorHighB);
 
                     opencv.User_Display_Mode((sbyte)Properties.Settings.Default.displayImgMode, Properties.Settings.Default.brightness,
                         Properties.Settings.Default.contrast, cameraViewerUC1.userBrightness, cameraViewerUC1.userContrast);
@@ -249,10 +302,10 @@ namespace NeedleController.Views
                         cameraViewerUC1.destVideo = dst;
                     }));
                 }
-            }
-            catch
-            {
-                threadOpenCV.Abort();
+                else
+                {
+                    opencv.stopCamera();
+                }
             }
         }
 
@@ -279,6 +332,6 @@ namespace NeedleController.Views
             }
         }
 
-        
+
     }
 }

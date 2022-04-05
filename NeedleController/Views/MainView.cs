@@ -33,6 +33,8 @@ namespace NeedleController.Views
         public static bool needlepickingviewloaded_status { get; set; } = false;
         public static bool addneedleviewloaded_status { get; set; } = false;
         public static bool needleinfoviewloaded_status { get; set; } = false;
+        public static bool camerasettingviewloaded_status { get; set; } = false;
+        
         public static bool check_camera { get; set; } = false;
         public static bool post_onlinestatus { get; set; } = false;
         public static bool get_onlinestatus { get; set; } = false;
@@ -193,7 +195,7 @@ namespace NeedleController.Views
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (needlepickingviewloaded_status || addneedleviewloaded_status || needleinfoviewloaded_status)
+            if (needlepickingviewloaded_status || addneedleviewloaded_status || needleinfoviewloaded_status || camerasettingviewloaded_status)
             {
                 return;
             }
@@ -238,6 +240,11 @@ namespace NeedleController.Views
                         last_view = null;
                     }
                     if (last_view == "NeedleInfoView")
+                    {
+                        this.Visible = true;
+                        last_view = null;
+                    }
+                    if (last_view == "CameraSettingView")
                     {
                         this.Visible = true;
                         last_view = null;
@@ -533,6 +540,7 @@ namespace NeedleController.Views
         }
         public void ShowCameraSettingView()
         {
+            this.Visible = false;
             new CameraSettingView().Show();
         }
         public void MainViewLoad()

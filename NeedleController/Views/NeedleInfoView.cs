@@ -152,7 +152,6 @@ namespace NeedleController.Views
         }
         public void Check_NeedleInformationTabControl()
         {
-
             switch (NeedleInformationTabControl.SelectedIndex)
             {
                 case 0:
