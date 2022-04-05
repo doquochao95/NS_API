@@ -37,7 +37,7 @@ namespace NeedleController.Views
         public static bool moduc_load { get; set; } = false;
 
         public static string[] PointList { get; set; } = new string[] { "D", "LR", "R", "RG", "S" };
-        
+
         public static string selected_needlepoint { get; set; }
         public static Image selected_needlepointbitmap { get; set; }
         public static byte[] selected_needlepointbitmap_byte { get; set; }
@@ -159,6 +159,8 @@ namespace NeedleController.Views
                     {
                         if (last_selectedTabindex != 0)
                         {
+                            MainView.last_view = this.Name;
+
                             using (WaitingProcessView waitingProcessView = new WaitingProcessView())
                             {
                                 waitingProcessView.ShowDialog();
@@ -199,6 +201,8 @@ namespace NeedleController.Views
                                 }
                                 else
                                 {
+                                    MainView.last_view = this.Name;
+
                                     using (WaitingProcessView waitingProcessView = new WaitingProcessView())
                                     {
                                         waitingProcessView.ShowDialog();
@@ -247,6 +251,8 @@ namespace NeedleController.Views
                                 }
                                 else
                                 {
+                                    MainView.last_view = this.Name;
+
                                     using (WaitingProcessView waitingProcessView = new WaitingProcessView())
                                     {
                                         waitingProcessView.ShowDialog();

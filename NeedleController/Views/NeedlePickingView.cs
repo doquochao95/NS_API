@@ -30,7 +30,6 @@ namespace NeedleController.Views
         public static ObservableCollection<NeedlePickingFormModel> NeedleQtyList { get; set; }
         private readonly MainView MainView1;
         private static string listbox_string;
-        private static string Mess;
         private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
         private Thread threadOpenCV;
         private double width;
@@ -52,7 +51,6 @@ namespace NeedleController.Views
 
         public event EventHandler NeedlePickingViewLoaded;
         public event EventHandler NeedlePickingViewExited;
-        public event EventHandler NeedlePickingViewClosed;
 
         private void NeedlePickingView_Load(object sender, EventArgs e)
         {
@@ -165,6 +163,7 @@ namespace NeedleController.Views
                 retry_flag = true;
             }
 
+
         }
 
         public void NeedlePickingViewLoad()
@@ -212,10 +211,6 @@ namespace NeedleController.Views
             MainView.last_view = this.Name;
             MainView.check_camera = false;
             MainView.needlepickingviewloaded_status = false;
-        }
-
-        public void NeedlePickingViewClose()
-        {
             opencv.stopCamera();
         }
 

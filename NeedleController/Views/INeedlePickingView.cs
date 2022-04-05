@@ -11,10 +11,8 @@ namespace NeedleController.Views
     {
         event EventHandler NeedlePickingViewLoaded;
         event EventHandler NeedlePickingViewExited;
-        event EventHandler NeedlePickingViewClosed;
 
         void NeedlePickingViewLoad();
         void NeedlePickingViewExit();
-        void NeedlePickingViewClose();
     }
 }

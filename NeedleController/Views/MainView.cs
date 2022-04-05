@@ -27,6 +27,8 @@ namespace NeedleController.Views
     {
         private static string lastlistbox_string;
         public static bool _deviceConnection = false;
+        public static bool _cableConnection = false;
+
         public static bool _confirmRFID { get; set; } = false;
         public static bool needlepickingviewloaded_status { get; set; } = false;
         public static bool addneedleviewloaded_status { get; set; } = false;
@@ -45,8 +47,6 @@ namespace NeedleController.Views
 
         private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
 
-        public static bool _cableConnection;
-        public static bool _deviceConnection;
         public static string _message { get; set; }
         public static string replied_buffer { get; set; }
 
@@ -65,7 +65,6 @@ namespace NeedleController.Views
         public static int selected_stockid { get; set; }
         public static int selected_needleid { get; set; }
         public static int current_qty { get; set; }
-        public static string device_name { get; set; }
         public static int countCamera { get; set; }
 
         public static int user_id { get; set; }
