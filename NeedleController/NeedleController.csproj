@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -79,10 +79,6 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
-    <Reference Include="OpenCvDotNet, Version=1.0.8104.28897, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\x64\Debug\OpenCvDotNet.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -103,7 +99,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presenters\CameraParaPresenter.cs" />
+    <Compile Include="Presenters\CameraSettingPresenters\CameraImgParaPresenter.cs" />
+    <Compile Include="Presenters\CameraSettingPresenters\CameraParaPresenter.cs" />
     <Compile Include="Presenters\CameraSettingPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\NeedlePickingPresenters\CameraViewerPresenter.cs" />
@@ -120,13 +117,21 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Views\CameraSettingUCs\CameraParaSetting.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\CameraSettingUCs\CameraParaSetting.Designer.cs">
       <DependentUpon>CameraParaSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\CameraSettingUCs\ICameraImgParaSetting.cs" />
     <Compile Include="Views\CameraSettingUCs\ICameraParaSetting.cs" />
+    <Compile Include="Views\CameraSettingUCs\CameraImgParaSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CameraSettingUCs\CameraImgParaSetting.Designer.cs">
+      <DependentUpon>CameraImgParaSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\CameraSettingView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +206,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\CameraSettingUCs\CameraImgParaSetting.resx">
+      <DependentUpon>CameraImgParaSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CameraSettingUCs\CameraParaSetting.resx">
       <DependentUpon>CameraParaSetting.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,6 +278,10 @@
       <Project>{62E6C7EA-AB84-4E44-B05A-AF648E60FA6D}</Project>
       <Name>Infralution.Localization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OpenCvDotNet\OpenCvDotNet.vcxproj">
+      <Project>{2196d6d3-9f09-49c9-b822-26c13eb66449}</Project>
+      <Name>OpenCvDotNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\camera 100x100.png" />
@@ -309,6 +321,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableLightIconON.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

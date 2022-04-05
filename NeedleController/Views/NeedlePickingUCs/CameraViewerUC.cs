@@ -25,69 +25,71 @@ namespace NeedleController.Views.NeedlePickingUCs
     [PresenterBinding(typeof(CameraViewerPresenter))]
     public partial class CameraViewerUC : MvpUserControl, ICameraViewerUC
     {
+        public Image sourceVideo
+        {
+            get { return this.SourceVideo.Image; }
+            set { this.SourceVideo.Image = value; }
+        }
+
+        public Image destVideo
+        {
+            get { return this.DestVideo.Image; }
+            set { this.DestVideo.Image = value; }
+        }
+
+        public int imgWidth
+        {
+            get { return this.SourceVideo.Width; }
+            set { this.SourceVideo.Width = value; }
+        }
+
+        public int imgHeight
+        {
+            get { return this.SourceVideo.Height; }
+            set { this.SourceVideo.Height = value; }
+        }
+
+        public int userBrightness { get; set; } = 0;
+        public float userContrast { get; set; } = 1;
+
         public CameraViewerUC()
         {
             InitializeComponent();
+            LoadViewer();
         }
 
-        public event EventHandler SuccessButtonClicked;
-        public event EventHandler FailButtonClicked;
+        public event EventHandler UserBrightnessTrackbar_Scrolled;
+        public event EventHandler UserContrastTrackbar_Scrolled;
 
-        private void SuccessButton_Click(object sender, EventArgs e)
+        private void UserBrightnessTrackbar_Scroll(object sender, EventArgs e)
         {
-            SuccessButtonClicked(this, EventArgs.Empty);
-        }
-        private void FailButton_Click(object sender, EventArgs e)
-        {
-            FailButtonClicked(this, EventArgs.Empty);
+            UserBrightnessTrackbar_Scrolled(this, EventArgs.Empty);
         }
 
-        public void FeedbackSuccess()
+        private void UserContrastTrackbar_Scroll(object sender, EventArgs e)
         {
-            try
-            {
-                using (UdpClient udpClient = new UdpClient())
-                {
-                    try
-                    {
-                        udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
-                        Byte[] senddata = Encoding.ASCII.GetBytes("<camera:1>");
-                        udpClient.Send(senddata, senddata.Length);
-                    }
-                    catch (Exception i)
-                    {
-                        Console.WriteLine(i.ToString());
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-        public void FeedbackFail()
-        {
-            try
-            {
-                using (UdpClient udpClient = new UdpClient())
-                {
-                    try
-                    {
-                        udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
-                        Byte[] senddata = Encoding.ASCII.GetBytes("<camera:0>");
-                        udpClient.Send(senddata, senddata.Length);
-                    }
-                    catch (Exception i)
-                    {
-                        Console.WriteLine(i.ToString());
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            UserContrastTrackbar_Scrolled(this, EventArgs.Empty);
         }
 
+        public void LoadViewer()
+        {
+            UserBrightnessTrackbar.Value = userBrightness;
+            UserBrightnessValue.Text = UserBrightnessTrackbar.Value.ToString();
+            UserContrastTrackbar.Value = (int)(userContrast * 10);
+            UserContrastValue.Text = ((float)(UserContrastTrackbar.Value) / 10).ToString();
+        }
+
+        public void GetUserBrightness()
+        {
+            userBrightness = UserBrightnessTrackbar.Value;
+            UserBrightnessValue.Text = UserBrightnessTrackbar.Value.ToString();
+        }
+
+        public void GetUserContrast()
+        {
+            userContrast = (float)UserContrastTrackbar.Value / 10;
+            UserContrastValue.Text = ((float)UserContrastTrackbar.Value / 10).ToString();
+        }
+        
     }
 }

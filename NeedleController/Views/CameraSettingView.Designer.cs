@@ -31,79 +31,154 @@ namespace NeedleController.Views
         {
             this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.CannyVideo = new System.Windows.Forms.PictureBox();
-            this.cameraParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraParaSetting();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.SaveParaButton = new System.Windows.Forms.Button();
+            this.DefaultParaButton = new System.Windows.Forms.Button();
+            this.Preview_grBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.OutputVideo = new System.Windows.Forms.PictureBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CannyVideo = new System.Windows.Forms.PictureBox();
+            this.cameraImgParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraImgParaSetting();
+            this.cameraParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraParaSetting();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CannyVideo)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.Preview_grBox.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutputVideo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CannyVideo)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble;
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.Controls.Add(this.CannyVideo, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.cameraParaSetting1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.OutputVideo, 1, 0);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Preview_grBox, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cameraImgParaSetting1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.cameraParaSetting1, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1264, 729);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // CannyVideo
+            // panel1
             // 
-            this.CannyVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CannyVideo.Image = global::NeedleController.Properties.Resources.Techlogo;
-            this.CannyVideo.Location = new System.Drawing.Point(789, 396);
-            this.CannyVideo.Margin = new System.Windows.Forms.Padding(30);
-            this.CannyVideo.Name = "CannyVideo";
-            this.CannyVideo.Size = new System.Drawing.Size(442, 300);
-            this.CannyVideo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.CannyVideo.TabIndex = 5;
-            this.CannyVideo.TabStop = false;
+            this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
+            this.panel1.Controls.Add(this.SaveParaButton);
+            this.panel1.Controls.Add(this.DefaultParaButton);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 681);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1258, 45);
+            this.panel1.TabIndex = 7;
             // 
-            // cameraParaSetting1
+            // SaveParaButton
             // 
-            this.cameraParaSetting1.CannyThreshold1 = 0;
-            this.cameraParaSetting1.CannyThreshold2 = 0;
-            this.cameraParaSetting1.ColorHighB = 0;
-            this.cameraParaSetting1.ColorHighG = 0;
-            this.cameraParaSetting1.ColorHighR = 0;
-            this.cameraParaSetting1.ColorLowB = 0;
-            this.cameraParaSetting1.ColorLowG = 0;
-            this.cameraParaSetting1.ColorLowR = 0;
-            this.cameraParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraParaSetting1.GaussianBlurKsize = 1;
-            this.cameraParaSetting1.Location = new System.Drawing.Point(6, 6);
-            this.cameraParaSetting1.Name = "cameraParaSetting1";
-            this.cameraParaSetting1.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel1.SetRowSpan(this.cameraParaSetting1, 2);
-            this.cameraParaSetting1.Size = new System.Drawing.Size(747, 717);
-            this.cameraParaSetting1.TabIndex = 3;
+            this.SaveParaButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.SaveParaButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SaveParaButton.Location = new System.Drawing.Point(734, 9);
+            this.SaveParaButton.Name = "SaveParaButton";
+            this.SaveParaButton.Size = new System.Drawing.Size(150, 30);
+            this.SaveParaButton.TabIndex = 22;
+            this.SaveParaButton.Text = "Save";
+            this.SaveParaButton.UseVisualStyleBackColor = true;
+            this.SaveParaButton.Click += new System.EventHandler(this.SaveParaButton_Click);
+            // 
+            // DefaultParaButton
+            // 
+            this.DefaultParaButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.DefaultParaButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DefaultParaButton.Location = new System.Drawing.Point(374, 9);
+            this.DefaultParaButton.Name = "DefaultParaButton";
+            this.DefaultParaButton.Size = new System.Drawing.Size(150, 30);
+            this.DefaultParaButton.TabIndex = 21;
+            this.DefaultParaButton.Text = "Default";
+            this.DefaultParaButton.UseVisualStyleBackColor = true;
+            this.DefaultParaButton.Click += new System.EventHandler(this.DefaultParaButton_Click);
+            // 
+            // Preview_grBox
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.Preview_grBox, 2);
+            this.Preview_grBox.Controls.Add(this.tableLayoutPanel2);
+            this.Preview_grBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Preview_grBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Preview_grBox.Location = new System.Drawing.Point(3, 3);
+            this.Preview_grBox.Name = "Preview_grBox";
+            this.Preview_grBox.Size = new System.Drawing.Size(1258, 265);
+            this.Preview_grBox.TabIndex = 8;
+            this.Preview_grBox.TabStop = false;
+            this.Preview_grBox.Text = "Preview";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.OutputVideo, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.CannyVideo, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 20);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1252, 242);
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // OutputVideo
             // 
+            this.OutputVideo.BackColor = System.Drawing.Color.DarkGray;
+            this.OutputVideo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.OutputVideo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OutputVideo.Image = global::NeedleController.Properties.Resources.Techlogo;
-            this.OutputVideo.Location = new System.Drawing.Point(789, 33);
-            this.OutputVideo.Margin = new System.Windows.Forms.Padding(30);
+            this.OutputVideo.Location = new System.Drawing.Point(631, 5);
+            this.OutputVideo.Margin = new System.Windows.Forms.Padding(5);
             this.OutputVideo.Name = "OutputVideo";
-            this.OutputVideo.Size = new System.Drawing.Size(442, 300);
+            this.OutputVideo.Size = new System.Drawing.Size(616, 232);
             this.OutputVideo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.OutputVideo.TabIndex = 4;
+            this.OutputVideo.TabIndex = 8;
             this.OutputVideo.TabStop = false;
             // 
-            // toolTip1
+            // CannyVideo
             // 
-            this.toolTip1.AutomaticDelay = 1000;
+            this.CannyVideo.BackColor = System.Drawing.Color.DarkGray;
+            this.CannyVideo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.CannyVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CannyVideo.Image = global::NeedleController.Properties.Resources.Techlogo;
+            this.CannyVideo.Location = new System.Drawing.Point(5, 5);
+            this.CannyVideo.Margin = new System.Windows.Forms.Padding(5);
+            this.CannyVideo.Name = "CannyVideo";
+            this.CannyVideo.Size = new System.Drawing.Size(616, 232);
+            this.CannyVideo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.CannyVideo.TabIndex = 7;
+            this.CannyVideo.TabStop = false;
+            // 
+            // cameraImgParaSetting1
+            // 
+            this.cameraImgParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraImgParaSetting1.Location = new System.Drawing.Point(635, 274);
+            this.cameraImgParaSetting1.Name = "cameraImgParaSetting1";
+            this.cameraImgParaSetting1.Size = new System.Drawing.Size(626, 401);
+            this.cameraImgParaSetting1.TabIndex = 9;
+            // 
+            // cameraParaSetting1
+            // 
+            this.cameraParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraParaSetting1.Location = new System.Drawing.Point(3, 274);
+            this.cameraParaSetting1.Name = "cameraParaSetting1";
+            this.cameraParaSetting1.Size = new System.Drawing.Size(626, 401);
+            this.cameraParaSetting1.TabIndex = 10;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // CameraSettingView
             // 
@@ -118,17 +193,26 @@ namespace NeedleController.Views
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CameraSettingView_FormClosed);
             this.Load += new System.EventHandler(this.CameraSettingView_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.CannyVideo)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.Preview_grBox.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.OutputVideo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CannyVideo)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button SaveParaButton;
+        private System.Windows.Forms.Button DefaultParaButton;
+        private System.Windows.Forms.GroupBox Preview_grBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox CannyVideo;
         private System.Windows.Forms.PictureBox OutputVideo;
+        private CameraSettingUCs.CameraImgParaSetting cameraImgParaSetting1;
+        private System.Windows.Forms.Timer timer1;
         private CameraSettingUCs.CameraParaSetting cameraParaSetting1;
-        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

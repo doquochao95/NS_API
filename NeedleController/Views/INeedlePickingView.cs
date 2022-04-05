@@ -10,7 +10,9 @@ namespace NeedleController.Views
     public interface INeedlePickingView : IView
     {
         event EventHandler NeedlePickingViewLoaded;
+        event EventHandler NeedlePickingViewClosed;
 
         void NeedlePickingViewLoad();
+        void NeedlePickingViewClose();
     }
 }

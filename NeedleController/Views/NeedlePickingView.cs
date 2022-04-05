@@ -21,6 +21,7 @@ using EF_CONFIG.DataTransform;
 using EF_CONFIG.Model;
 using NeedleController.Views.NeedlePickingUCs;
 using System.Collections.ObjectModel;
+using OpenCvDotNet;
 
 namespace NeedleController.Views
 {
@@ -29,21 +30,32 @@ namespace NeedleController.Views
         private ObservableCollection<NeedlePickingFormModel> NeedleQtyList { get; set; }
         private readonly MainView MainView1;
         private static string Mess;
+        private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
+        private Thread threadOpenCV;
+        private double width;
+        private double height;
 
         public NeedlePickingView(MainView mainView)
         {
             InitializeComponent();
             InitializeTimer();
+            InitializeCamera();
             MainView1 = mainView;
         }
 
         public event EventHandler NeedlePickingViewLoaded;
+        public event EventHandler NeedlePickingViewClosed;
 
         private void NeedlePickingView_Load(object sender, EventArgs e)
         {
             NeedlePickingViewLoaded(this, EventArgs.Empty);
-
         }
+
+        private void NeedlePickingView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            NeedlePickingViewClosed(this, EventArgs.Empty);
+        }
+
         private void InitializeTimer()
         {
             Timer1.Tick += new EventHandler(Timer1_Tick);
@@ -119,5 +131,76 @@ namespace NeedleController.Views
             }
         }
 
+        public void NeedlePickingViewClose()
+        {
+            opencv.stopCamera();
+        }
+
+        private void InitializeCamera()
+        {
+            opencv.startCamera(Properties.Settings.Default.IDCamera);
+            threadOpenCV = new Thread(() => Display(opencv));
+            threadOpenCV.IsBackground = true;
+            threadOpenCV.Start();
+        }
+
+        private void Display(MyOpenCvWrapper opencv)
+        {
+            try
+            {
+                if (!opencv.checkCamera())
+                    MessageBox.Show("Can't open Camera");
+
+                while (opencv.checkCamera())
+                {
+                    SetImgPosition();
+                    opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
+                        width, height);
+
+                    opencv.getColor(Properties.Settings.Default.colorLowR, Properties.Settings.Default.colorLowG, Properties.Settings.Default.colorLowB,
+                        Properties.Settings.Default.colorHighR, Properties.Settings.Default.colorHighG, Properties.Settings.Default.colorHighB);
+
+                    opencv.User_Display_Mode((sbyte)Properties.Settings.Default.displayImgMode, Properties.Settings.Default.brightness,
+                        Properties.Settings.Default.contrast, cameraViewerUC1.userBrightness, cameraViewerUC1.userContrast);
+
+                    Bitmap src = opencv.displaySrc();
+                    Bitmap dst = opencv.displayDst();
+                    Invoke(new Action(() =>
+                    {
+                        cameraViewerUC1.sourceVideo = src;
+                        cameraViewerUC1.destVideo = dst;
+                    }));
+                }
+            }
+            catch
+            {
+                threadOpenCV.Abort();
+            }
+        }
+
+        private void SetImgPosition()
+        {
+            switch (Properties.Settings.Default.imgPosition)
+            {
+                case "Center":
+                    width = 100;
+                    height = 100;
+                    break;
+                case "Fill":
+                    width = Math.Round((double)(cameraViewerUC1.imgWidth * 100 / 640));
+                    height = Math.Round((double)(cameraViewerUC1.imgWidth * 100 / 640));
+                    break;
+                case "Fit":
+                    width = Math.Round((double)(cameraViewerUC1.imgHeight * 100 / 480));
+                    height = Math.Round((double)(cameraViewerUC1.imgHeight * 100 / 480));
+                    break;
+                case "Stretch":
+                    width = Math.Round((double)(cameraViewerUC1.imgWidth * 100 / 640));
+                    height = Math.Round((double)(cameraViewerUC1.imgHeight * 100 / 480));
+                    break;
+            }
+        }
+
+        
     }
 }

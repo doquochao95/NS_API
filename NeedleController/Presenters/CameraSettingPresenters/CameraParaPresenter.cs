@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using WinFormsMvp;
 
-namespace NeedleController.Presenters
+namespace NeedleController.Presenters.CameraSettingPresenters
 {
 
     public class CameraParaPresenter : Presenter<ICameraParaSetting>
@@ -15,16 +15,22 @@ namespace NeedleController.Presenters
         public CameraParaPresenter(ICameraParaSetting view)
             : base (view)
         {
-            View.CannyThreshold_1_Scrolled += View_CannyThreshold_1_Scrolled;
-            View.CannyThreshold_2_Scrolled += View_CannyThreshold_2_Scrolled;
-            View.SaveColorPara_Clicked += View_SaveColorPara_Clicked;
+            View.IDcameraCmb_Selected += View_IDcameraCmb_Selected;
             View.GaussianKSizeCmb_Selected += View_GaussianKSizeCmb_Selected;
+            View.CannyThreshold_1_Scrolled += View_CannyThreshold_1_Scrolled;
+            View.CannyThreshold_2_Scrolled += View_CannyThreshold_2_Scrolled;            
             View.LowR_KeyPressed += View_LowR_KeyPressed;
             View.LowG_KeyPressed += View_LowG_KeyPressed;
             View.LowB_KeyPressed += View_LowB_KeyPressed;
             View.HighR_KeyPressed += View_HighR_KeyPressed;
             View.HighG_KeyPressed += View_HighG_KeyPressed;
             View.HighB_KeyPressed += View_HighB_KeyPressed;
+            View.OnOffDetect_Checked += View_OnOffDetect_Checked;
+        }
+
+        void View_IDcameraCmb_Selected(object sender, System.EventArgs e)
+        {
+            View.GetIDCamera();
         }
 
         void View_GaussianKSizeCmb_Selected(object sender, System.EventArgs e)
@@ -40,11 +46,6 @@ namespace NeedleController.Presenters
         void View_CannyThreshold_2_Scrolled(object sender, System.EventArgs e)
         {
             View.GetCannyThreshold2();
-        }
-
-        void View_SaveColorPara_Clicked(object sender, System.EventArgs e)
-        {
-            View.SaveColorPara();
         }
 
         void View_LowR_KeyPressed(object sender, System.EventArgs e)
@@ -75,6 +76,11 @@ namespace NeedleController.Presenters
         void View_HighB_KeyPressed(object sender, System.EventArgs e)
         {
             View.EnterHighB();
+        }
+
+        void View_OnOffDetect_Checked(object sender, System.EventArgs e)
+        {
+            View.Detect_OnOff();
         }
     }
 }

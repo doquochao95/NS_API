@@ -79,12 +79,18 @@ namespace NeedleController.Views
             // 
             this.cameraViewerUC1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.cameraViewerUC1, 2);
+            this.cameraViewerUC1.destVideo = null;
             this.cameraViewerUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraViewerUC1.imgHeight = 196;
+            this.cameraViewerUC1.imgWidth = 295;
             this.cameraViewerUC1.Location = new System.Drawing.Point(3, 504);
             this.cameraViewerUC1.Name = "cameraViewerUC1";
             this.cameraViewerUC1.Padding = new System.Windows.Forms.Padding(2);
             this.cameraViewerUC1.Size = new System.Drawing.Size(953, 222);
+            this.cameraViewerUC1.sourceVideo = null;
             this.cameraViewerUC1.TabIndex = 1;
+            this.cameraViewerUC1.userBrightness = 0;
+            this.cameraViewerUC1.userContrast = 1F;
             // 
             // needleSearchingUC1
             // 
@@ -141,6 +147,7 @@ namespace NeedleController.Views
             this.Name = "NeedlePickingView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NeedlePickingView";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NeedlePickingView_FormClosed);
             this.Load += new System.EventHandler(this.NeedlePickingView_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

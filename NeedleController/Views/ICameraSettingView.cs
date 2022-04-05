@@ -11,7 +11,13 @@ namespace NeedleController.Views
     public interface ICameraSettingView : IView
     {
         event EventHandler CameraSettingViewLoaded;
+        event EventHandler CameraSettingViewClosed;
+        event EventHandler DefaultParaButton_Clicked;
+        event EventHandler SaveParaButton_Clicked;
 
         void CameraSettingViewLoad();
+        void CameraSettingViewClose();
+        void DefaultPara();
+        void SavePara();
     }
 }

@@ -11,5 +11,47 @@
     <Setting Name="language_set" Type="System.String" Scope="User">
       <Value Profile="(Default)">en-US</Value>
     </Setting>
+    <Setting Name="gaussianBlurKsize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="cannyThreshold1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="cannyThreshold2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">255</Value>
+    </Setting>
+    <Setting Name="colorLowR" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">130</Value>
+    </Setting>
+    <Setting Name="colorLowG" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">90</Value>
+    </Setting>
+    <Setting Name="colorLowB" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="colorHighR" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="colorHighG" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">110</Value>
+    </Setting>
+    <Setting Name="colorHighB" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="displayImgMode" Type="System.Char" Scope="User">
+      <Value Profile="(Default)">N</Value>
+    </Setting>
+    <Setting Name="brightness" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="contrast" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="imgPosition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Fit</Value>
+    </Setting>
+    <Setting Name="IDCamera" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

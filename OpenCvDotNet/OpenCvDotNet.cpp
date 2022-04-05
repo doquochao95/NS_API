@@ -10,14 +10,15 @@ typedef unsigned char byte;
 //VideoCapture videoCapture("http://192.168.50.130:4747/video");
 //VideoCapture videoCapture(0);
 VideoCapture videoCapture;
-UMat imgSource, imgGray, imgGaussianBlur, imgCanny, imgDilate, imgErode, imgEqualizeHist, mask;
+UMat imgSource, imgGray, imgGaussianBlur, imgCanny, imgDilate, imgErode, imgEqualizeHist, imgOutput, mask;
+UMat g, g1, fin_img, imgMode, imgUserMode, imgUserMode_1;
 int color;
 double output;
 
-void MyOpenCvWrapper::startCamera()
+void MyOpenCvWrapper::startCamera(int IDCamera)
 {
-    videoCapture.open(0);
-    //videoCapture.open("http://192.168.50.130:4747/video");
+    videoCapture.open(IDCamera);
+    //videoCapture.open("http://192.168.0.2:4747/video");
 }
 
 bool MyOpenCvWrapper::checkCamera()
@@ -28,6 +29,18 @@ bool MyOpenCvWrapper::checkCamera()
 void MyOpenCvWrapper::stopCamera()
 {
     videoCapture.release();
+}
+
+int MyOpenCvWrapper::countCamera()
+{
+    int device_counts = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        if (!videoCapture.open(device_counts++))
+            break;
+    }
+    videoCapture.release();
+    return device_counts - 1;
 }
 
 struct compareContourAreas
@@ -129,9 +142,12 @@ void MyOpenCvWrapper::getContours(UMat imgErode, UMat img)
 void MyOpenCvWrapper::getNeedleLength(int gaussianBlurKsize, int threshold1, int threshold2, double width, double height)
 {
     videoCapture.read(imgSource);
-    resize(imgSource, imgSource, cv::Size(imgSource.size().width * width / 100, imgSource.size().height * height / 100), INTER_LINEAR);
+    //resize(imgSource, imgSource, cv::Size(imgSource.size().width * width / 100, imgSource.size().height * height / 100), INTER_LINEAR);
+    resize(imgSource, imgSource, cv::Size(), width / 100, height / 100, INTER_LINEAR);
+    //imgOutput = imgSource;
+    imgSource.copyTo(imgOutput);
 
-    cvtColor(imgSource, imgGray, COLOR_RGB2GRAY);
+    cvtColor(imgOutput, imgGray, COLOR_RGB2GRAY);
     equalizeHist(imgGray, imgEqualizeHist);
     GaussianBlur(imgEqualizeHist, imgGaussianBlur, cv::Size(gaussianBlurKsize, gaussianBlurKsize), 0);
 
@@ -139,7 +155,7 @@ void MyOpenCvWrapper::getNeedleLength(int gaussianBlurKsize, int threshold1, int
     Mat kernel = getStructuringElement(MORPH_RECT, cv::Size(3, 3));
     dilate(imgCanny, imgDilate, kernel);
     erode(imgDilate, imgErode, kernel);
-    getContours(imgErode, imgSource);
+    getContours(imgErode, imgOutput);
 }
 
 Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image)
@@ -151,7 +167,7 @@ Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image)
     {
         throw gcnew NotSupportedException("Only images of type CV_8UC3, CV_8UC4, CV_8UC1 are supported for conversion to Bitmap");
     }
-
+    
     //create the bitmap and get the pointer to the data
     Bitmap^ bmpimg = gcnew Bitmap(img.cols, img.rows, PixelFormat::Format24bppRgb);
     BitmapData^ data;
@@ -183,7 +199,7 @@ void MyOpenCvWrapper::getColor(int LowR, int LowG, int LowB, int HighR, int High
     vector<vector<cv::Point>>imgColor;
     vector<Vec4i>hierarchy;
     //inRange(videoFrame, Scalar(50, 90, 130), Scalar(80, 100, 145), mask);
-    inRange(imgSource, Scalar(LowB, LowG, LowR), Scalar(HighB, HighG, HighR), mask);
+    inRange(imgOutput, Scalar(LowB, LowG, LowR), Scalar(HighB, HighG, HighR), mask);
     //inRange(videoFrame, Scalar(50, 90, 130), Scalar(80, 110, 150), mask);
     dilate(mask, mask, getStructuringElement(MORPH_RECT, cv::Size(3, 3)));
     erode(mask, mask, getStructuringElement(MORPH_RECT, cv::Size(3, 3)));
@@ -192,7 +208,7 @@ void MyOpenCvWrapper::getColor(int LowR, int LowG, int LowB, int HighR, int High
         color = 1;
     else
         color = 0;
-    drawContours(imgSource, imgColor, -1, Scalar(255, 0, 255), 2);
+    drawContours(imgOutput, imgColor, -1, Scalar(255, 0, 255), 2);
 }
 
 int MyOpenCvWrapper::Color()
@@ -212,9 +228,111 @@ void MyOpenCvWrapper::captureCam()
     imshow("Image Window", image);
 }
 
+void MyOpenCvWrapper::Display_Mode(char mode, int brightness, float contrast, bool onoffDetect)
+{
+    vector<UMat> rgbChannels(3), channels;
+
+    if (onoffDetect)
+        split(imgOutput, rgbChannels);
+    else
+        split(imgSource, rgbChannels);
+
+    g = UMat::zeros(imgSource.size(), CV_8UC1);
+
+    switch (mode)
+    {
+    case 'R':
+        channels.push_back(g);
+        channels.push_back(g);
+        channels.push_back(rgbChannels[2]);
+        merge(channels, imgMode);
+        break;
+    case 'G':
+        channels.push_back(g);
+        channels.push_back(rgbChannels[1]);
+        channels.push_back(g);
+        merge(channels, imgMode);
+        break;
+    case 'B':
+        channels.push_back(rgbChannels[0]);
+        channels.push_back(g);
+        channels.push_back(g);
+        merge(channels, imgMode);
+        break;
+    case 'N':
+        if (onoffDetect)
+            imgMode = imgOutput;
+        else
+            imgMode = imgSource;
+        break;
+    }
+    imgMode.convertTo(fin_img, -1, contrast, brightness);
+}
+
+void MyOpenCvWrapper::User_Display_Mode(char mode, int brightness, float contrast, int user_brightness, float user_contrast)
+{
+    vector<UMat> rgbChannels(3), rgbChannels_1(3), channels, channels_1;
+    split(imgOutput, rgbChannels);
+    split(imgSource, rgbChannels_1);
+    g = UMat::zeros(imgOutput.size(), CV_8UC1);
+    g1 = UMat::zeros(imgSource.size(), CV_8UC1);
+
+    switch (mode)
+    {
+    case 'R':
+        channels.push_back(g);
+        channels.push_back(g);
+        channels.push_back(rgbChannels[2]);
+        merge(channels, imgUserMode);
+
+        channels_1.push_back(g1);
+        channels_1.push_back(g1);
+        channels_1.push_back(rgbChannels_1[2]);
+        merge(channels_1, imgUserMode_1);
+        break;
+    case 'G':
+        channels.push_back(g);
+        channels.push_back(rgbChannels[1]);
+        channels.push_back(g);
+        merge(channels, imgUserMode);
+
+        channels_1.push_back(g1);
+        channels_1.push_back(rgbChannels_1[1]);
+        channels_1.push_back(g1);
+        merge(channels_1, imgUserMode_1);
+        break;
+    case 'B':
+        channels.push_back(rgbChannels[0]);
+        channels.push_back(g);
+        channels.push_back(g);
+        merge(channels, imgUserMode);
+
+        channels_1.push_back(rgbChannels_1[0]);
+        channels_1.push_back(g1);
+        channels_1.push_back(g1);
+        merge(channels_1, imgUserMode_1);
+        break;
+    case 'N':
+        imgUserMode = imgOutput;
+        imgUserMode_1 = imgSource;
+        break;
+    }
+
+    imgUserMode.convertTo(fin_img, -1, contrast, brightness);
+    imgUserMode_1.convertTo(imgSource, -1, contrast, brightness);
+
+    fin_img.convertTo(fin_img, -1, user_contrast, user_brightness);
+    imgSource.convertTo(imgSource, -1, user_contrast, user_brightness);
+}
+
 Bitmap^ MyOpenCvWrapper::displaySrc()
 {
     return MatToBitmap(imgSource);
+}
+
+Bitmap^ MyOpenCvWrapper::displayDst()
+{
+    return MatToBitmap(fin_img);
 }
 
 Bitmap^ MyOpenCvWrapper::displayCanny()

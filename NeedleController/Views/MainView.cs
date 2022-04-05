@@ -19,10 +19,14 @@ using System.Net.NetworkInformation;
 using System.Globalization;
 using Infralution.Localization;
 
+using OpenCvDotNet;
+
 namespace NeedleController.Views
 {
     public partial class MainView : MvpForm, IMainView
     {
+        private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
+
         public static bool _cableConnection;
         public static bool _deviceConnection;
         public static string _message { get; set; }
@@ -31,8 +35,8 @@ namespace NeedleController.Views
         public static string para_value_str;
         public static int device_id { get; set; }
         public static string building_name { get; set; }
-
         public static string device_name { get; set; }
+        public static int countCamera { get; set; }
 
 
         public MainView()
@@ -108,7 +112,7 @@ namespace NeedleController.Views
         {
             Timer1.Interval = 500;
             Timer1.Tick += new EventHandler(Timer1_Tick);
-            Timer1.Enabled = true; 
+            Timer1.Enabled = true;
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
@@ -185,7 +189,7 @@ namespace NeedleController.Views
 
 
         public void ShowNeedlePickingView()
-        {            
+        {
             if (_deviceConnection)
             {
                 using (RFIDCheckingView checkingView = new RFIDCheckingView())
@@ -232,7 +236,7 @@ namespace NeedleController.Views
         }
         public void MainViewLoad()
         {
-
+            countCamera = opencv.countCamera();
         }
         public void ConnectDevice()
         {

@@ -13,17 +13,18 @@ namespace NeedleController.Presenters.NeedlePickingPresenters
     {
         public CameraViewerPresenter(ICameraViewerUC view) : base(view)
         {
-            View.SuccessButtonClicked += View_SuccessButtonClicked;
-            View.FailButtonClicked += View_FailButtonClicked;
+            View.UserBrightnessTrackbar_Scrolled += View_UserBrightnessTrackbar_Scrolled;
+            View.UserContrastTrackbar_Scrolled += View_UserContrastTrackbar_Scrolled;
+        }
 
-            void View_SuccessButtonClicked(object sender, EventArgs e)
-            {
-              View.FeedbackSuccess();
-            }
-            void View_FailButtonClicked(object sender, EventArgs e)
-            {
-              View.FeedbackFail();
-            }
+        void View_UserBrightnessTrackbar_Scrolled(object sender, EventArgs e)
+        {
+            View.GetUserBrightness();
+        }
+
+        void View_UserContrastTrackbar_Scrolled(object sender, EventArgs e)
+        {
+            View.GetUserContrast();
         }
     }
 }
