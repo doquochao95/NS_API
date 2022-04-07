@@ -113,24 +113,16 @@ namespace NeedleController.Views
         {
             opencv.startCamera(Properties.Settings.Default.IDCamera);
             CheckCamera_Connection();
+            threadOpenCV = new Thread(() => Display(opencv));
             if (camera_connected)
             {
-                threadOpenCV = new Thread(() => Display(opencv));
                 threadOpenCV.IsBackground = true;
                 threadOpenCV.Start();
                 thread_flag = true;
             }
             else
             {
-                switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
-                {
-                    case DialogResult.Retry:
-                        retry_connect_camera = true;
-                        break;
-                    case DialogResult.Cancel:
-                        this.Close();
-                        break;
-                }
+                thread_flag = true;
             }
         }
         private void CheckCamera_Connection()
@@ -207,7 +199,9 @@ namespace NeedleController.Views
         {
             if (!thread_flag)
             {
+                timer1.Stop();
                 InitializeCamera();
+                timer1.Start();
             }
             else
             {
@@ -219,7 +213,6 @@ namespace NeedleController.Views
                     reset_camera = false;
                 }
             }
-
             if (change_flag)
                 SaveParaButton.Enabled = true;
             else
@@ -236,24 +229,31 @@ namespace NeedleController.Views
             }
             if (!camera_connected)
             {
-                timer1.Stop();
-
-                if (threadOpenCV.IsAlive)
+                try
                 {
-                    if (threadOpenCV.IsBackground)
+                    timer1.Stop();
+                    if (threadOpenCV.IsAlive)
                     {
-                        threadOpenCV.Abort();
+                        if (threadOpenCV.IsBackground)
+                        {
+                            threadOpenCV.Abort();
+                        }
                     }
-                }  
-                switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
-                {
-                    case DialogResult.Retry:
-                        retry_connect_camera = true;
-                        break;
-                    case DialogResult.Cancel:
-                        this.Close();
-                        break;
+                    switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
+                    {
+                        case DialogResult.Retry:
+                            retry_connect_camera = true;
+                            break;
+                        case DialogResult.Cancel:
+                            this.Close();
+                            break;
+                    }
                 }
+                catch (Exception r)
+                {
+                    Console.WriteLine(r.ToString());
+                }
+
             }
             else
             {

@@ -34,7 +34,9 @@ namespace NeedleController.Views
         public static bool addneedleviewloaded_status { get; set; } = false;
         public static bool needleinfoviewloaded_status { get; set; } = false;
         public static bool camerasettingviewloaded_status { get; set; } = false;
-        
+        public static bool devicesettingviewloaded_status { get; set; } = false;
+
+
         public static bool check_camera { get; set; } = false;
         public static bool post_onlinestatus { get; set; } = false;
         public static bool get_onlinestatus { get; set; } = false;
@@ -195,7 +197,7 @@ namespace NeedleController.Views
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (needlepickingviewloaded_status || addneedleviewloaded_status || needleinfoviewloaded_status || camerasettingviewloaded_status)
+            if (needlepickingviewloaded_status || addneedleviewloaded_status || needleinfoviewloaded_status || camerasettingviewloaded_status || devicesettingviewloaded_status)
             {
                 return;
             }
@@ -209,7 +211,6 @@ namespace NeedleController.Views
                         {
                             Timer1.Stop();
                             close_waiting = true;
-
                             switch (MessageBox.Show(this, "Needle table close success", "Error: Machine", MessageBoxButtons.OK))
                             {
                                 case DialogResult.OK:
@@ -249,26 +250,17 @@ namespace NeedleController.Views
                         this.Visible = true;
                         last_view = null;
                     }
+                    if (last_view == "DeviceSettingView")
+                    {
+                        this.Visible = true;
+                        last_view = null;
+                    }
                 }
             }
 
             if (listbox_string == "table_closed")
             {
-                using (UdpClient udpClient = new UdpClient())
-                {
-                    try
-                    {
-                        replied_buffer = "<led2:1><table:1>";
-                        udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
-                        Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
-                        udpClient.Send(senddata, senddata.Length);
-
-                    }
-                    catch (Exception i)
-                    {
-                        Console.WriteLine(i.ToString());
-                    }
-                }
+                Reply_Buffer("<led2:1><table:1>");          
                 this.Visible = false;
                 new WaitingProcessView().Show();
                 listbox_string = null;
@@ -305,12 +297,15 @@ namespace NeedleController.Views
             if (listbox_string == "open_fail")
             {
                 Timer1.Stop();
+                Reply_Buffer("<table:0><led2:0>");
+                close_waiting = true;
                 switch (MessageBox.Show(this, "Needle table open failed", "Error: Machine", MessageBoxButtons.OK))
                 {
                     case DialogResult.OK:
                         Timer1.Start();
                         break;
                 }
+                this.Visible = true;
                 listbox_string = null;
             }
 
@@ -473,7 +468,6 @@ namespace NeedleController.Views
         }
         public void ShowAddNeedleView()
         {
-
             if (_deviceConnection)
             {
                 using (IDCardCheckingView checkingView = new IDCardCheckingView())
@@ -531,7 +525,34 @@ namespace NeedleController.Views
         {
             if (_deviceConnection)
             {
-                new DeviceSettingView().Show();
+                using (IDCardCheckingView checkingView = new IDCardCheckingView())
+                {
+                    checkingView.ShowDialog();
+                }
+                if (_confirmRFID)
+                {
+                    if (device_id != user_deviceid)
+                    {
+                        MessageBox.Show("Your ID card is not acceptable in this device");
+                    }
+                    else
+                    {
+                        if (user_layer == "user")
+                        {
+                            MessageBox.Show("You need adminstrator permission to access this funtion");
+                        }
+                        else
+                        {
+                            this.Visible = false;
+                            new DeviceSettingView(this).Show();
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid ID Card");
+                }
+                _confirmRFID = false;
             }
             else
             {
@@ -668,6 +689,24 @@ namespace NeedleController.Views
             }
 
             return pingable;
+        }
+        private void Reply_Buffer(string buffer)
+        {
+            using (UdpClient udpClient = new UdpClient())
+            {
+                try
+                {
+                    replied_buffer = buffer;
+                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                    Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
+                    udpClient.Send(senddata, senddata.Length);
+
+                }
+                catch (Exception i)
+                {
+                    Console.WriteLine(i.ToString());
+                }
+            }
         }
         public void SetString_message()
         {

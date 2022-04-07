@@ -18,8 +18,8 @@ double output;
 void MyOpenCvWrapper::startCamera(int IDCamera)
 {
 
-	/* videoCapture.open(IDCamera);*/
-	videoCapture.open("http://192.168.0.2:4747/video");
+	 videoCapture.open(IDCamera);
+	/*videoCapture.open("http://192.168.0.2:4747/video");*/
 }
 
 bool MyOpenCvWrapper::checkCamera()

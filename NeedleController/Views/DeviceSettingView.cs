@@ -12,9 +12,11 @@ namespace NeedleController.Views
 {
     public partial class DeviceSettingView : Form
     {
-        public DeviceSettingView()
+        private static MainView _mainView;
+        public DeviceSettingView(MainView mainView)
         {
             InitializeComponent();
+            _mainView = mainView;
         }
     }
 }
