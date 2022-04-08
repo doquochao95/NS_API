@@ -212,12 +212,24 @@ namespace NeedleController.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int IDCamera {
+        public string IDCamera {
             get {
-                return ((int)(this["IDCamera"]));
+                return ((string)(this["IDCamera"]));
             }
             set {
                 this["IDCamera"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Local Camera")]
+        public string modeCamera {
+            get {
+                return ((string)(this["modeCamera"]));
+            }
+            set {
+                this["modeCamera"] = value;
             }
         }
     }

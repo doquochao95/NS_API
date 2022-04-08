@@ -16,14 +16,13 @@ namespace NeedleController.Views.CameraSettingUCs
     [PresenterBinding(typeof(Presenters.CameraSettingPresenters.CameraImgParaPresenter))]
     public partial class CameraImgParaSetting : MvpUserControl, ICameraImgParaSetting
     {
-        
-
         public CameraImgParaSetting()
         {
             InitializeComponent();
             InitializeTimer();
         }
 
+        public event EventHandler CameraImgParaSetting_Loaded;
         public event EventHandler BrightnessTrackbar_Scrolled;
         public event EventHandler ContrastTrackbar_Scrolled;
         public event EventHandler RedRaBtn_Checked;
@@ -31,6 +30,19 @@ namespace NeedleController.Views.CameraSettingUCs
         public event EventHandler BlueRaBtn_Checked;
         public event EventHandler NormalRaBtn_Checked;
         public event EventHandler ImgPositionCmb_Selected;
+
+        private void CameraImgParaSetting_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                CameraImgParaSetting_Loaded(this, EventArgs.Empty);
+
+            }
+            catch (NullReferenceException n)
+            {
+                Console.WriteLine(n.ToString());
+            }
+        }
 
         private void BrightnessTrackbar_Scroll(object sender, EventArgs e)
         {
@@ -71,8 +83,15 @@ namespace NeedleController.Views.CameraSettingUCs
             ImgPositionCmb_Selected(this, EventArgs.Empty);
         }
 
-        public void LoadImgPara()
+        public void Load_CameraImgParaSetting()
         {
+            if (CameraSettingView.camera_connection_failed)
+            {
+                BrightnessTrackbar.Enabled = false;
+                ContrastTrackBar.Enabled = false;
+                DisplayMode.Enabled = false;
+                ImgPositionCmb.Enabled = false;
+            }
             BrightnessTrackbar.Value = Properties.Settings.Default.brightness;
             BrightnessValue.Text = BrightnessTrackbar.Value.ToString();
             ContrastTrackBar.Value = (int)(Properties.Settings.Default.contrast * 10);
@@ -107,6 +126,11 @@ namespace NeedleController.Views.CameraSettingUCs
                     ImgPositionCmb.SelectedIndex = 3;
                     break;
             }
+        }
+
+        public void LoadImgPara()
+        {
+            
         }
 
         public void GetBrightness()
@@ -197,6 +221,9 @@ namespace NeedleController.Views.CameraSettingUCs
             {
                 CameraSettingView.default_img = false;
             }
+            Load_CameraImgParaSetting();
         }
+
+        
     }
 }

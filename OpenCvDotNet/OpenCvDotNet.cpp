@@ -1,6 +1,8 @@
 #include "pch.h"
 
 #include "OpenCvDotNet.h"
+#include <stdio.h>
+
 
 using namespace OpenCvDotNet;
 using namespace cv;
@@ -15,11 +17,25 @@ UMat g, g1, fin_img, imgMode, imgUserMode, imgUserMode_1;
 int color;
 double output;
 
+void MarshalString(System::String^ s, string& os) {
+	using namespace Runtime::InteropServices;
+	const char* chars =
+		(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+	os = chars;
+	Marshal::FreeHGlobal(IntPtr((void*)chars));
+}
+
 void MyOpenCvWrapper::startCamera(int IDCamera)
 {
+	videoCapture.open(IDCamera);
+	/*videoCapture.open("http://192.168.000.002:4747/video");*/
+}
 
-	 videoCapture.open(IDCamera);
-	/*videoCapture.open("http://192.168.0.2:4747/video");*/
+void MyOpenCvWrapper::startCamera(System::String^ IPCamera)
+{
+	string path;
+	MarshalString(IPCamera, path);
+	videoCapture.open(path);
 }
 
 bool MyOpenCvWrapper::checkCamera()
@@ -164,7 +180,7 @@ bool MyOpenCvWrapper::getNeedleLength(int gaussianBlurKsize, int threshold1, int
 		erode(imgDilate, imgErode, kernel);
 		getContours(imgErode, imgOutput);
 		return true;
-	}	
+	}
 }
 
 Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image)

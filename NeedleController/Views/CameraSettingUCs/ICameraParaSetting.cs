@@ -10,7 +10,9 @@ namespace NeedleController.Views.CameraSettingUCs
 {
     public interface ICameraParaSetting : IView
     {
+        event EventHandler CameraParaSettingLoaded;
         event EventHandler IDcameraCmb_Selected;
+        event EventHandler AddressStringTextBox_KeyPressed;
         event EventHandler GaussianKSizeCmb_Selected;
         event EventHandler CannyThreshold_1_Scrolled;
         event EventHandler CannyThreshold_2_Scrolled;
@@ -22,6 +24,8 @@ namespace NeedleController.Views.CameraSettingUCs
         event EventHandler HighB_KeyPressed;
         event EventHandler OnOffDetect_Checked;
 
+        void Load_CameraParaSetting();
+        void EnterCameraAddress();
         void GetIDCamera();
         void GetGaussianBlurKsize();
         void GetCannyThreshold1();

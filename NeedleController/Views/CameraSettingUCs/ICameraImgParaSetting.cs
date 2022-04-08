@@ -10,6 +10,7 @@ namespace NeedleController.Views.CameraSettingUCs
 {
     public interface ICameraImgParaSetting : IView
     {
+        event EventHandler CameraImgParaSetting_Loaded;
         event EventHandler BrightnessTrackbar_Scrolled;
         event EventHandler ContrastTrackbar_Scrolled;
         event EventHandler RedRaBtn_Checked;
@@ -18,6 +19,7 @@ namespace NeedleController.Views.CameraSettingUCs
         event EventHandler NormalRaBtn_Checked;
         event EventHandler ImgPositionCmb_Selected;
 
+        void Load_CameraImgParaSetting();
         void GetBrightness();
         void GetContrast();
         void GetDisplayMode();

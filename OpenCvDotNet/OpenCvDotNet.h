@@ -5,6 +5,8 @@ using namespace System::Drawing;
 using namespace System::Drawing::Imaging;
 using namespace System::IO;
 
+#include <string>
+#include <iostream>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -14,6 +16,7 @@ namespace OpenCvDotNet {
 	{
 	public:
 		void startCamera(int IDCamera);
+		void startCamera(System::String^ IPCamera);
 		void stopCamera();
 		bool checkCamera();
 		int countCamera();

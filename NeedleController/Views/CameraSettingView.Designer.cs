@@ -38,15 +38,18 @@ namespace NeedleController.Views
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.OutputVideo = new System.Windows.Forms.PictureBox();
             this.CannyVideo = new System.Windows.Forms.PictureBox();
-            this.cameraImgParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraImgParaSetting();
-            this.cameraParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraParaSetting();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.cameraImgParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraImgParaSetting();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.Preview_grBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutputVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CannyVideo)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -56,8 +59,8 @@ namespace NeedleController.Views
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.Preview_grBox, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.cameraImgParaSetting1, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.cameraParaSetting1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -160,25 +163,34 @@ namespace NeedleController.Views
             this.CannyVideo.TabIndex = 7;
             this.CannyVideo.TabStop = false;
             // 
-            // cameraImgParaSetting1
-            // 
-            this.cameraImgParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraImgParaSetting1.Location = new System.Drawing.Point(495, 207);
-            this.cameraImgParaSetting1.Name = "cameraImgParaSetting1";
-            this.cameraImgParaSetting1.Size = new System.Drawing.Size(486, 300);
-            this.cameraImgParaSetting1.TabIndex = 9;
-            // 
-            // cameraParaSetting1
-            // 
-            this.cameraParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraParaSetting1.Location = new System.Drawing.Point(3, 207);
-            this.cameraParaSetting1.Name = "cameraParaSetting1";
-            this.cameraParaSetting1.Size = new System.Drawing.Size(486, 300);
-            this.cameraParaSetting1.TabIndex = 10;
-            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 207);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(486, 300);
+            this.panel2.TabIndex = 10;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.cameraImgParaSetting1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(495, 207);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(486, 300);
+            this.panel3.TabIndex = 11;
+            // 
+            // cameraImgParaSetting1
+            // 
+            this.cameraImgParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraImgParaSetting1.Location = new System.Drawing.Point(0, 0);
+            this.cameraImgParaSetting1.Name = "cameraImgParaSetting1";
+            this.cameraImgParaSetting1.Size = new System.Drawing.Size(486, 300);
+            this.cameraImgParaSetting1.TabIndex = 10;
             // 
             // CameraSettingView
             // 
@@ -199,6 +211,8 @@ namespace NeedleController.Views
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.OutputVideo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CannyVideo)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -212,8 +226,9 @@ namespace NeedleController.Views
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox CannyVideo;
         private System.Windows.Forms.PictureBox OutputVideo;
-        private CameraSettingUCs.CameraImgParaSetting cameraImgParaSetting1;
         private System.Windows.Forms.Timer timer1;
-        private CameraSettingUCs.CameraParaSetting cameraParaSetting1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private CameraSettingUCs.CameraImgParaSetting cameraImgParaSetting1;
     }
 }

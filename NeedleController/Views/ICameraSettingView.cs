@@ -19,5 +19,6 @@ namespace NeedleController.Views
         void CameraSettingViewClose();
         void DefaultPara();
         void SavePara();
+        void Reset_timer();
     }
 }

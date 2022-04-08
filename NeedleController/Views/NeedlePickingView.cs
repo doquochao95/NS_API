@@ -262,7 +262,18 @@ namespace NeedleController.Views
 
         private void InitializeCamera()
         {
-            opencv.startCamera(Properties.Settings.Default.IDCamera);
+            //opencv.startCamera(Properties.Settings.Default.modeCamera,Properties.Settings.Default.IDCamera);
+            string camera_id = "http://" + Properties.Settings.Default.IDCamera + ":4747/video";
+            int str_length = camera_id.Length;
+            if (str_length > 1)
+            {
+                opencv.startCamera(camera_id);
+            }
+            else
+            {
+                opencv.startCamera(int.Parse(camera_id));
+            }
+
             CheckCamera_Connection();
             threadOpenCV = new Thread(() => Display(opencv));
 

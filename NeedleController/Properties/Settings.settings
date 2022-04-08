@@ -50,8 +50,11 @@
     <Setting Name="imgPosition" Type="System.String" Scope="User">
       <Value Profile="(Default)">Fit</Value>
     </Setting>
-    <Setting Name="IDCamera" Type="System.Int32" Scope="User">
+    <Setting Name="IDCamera" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="modeCamera" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Local Camera</Value>
     </Setting>
   </Settings>
 </SettingsFile>

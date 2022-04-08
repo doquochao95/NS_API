@@ -12,6 +12,9 @@ using System.Threading;
 using WinFormsMvp.Forms;
 using OpenCvDotNet;
 using System.Configuration;
+using System.Runtime.InteropServices;
+using NeedleController.Views.CameraSettingUCs;
+using System.Net.NetworkInformation;
 
 namespace NeedleController.Views
 {
@@ -21,6 +24,10 @@ namespace NeedleController.Views
         private double width;
         private double height;
 
+        private CameraSettingUCs.CameraParaSetting cameraParaSetting1;
+
+        public static string[] camera_id_list { get; set; } = new string[] { "Local Camera", "IP Camera" };
+
         public static bool reset_camera { get; set; } = false;
         public static bool thread_flag { get; set; } = false;
         public static bool change_flag { get; set; } = false;
@@ -29,15 +36,22 @@ namespace NeedleController.Views
         public static bool default_img { get; set; } = false;
         public static bool default_opencv { get; set; } = false;
         public static bool on_off_detect { get; set; } = true;
+        public static bool camera_connection_failed { get; set; } = false;
+
+        public static bool initial_flag { get; set; } = false;
+        public static bool camera_parasetting_flag { get; set; } = false;
+
+
         public Thread threadOpenCV;
 
-        private static bool camera_connected = false;
-        private static bool retry_connect_camera = false;
+        public static bool camera_connected = false;
 
         public CameraSettingView()
         {
             InitializeComponent();
             InitializeTimer();
+            this.cameraParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraParaSetting(this);
+
         }
 
         public event EventHandler CameraSettingViewLoaded;
@@ -67,6 +81,14 @@ namespace NeedleController.Views
 
         public void CameraSettingViewLoad()
         {
+
+            this.panel2.Controls.Add(this.cameraParaSetting1);
+            this.cameraParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraParaSetting1.Location = new System.Drawing.Point(0, 0);
+            this.cameraParaSetting1.Name = "cameraParaSetting1";
+            this.cameraParaSetting1.Size = new System.Drawing.Size(486, 300);
+            this.cameraParaSetting1.TabIndex = 11;
+
             thread_flag = false;
             change_flag = false;
             default_flag = false;
@@ -76,6 +98,7 @@ namespace NeedleController.Views
             load_flag = true;
             MainView.last_view = this.Name;
             MainView.camerasettingviewloaded_status = true;
+
         }
 
         public void CameraSettingViewClose()
@@ -97,7 +120,7 @@ namespace NeedleController.Views
         public void DefaultPara()
         {
             default_flag = false;
-            Properties.Settings.Default.Reset();
+            Properties.Settings.Default.Reload();
             reset_camera = true;
             cameraParaSetting1.LoadOpencvPara();
             cameraImgParaSetting1.LoadImgPara();
@@ -105,24 +128,94 @@ namespace NeedleController.Views
 
         public void SavePara()
         {
-            change_flag = false;
-            Properties.Settings.Default.Save();
+            switch (MessageBox.Show(this, "Are you sure ?", "Save parameters ", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.Yes:
+                    change_flag = false;
+                    Properties.Settings.Default.Save();
+                    break;
+                case DialogResult.No:
+                    break;
+            }
+        }
+        public void Reset_timer()
+        {
+            timer1.Start();
         }
 
         private void InitializeCamera()
         {
-            opencv.startCamera(Properties.Settings.Default.IDCamera);
-            CheckCamera_Connection();
-            threadOpenCV = new Thread(() => Display(opencv));
-            if (camera_connected)
+            try
             {
-                threadOpenCV.IsBackground = true;
-                threadOpenCV.Start();
-                thread_flag = true;
+                string camera_id = Properties.Settings.Default.IDCamera;
+                string camera_mode = Properties.Settings.Default.modeCamera;
+                if (camera_mode == "Local Camera" && camera_id.Length == 1)
+                {
+                    opencv.startCamera(int.Parse(camera_id));
+                    threadOpenCV = new Thread(() => Display(opencv));
+
+                    CheckCamera_Connection();
+                    if (camera_connected)
+                    {
+                        threadOpenCV.IsBackground = true;
+                        threadOpenCV.Start();
+                        thread_flag = true;
+                    }
+                    else
+                    {
+                        thread_flag = true;
+                    }
+                    if (!camera_parasetting_flag)
+                    {
+                        initial_flag = true;
+
+                    }
+                }
+                else if (camera_mode == "Local Camera" && camera_id.Length > 1)
+                {
+                    MessageBox.Show(this, "Invalid camera id", "Error: Data", MessageBoxButtons.OK);
+                    initial_flag = true;
+                }
+                else if (camera_mode == "IP Camera" && camera_id.Length > 1)
+                {
+                    bool status = PingHost(camera_id);
+                    if (status)
+                    {
+                        opencv.startCamera("http://" + camera_id + ":4747/video");
+                        threadOpenCV = new Thread(() => Display(opencv));
+
+                        CheckCamera_Connection();
+                        if (camera_connected)
+                        {
+                            threadOpenCV.IsBackground = true;
+                            threadOpenCV.Start();
+                            thread_flag = true;
+                        }
+                        else
+                        {
+                            thread_flag = true;
+                        }
+                        if (!camera_parasetting_flag)
+                        {
+                            initial_flag = true;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Invalid camera id", "Error: Data", MessageBoxButtons.OK);
+                        initial_flag = true;
+                        thread_flag = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "Invalid camera id", "Error: Data", MessageBoxButtons.OK);
+                    initial_flag = true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                thread_flag = true;
+                Console.WriteLine(ex.Message);
             }
         }
         private void CheckCamera_Connection()
@@ -140,6 +233,7 @@ namespace NeedleController.Views
         {
             while (true)
             {
+
                 SetImgPosition();
                 bool status = opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
                     width, height);
@@ -190,82 +284,125 @@ namespace NeedleController.Views
 
         private void InitializeTimer()
         {
-            timer1.Interval = 100;
+            timer1.Interval = 500;
             timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (camera_connection_failed)
+            {
+                return;
+            }
             if (!thread_flag)
             {
-                timer1.Stop();
-                InitializeCamera();
-                timer1.Start();
+                if (initial_flag)
+                {
+                    return;
+                }
+                else
+                {
+                    if (reset_camera)
+                    {
+                        opencv.stopCamera();
+                        thread_flag = true;
+                        reset_camera = false;
+                    }
+                    timer1.Stop();
+                    InitializeCamera();
+                    timer1.Start();
+                }
+
             }
             else
             {
                 if (reset_camera)
                 {
+                    
                     opencv.stopCamera();
                     threadOpenCV.Abort();
                     thread_flag = false;
                     reset_camera = false;
                 }
-            }
-            if (change_flag)
-                SaveParaButton.Enabled = true;
-            else
-                SaveParaButton.Enabled = false;
+                if (change_flag)
+                    SaveParaButton.Enabled = true;
+                else
+                    SaveParaButton.Enabled = false;
 
-            if (default_flag)
-                DefaultParaButton.Enabled = true;
-            else
-            {
-                if (default_img || default_opencv)
+                if (default_flag)
+                    DefaultParaButton.Enabled = true;
+                else
                 {
-                    DefaultParaButton.Enabled = false;
+                    if (default_img || default_opencv)
+                    {
+                        DefaultParaButton.Enabled = false;
+                    }
                 }
-            }
-            if (!camera_connected)
-            {
-                try
+                if (!camera_connected)
                 {
                     timer1.Stop();
-                    if (threadOpenCV.IsAlive)
+                    try
                     {
-                        if (threadOpenCV.IsBackground)
+                        if (threadOpenCV.IsAlive)
                         {
-                            threadOpenCV.Abort();
+                            if (threadOpenCV.IsBackground)
+                            {
+                                threadOpenCV.Abort();
+                            }
+                        }
+                        switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
+                        {
+                            case DialogResult.Retry:
+                                camera_connection_failed = true;
+                                break;
+                            case DialogResult.Cancel:
+                                this.Close();
+                                break;
                         }
                     }
-                    switch (MessageBox.Show(this, "Can't open Camera", "Error: commmunication", MessageBoxButtons.RetryCancel))
+                    catch (Exception r)
                     {
-                        case DialogResult.Retry:
-                            retry_connect_camera = true;
-                            break;
-                        case DialogResult.Cancel:
-                            this.Close();
-                            break;
+                        Console.WriteLine(r.ToString());
                     }
+
                 }
-                catch (Exception r)
+                else
                 {
-                    Console.WriteLine(r.ToString());
+                    CheckCamera_Connection();
                 }
+            }
 
-            }
-            else
-            {
-                CheckCamera_Connection();
-            }
-            if (retry_connect_camera)
-            {
-                InitializeCamera();
-                retry_connect_camera = false;
-                timer1.Start();
-            }
+            /* if (retry_connect_camera)
+             {
+                 InitializeCamera();
+                 retry_connect_camera = false;
+                 timer1.Start();
+             }*/
         }
+        private static bool PingHost(string nameOrAddress)
+        {
+            bool pingable = false;
+            Ping pinger = null;
+            try
+            {
+                pinger = new Ping();
+                PingReply reply = pinger.Send(nameOrAddress);
+                pingable = reply.Status == IPStatus.Success;
+            }
+            catch (PingException)
+            {
+                // Discard PingExceptions and return false;
+            }
+            finally
+            {
+                if (pinger != null)
+                {
+                    pinger.Dispose();
+                }
+            }
 
+            return pingable;
+        }
     }
 }

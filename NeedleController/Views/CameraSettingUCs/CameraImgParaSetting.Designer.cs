@@ -86,7 +86,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(70, 306);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 18);
+            this.label1.Size = new System.Drawing.Size(100, 17);
             this.label1.TabIndex = 16;
             this.label1.Text = "Image Position";
             // 
@@ -100,7 +100,7 @@
             "Stretch"});
             this.ImgPositionCmb.Location = new System.Drawing.Point(229, 303);
             this.ImgPositionCmb.Name = "ImgPositionCmb";
-            this.ImgPositionCmb.Size = new System.Drawing.Size(100, 26);
+            this.ImgPositionCmb.Size = new System.Drawing.Size(100, 24);
             this.ImgPositionCmb.TabIndex = 15;
             this.ImgPositionCmb.SelectedIndexChanged += new System.EventHandler(this.ImgPositionCmb_SelectedIndexChanged);
             // 
@@ -110,7 +110,7 @@
             this.ContrastValue.AutoSize = true;
             this.ContrastValue.Location = new System.Drawing.Point(527, 103);
             this.ContrastValue.Name = "ContrastValue";
-            this.ContrastValue.Size = new System.Drawing.Size(16, 18);
+            this.ContrastValue.Size = new System.Drawing.Size(16, 17);
             this.ContrastValue.TabIndex = 14;
             this.ContrastValue.Text = "0";
             // 
@@ -120,7 +120,7 @@
             this.BrightnessValue.AutoSize = true;
             this.BrightnessValue.Location = new System.Drawing.Point(527, 44);
             this.BrightnessValue.Name = "BrightnessValue";
-            this.BrightnessValue.Size = new System.Drawing.Size(16, 18);
+            this.BrightnessValue.Size = new System.Drawing.Size(16, 17);
             this.BrightnessValue.TabIndex = 13;
             this.BrightnessValue.Text = "0";
             // 
@@ -148,7 +148,7 @@
             this.RedRaBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RedRaBtn.Location = new System.Drawing.Point(280, 35);
             this.RedRaBtn.Name = "RedRaBtn";
-            this.RedRaBtn.Size = new System.Drawing.Size(100, 20);
+            this.RedRaBtn.Size = new System.Drawing.Size(82, 17);
             this.RedRaBtn.TabIndex = 8;
             this.RedRaBtn.Text = "Red Display";
             this.RedRaBtn.UseVisualStyleBackColor = true;
@@ -161,7 +161,7 @@
             this.NormalRaBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NormalRaBtn.Location = new System.Drawing.Point(76, 35);
             this.NormalRaBtn.Name = "NormalRaBtn";
-            this.NormalRaBtn.Size = new System.Drawing.Size(118, 20);
+            this.NormalRaBtn.Size = new System.Drawing.Size(95, 17);
             this.NormalRaBtn.TabIndex = 11;
             this.NormalRaBtn.Text = "Normal Display";
             this.NormalRaBtn.UseVisualStyleBackColor = true;
@@ -174,7 +174,7 @@
             this.GreenRaBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GreenRaBtn.Location = new System.Drawing.Point(76, 72);
             this.GreenRaBtn.Name = "GreenRaBtn";
-            this.GreenRaBtn.Size = new System.Drawing.Size(111, 20);
+            this.GreenRaBtn.Size = new System.Drawing.Size(91, 17);
             this.GreenRaBtn.TabIndex = 9;
             this.GreenRaBtn.Text = "Green Display";
             this.GreenRaBtn.UseVisualStyleBackColor = true;
@@ -187,7 +187,7 @@
             this.BlueRaBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BlueRaBtn.Location = new System.Drawing.Point(280, 72);
             this.BlueRaBtn.Name = "BlueRaBtn";
-            this.BlueRaBtn.Size = new System.Drawing.Size(101, 20);
+            this.BlueRaBtn.Size = new System.Drawing.Size(83, 17);
             this.BlueRaBtn.TabIndex = 10;
             this.BlueRaBtn.Text = "Blue Display";
             this.BlueRaBtn.UseVisualStyleBackColor = true;
@@ -201,7 +201,7 @@
             this.ContrastTrackBar.Location = new System.Drawing.Point(167, 103);
             this.ContrastTrackBar.Maximum = 100;
             this.ContrastTrackBar.Name = "ContrastTrackBar";
-            this.ContrastTrackBar.Size = new System.Drawing.Size(344, 50);
+            this.ContrastTrackBar.Size = new System.Drawing.Size(344, 45);
             this.ContrastTrackBar.SmallChange = 5;
             this.ContrastTrackBar.TabIndex = 3;
             this.ContrastTrackBar.TickFrequency = 10;
@@ -215,7 +215,7 @@
             this.BrightnessTrackbar.Maximum = 100;
             this.BrightnessTrackbar.Minimum = -100;
             this.BrightnessTrackbar.Name = "BrightnessTrackbar";
-            this.BrightnessTrackbar.Size = new System.Drawing.Size(344, 50);
+            this.BrightnessTrackbar.Size = new System.Drawing.Size(344, 45);
             this.BrightnessTrackbar.TabIndex = 2;
             this.BrightnessTrackbar.TickFrequency = 10;
             this.BrightnessTrackbar.Scroll += new System.EventHandler(this.BrightnessTrackbar_Scroll);
@@ -226,7 +226,7 @@
             this.Contrast.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Contrast.Location = new System.Drawing.Point(70, 103);
             this.Contrast.Name = "Contrast";
-            this.Contrast.Size = new System.Drawing.Size(56, 16);
+            this.Contrast.Size = new System.Drawing.Size(46, 13);
             this.Contrast.TabIndex = 1;
             this.Contrast.Text = "Contrast";
             // 
@@ -236,7 +236,7 @@
             this.Brightness.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Brightness.Location = new System.Drawing.Point(70, 46);
             this.Brightness.Name = "Brightness";
-            this.Brightness.Size = new System.Drawing.Size(70, 16);
+            this.Brightness.Size = new System.Drawing.Size(56, 13);
             this.Brightness.TabIndex = 0;
             this.Brightness.Text = "Brightness";
             // 
@@ -251,6 +251,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "CameraImgParaSetting";
             this.Size = new System.Drawing.Size(621, 414);
+            this.Load += new System.EventHandler(this.CameraImgParaSetting_Load);
             this.panel1.ResumeLayout(false);
             this.ImageSetting.ResumeLayout(false);
             this.ImageSetting.PerformLayout();

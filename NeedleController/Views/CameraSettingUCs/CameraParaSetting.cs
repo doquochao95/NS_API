@@ -20,21 +20,26 @@ namespace NeedleController.Views.CameraSettingUCs
     public partial class CameraParaSetting : MvpUserControl, ICameraParaSetting
     {
         private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
-
-        public CameraParaSetting()
+        private static bool setting_flag = false;
+        private static CameraSettingView _cameraSettingView;
+        public CameraParaSetting(CameraSettingView cameraSettingView)
         {
             InitializeComponent();
             InitializeTimer();
-            for (int i = 0; i < 3/*MainView.countCamera*/; i++)
-            {
-                IDcameraCmb.Items.Add(i.ToString());
-            }
+            _cameraSettingView = cameraSettingView;
+            /*_cameraSettingView = cameraSettingView;*/
+            //for (int i = 0; i < 3/*MainView.countCamera*/; i++)
+            //{
+            //    IDcameraCmb.Items.Add(i.ToString());
+            //}
         }
 
+        public event EventHandler CameraParaSettingLoaded;
         public event EventHandler IDcameraCmb_Selected;
+        public event EventHandler AddressStringTextBox_KeyPressed;
         public event EventHandler GaussianKSizeCmb_Selected;
         public event EventHandler CannyThreshold_1_Scrolled;
-        public event EventHandler CannyThreshold_2_Scrolled;        
+        public event EventHandler CannyThreshold_2_Scrolled;
         public event EventHandler LowR_KeyPressed;
         public event EventHandler LowG_KeyPressed;
         public event EventHandler LowB_KeyPressed;
@@ -43,9 +48,29 @@ namespace NeedleController.Views.CameraSettingUCs
         public event EventHandler HighB_KeyPressed;
         public event EventHandler OnOffDetect_Checked;
 
+        private void CameraParaSetting_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                CameraParaSettingLoaded(this, EventArgs.Empty);
+
+            }
+            catch (NullReferenceException n)
+            {
+                Console.WriteLine(n.ToString());
+            }
+        }
         private void IDcameraCmb_SelectedIndexChanged(object sender, EventArgs e)
         {
             IDcameraCmb_Selected(this, EventArgs.Empty);
+        }
+
+        private void AddressStringTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+                e.Handled = true;
+            if (e.KeyChar == 13)
+                AddressStringTextBox_KeyPressed(this, EventArgs.Empty);
         }
 
         private void GaussianKSizeCmb_SelectedIndexChanged(object sender, EventArgs e)
@@ -116,12 +141,8 @@ namespace NeedleController.Views.CameraSettingUCs
             OnOffDetect_Checked(this, EventArgs.Empty);
         }
         //------------------.-----------------//
-
-        public void LoadOpencvPara()
+        public void Load_CameraParaSetting()
         {
-            if (MainView.countCamera > 0)
-                IDcameraCmb.SelectedIndex = Properties.Settings.Default.IDCamera;
-
             switch (Properties.Settings.Default.gaussianBlurKsize)
             {
                 case 3:
@@ -136,7 +157,7 @@ namespace NeedleController.Views.CameraSettingUCs
                 case 9:
                     GaussianKSizeCmb.SelectedIndex = 3;
                     break;
-            }            
+            }
             CannyThreshold1Trackbar.Value = Properties.Settings.Default.cannyThreshold1;
             CannyThreshold1Value.Text = CannyThreshold1Trackbar.Value.ToString();
             CannyThreshold2Trackbar.Value = Properties.Settings.Default.cannyThreshold2;
@@ -148,24 +169,115 @@ namespace NeedleController.Views.CameraSettingUCs
             HighG.Text = Properties.Settings.Default.colorHighG.ToString();
             HighB.Text = Properties.Settings.Default.colorHighB.ToString();
             ColorNeedle.Invalidate();
+            if (CameraSettingView.camera_connection_failed)
+            {
+                AddressStringTextBox.Enabled = false;
+                GaussianKSizeCmb.Enabled = false;
+                CannyThreshold1Trackbar.Enabled = false;
+                CannyThreshold2Trackbar.Enabled = false;
+                Color.Enabled = false;
+            }
+            IDcameraCmb.Items.Clear();
+            IDcameraCmb.Items.AddRange(CameraSettingView.camera_id_list);
+            IDcameraCmb.SelectedText = Properties.Settings.Default.modeCamera;
+            AddressStringTextBox.Text = Properties.Settings.Default.IDCamera;
+            setting_flag = true;
+            if (IDcameraCmb.SelectedText == "Local Camera")
+            {
+                label1.Enabled = false;
+                label2.Enabled = false;
+            }
+            else
+            {
+                label1.Enabled = true;
+                label2.Enabled = true;
+            }
+        }
+        public void LoadOpencvPara()
+        {
+
         }
 
         public void GetIDCamera()
         {
             if (CameraSettingView.load_flag)
             {
-                if (!Properties.Settings.Default.Properties["IDCamera"].DefaultValue.Equals(IDcameraCmb.SelectedItem))
-                    CameraSettingView.default_flag = true;
-                else
-                    CameraSettingView.default_flag = false;
-
-                if (!Properties.Settings.Default.IDCamera.Equals(int.Parse(IDcameraCmb.SelectedItem.ToString())))
+                if (!Properties.Settings.Default.Properties["modeCamera"].DefaultValue.Equals(IDcameraCmb.SelectedItem))
                 {
-                    CameraSettingView.change_flag = true;
-                    Properties.Settings.Default.IDCamera = int.Parse(IDcameraCmb.SelectedItem.ToString());
+                    CameraSettingView.default_flag = true;
+                }
+                else
+                {
+                    CameraSettingView.default_flag = false;
+                }
+                CameraSettingView.change_flag = true;
+                AddressStringTextBox.Enabled= true;
+                if (IDcameraCmb.Text == "Local Camera")
+                {
+                    label1.Enabled = false;
+                    label2.Enabled = false;
+                }
+                else
+                {
+                    label1.Enabled = true;
+                    label2.Enabled = true;
+                }
+                Properties.Settings.Default.modeCamera = IDcameraCmb.SelectedItem.ToString();
+                //
+                //if (!Properties.Settings.Default.IDCamera.Equals(int.Parse(IDcameraCmb.SelectedItem.ToString())))
+                //{
+                //    CameraSettingView.change_flag = true;
+                //    Properties.Settings.Default.IDCamera = int.Parse(IDcameraCmb.SelectedItem.ToString());
+                //    CameraSettingView.reset_camera = true;
+                //}
+
+            }
+        }
+
+        public void EnterCameraAddress()
+        {
+            string mode_camera = Properties.Settings.Default.modeCamera;
+            string text_string = AddressStringTextBox.Text;
+            int id_camera_input_legnth = text_string.Length;
+            if (mode_camera == "Local Camera")
+            {
+                if (id_camera_input_legnth == 1)
+                {
                     CameraSettingView.reset_camera = true;
+                    Properties.Settings.Default.IDCamera = AddressStringTextBox.Text;
+                    _cameraSettingView.Reset_timer();
+                    Thread.Sleep(500);
+                    CameraSettingView.change_flag = true;
+                    CameraSettingView.camera_connected = true;
+                    CameraSettingView.camera_connection_failed = false;
+                    CameraSettingView.initial_flag = false;
+                    CameraSettingView.camera_parasetting_flag = true;
+                }
+                else
+                {
+                    MessageBox.Show(this, "Invalid camera id", "Error: Data", MessageBoxButtons.OK);
                 }
             }
+            else
+            {
+                if (id_camera_input_legnth == 1)
+                {
+                    MessageBox.Show(this, "Invalid camera id", "Error: Data", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    CameraSettingView.reset_camera = true;
+                    Properties.Settings.Default.IDCamera = AddressStringTextBox.Text;
+                    _cameraSettingView.Reset_timer();
+                    Thread.Sleep(500);
+                    CameraSettingView.change_flag = true;
+                    CameraSettingView.camera_connected = true;
+                    CameraSettingView.camera_connection_failed = false;
+                    CameraSettingView.initial_flag = false;
+                    CameraSettingView.camera_parasetting_flag = true;
+                }
+            }
+
         }
 
         public void GetGaussianBlurKsize()
@@ -343,8 +455,8 @@ namespace NeedleController.Views.CameraSettingUCs
         {
             Graphics g = e.Graphics;
             Rectangle rBackground = new Rectangle(0, 0, this.Width, this.Height);
-            LinearGradientBrush bBackground = new LinearGradientBrush(rBackground, 
-                System.Drawing.Color.FromArgb(Properties.Settings.Default.colorLowR, Properties.Settings.Default.colorLowG, Properties.Settings.Default.colorLowB), 
+            LinearGradientBrush bBackground = new LinearGradientBrush(rBackground,
+                System.Drawing.Color.FromArgb(Properties.Settings.Default.colorLowR, Properties.Settings.Default.colorLowG, Properties.Settings.Default.colorLowB),
                 System.Drawing.Color.FromArgb(Properties.Settings.Default.colorHighR, Properties.Settings.Default.colorHighG, Properties.Settings.Default.colorHighB), 0f);
             g.FillRectangle(bBackground, rBackground);
         }
@@ -375,6 +487,22 @@ namespace NeedleController.Views.CameraSettingUCs
             {
                 CameraSettingView.default_opencv = false;
             }
+
+            if (!setting_flag)
+            {
+                timer1.Stop();
+                Load_CameraParaSetting();
+                timer1.Start();
+            }
+
+
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

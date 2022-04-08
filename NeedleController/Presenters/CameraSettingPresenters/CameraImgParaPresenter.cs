@@ -14,6 +14,7 @@ namespace NeedleController.Presenters.CameraSettingPresenters
         public CameraImgParaPresenter(ICameraImgParaSetting view)
             : base(view)
         {
+            View.CameraImgParaSetting_Loaded += View_CameraImgParaSetting_Loaded;
             View.RedRaBtn_Checked += View_RedRaBtn_Checked;
             View.GreenRaBtn_Checked += View_GreenRaBtn_Checked;
             View.BlueRaBtn_Checked += View_BlueRaBtn_Checked;
@@ -21,6 +22,11 @@ namespace NeedleController.Presenters.CameraSettingPresenters
             View.BrightnessTrackbar_Scrolled += View_BrightnessTrackbar_Scrolled;
             View.ContrastTrackbar_Scrolled += View_ContrastTrackbar_Scrolled;
             View.ImgPositionCmb_Selected += View_ImgPositionCmb_Selected;
+        }
+
+        void View_CameraImgParaSetting_Loaded(object sende, EventArgs e)
+        {
+            View.Load_CameraImgParaSetting();
         }
 
         void View_BrightnessTrackbar_Scrolled(object sender, System.EventArgs e)

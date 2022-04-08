@@ -15,7 +15,9 @@ namespace NeedleController.Presenters.CameraSettingPresenters
         public CameraParaPresenter(ICameraParaSetting view)
             : base (view)
         {
+            View.CameraParaSettingLoaded += View_CameraParaSettingLoaded;
             View.IDcameraCmb_Selected += View_IDcameraCmb_Selected;
+            View.AddressStringTextBox_KeyPressed += View_AddressStringTextBox_KeyPressed;
             View.GaussianKSizeCmb_Selected += View_GaussianKSizeCmb_Selected;
             View.CannyThreshold_1_Scrolled += View_CannyThreshold_1_Scrolled;
             View.CannyThreshold_2_Scrolled += View_CannyThreshold_2_Scrolled;            
@@ -28,9 +30,19 @@ namespace NeedleController.Presenters.CameraSettingPresenters
             View.OnOffDetect_Checked += View_OnOffDetect_Checked;
         }
 
+        void View_CameraParaSettingLoaded(object sender, EventArgs e)
+        {
+            View.Load_CameraParaSetting();
+        }
+
         void View_IDcameraCmb_Selected(object sender, System.EventArgs e)
         {
             View.GetIDCamera();
+        }
+
+        void View_AddressStringTextBox_KeyPressed(object sendeer, EventArgs e)
+        {
+            View.EnterCameraAddress();
         }
 
         void View_GaussianKSizeCmb_Selected(object sender, System.EventArgs e)
@@ -82,5 +94,6 @@ namespace NeedleController.Presenters.CameraSettingPresenters
         {
             View.Detect_OnOff();
         }
+        
     }
 }
