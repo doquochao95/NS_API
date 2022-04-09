@@ -90,6 +90,15 @@ namespace NeedleController.Views.NeedlePickingUCs
             userContrast = (float)UserContrastTrackbar.Value / 10;
             UserContrastValue.Text = ((float)UserContrastTrackbar.Value / 10).ToString();
         }
-        
+
+        private void User_Brightness_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void User_Contrast_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

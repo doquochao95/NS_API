@@ -25,17 +25,21 @@ void MarshalString(System::String^ s, string& os) {
 	Marshal::FreeHGlobal(IntPtr((void*)chars));
 }
 
-void MyOpenCvWrapper::startCamera(int IDCamera)
+bool  MyOpenCvWrapper::startCamera(int IDCamera)
 {
-	videoCapture.open(IDCamera);
+	bool status;
+	status = videoCapture.open(IDCamera);
+	return status;
 	/*videoCapture.open("http://192.168.000.002:4747/video");*/
 }
 
-void MyOpenCvWrapper::startCamera(System::String^ IPCamera)
+bool  MyOpenCvWrapper::startCamera(System::String^ IPCamera)
 {
 	string path;
+	bool status;
 	MarshalString(IPCamera, path);
-	videoCapture.open(path);
+	status = videoCapture.open(path);
+	return status;
 }
 
 bool MyOpenCvWrapper::checkCamera()
@@ -43,9 +47,10 @@ bool MyOpenCvWrapper::checkCamera()
 	return videoCapture.isOpened();
 }
 
-void MyOpenCvWrapper::stopCamera()
+bool  MyOpenCvWrapper::stopCamera()
 {
 	videoCapture.release();
+	return videoCapture.isOpened();
 }
 
 int MyOpenCvWrapper::countCamera()

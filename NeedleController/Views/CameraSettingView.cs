@@ -25,6 +25,8 @@ namespace NeedleController.Views
         private double height;
 
         private CameraSettingUCs.CameraParaSetting cameraParaSetting1;
+        private CameraSettingUCs.CameraImgParaSetting cameraImgParaSetting1;
+
 
         public static string[] camera_id_list { get; set; } = new string[] { "Local Camera", "IP Camera" };
 
@@ -32,25 +34,42 @@ namespace NeedleController.Views
         public static bool thread_flag { get; set; } = false;
         public static bool change_flag { get; set; } = false;
         public static bool default_flag { get; set; } = false;
-        public static bool load_flag { get; set; } = false;
-        public static bool default_img { get; set; } = false;
-        public static bool default_opencv { get; set; } = false;
-        public static bool on_off_detect { get; set; } = true;
         public static bool camera_connection_failed { get; set; } = false;
-
         public static bool initial_flag { get; set; } = false;
         public static bool camera_parasetting_flag { get; set; } = false;
-
+        public static bool camera_connected { get; set; } = false;
+        public static bool paraSetting_flag { get; set; } = false;
+        public static bool imgpParaSetting_flag { get; set; } = false;
+        public static bool on_off_detect { get; set; } = true;
+        public static bool default_img { get; set; } = true;
+        public static bool default_opencv { get; set; } = true;
 
         public Thread threadOpenCV;
 
-        public static bool camera_connected = false;
+        //default 
+        public static int gaussianBlurKsize { get; set; }
+        public static int cannyThreshold1 { get; set; }
+        public static int cannyThreshold2 { get; set; }
+        public static int colorLowR { get; set; }
+        public static int colorLowG { get; set; }
+        public static int colorLowB { get; set; }
+        public static int colorHighR { get; set; }
+        public static int colorHighG { get; set; }
+        public static int colorHighB { get; set; }
+        public static char displayImgMode { get; set; }
+        public static int brightness { get; set; }
+        public static float contrast { get; set; }
+        public static string imgPosition { get; set; }
+        public static string IDCamera { get; set; }
+        public static string modeCamera { get; set; }
+        //
 
         public CameraSettingView()
         {
             InitializeComponent();
             InitializeTimer();
             this.cameraParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraParaSetting(this);
+            this.cameraImgParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraImgParaSetting();
 
         }
 
@@ -81,7 +100,7 @@ namespace NeedleController.Views
 
         public void CameraSettingViewLoad()
         {
-
+            defaultValue();
             this.panel2.Controls.Add(this.cameraParaSetting1);
             this.cameraParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cameraParaSetting1.Location = new System.Drawing.Point(0, 0);
@@ -89,16 +108,20 @@ namespace NeedleController.Views
             this.cameraParaSetting1.Size = new System.Drawing.Size(486, 300);
             this.cameraParaSetting1.TabIndex = 11;
 
+
+            this.panel3.Controls.Add(this.cameraImgParaSetting1);
+            this.cameraImgParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraImgParaSetting1.Location = new System.Drawing.Point(0, 0);
+            this.cameraImgParaSetting1.Name = "cameraImgParaSetting1";
+            this.cameraImgParaSetting1.Size = new System.Drawing.Size(486, 300);
+            this.cameraImgParaSetting1.TabIndex = 10;
+
             thread_flag = false;
             change_flag = false;
-            default_flag = false;
             on_off_detect = true;
-            cameraParaSetting1.LoadOpencvPara();
-            cameraImgParaSetting1.LoadImgPara();
-            load_flag = true;
             MainView.last_view = this.Name;
             MainView.camerasettingviewloaded_status = true;
-
+            
         }
 
         public void CameraSettingViewClose()
@@ -112,18 +135,39 @@ namespace NeedleController.Views
             }
             opencv.stopCamera();
             Properties.Settings.Default.Reload();
-            load_flag = false;
             MainView.last_view = this.Name;
             MainView.camerasettingviewloaded_status = false;
+            Reset_bool();       
         }
 
         public void DefaultPara()
         {
-            default_flag = false;
-            Properties.Settings.Default.Reload();
-            reset_camera = true;
-            cameraParaSetting1.LoadOpencvPara();
-            cameraImgParaSetting1.LoadImgPara();
+            if (threadOpenCV.IsAlive)
+            {
+                if (threadOpenCV.IsBackground)
+                {
+                    threadOpenCV.Abort();
+                }
+            }
+            bool status = opencv.stopCamera();
+            if (!status)
+            {
+                Thread.Sleep(700);
+                Reset_bool();
+                Properties.Settings.Default.Reload();
+                this.cameraParaSetting1.Refresh();
+                this.cameraImgParaSetting1.Refresh();
+                cameraParaSetting1.Load_CameraParaSetting();
+                cameraImgParaSetting1.Load_CameraImgParaSetting();
+                InitializeTimer();
+                CameraSettingViewLoad();
+            }
+            else
+            {
+                MessageBox.Show(this, "Fail to reset setting", "Error: parameter", MessageBoxButtons.OK);
+            }
+
+            
         }
 
         public void SavePara()
@@ -132,12 +176,34 @@ namespace NeedleController.Views
             {
                 case DialogResult.Yes:
                     change_flag = false;
+                    default_flag = false;
+                    defaultValue();
                     Properties.Settings.Default.Save();
                     break;
                 case DialogResult.No:
                     break;
             }
         }
+
+        private void defaultValue()
+        {
+            gaussianBlurKsize = Properties.Settings.Default.gaussianBlurKsize;
+            cannyThreshold1 = Properties.Settings.Default.cannyThreshold1;
+            cannyThreshold2 = Properties.Settings.Default.cannyThreshold2;
+            colorLowR = Properties.Settings.Default.colorLowR;
+            colorLowG = Properties.Settings.Default.colorLowG;
+            colorLowB = Properties.Settings.Default.colorLowB;
+            colorHighR = Properties.Settings.Default.colorHighR;
+            colorHighG = Properties.Settings.Default.colorHighG;
+            colorHighB = Properties.Settings.Default.colorHighB;
+            displayImgMode = Properties.Settings.Default.displayImgMode;
+            brightness = Properties.Settings.Default.brightness;
+            contrast = Properties.Settings.Default.contrast;
+            imgPosition = Properties.Settings.Default.imgPosition;
+            modeCamera = Properties.Settings.Default.modeCamera;
+            IDCamera = Properties.Settings.Default.IDCamera;
+        }
+
         public void Reset_timer()
         {
             timer1.Start();
@@ -151,39 +217,10 @@ namespace NeedleController.Views
                 string camera_mode = Properties.Settings.Default.modeCamera;
                 if (camera_mode == "Local Camera" && camera_id.Length == 1)
                 {
-                    opencv.startCamera(int.Parse(camera_id));
-                    threadOpenCV = new Thread(() => Display(opencv));
-
-                    CheckCamera_Connection();
-                    if (camera_connected)
-                    {
-                        threadOpenCV.IsBackground = true;
-                        threadOpenCV.Start();
-                        thread_flag = true;
-                    }
-                    else
-                    {
-                        thread_flag = true;
-                    }
-                    if (!camera_parasetting_flag)
-                    {
-                        initial_flag = true;
-
-                    }
-                }
-                else if (camera_mode == "Local Camera" && camera_id.Length > 1)
-                {
-                    MessageBox.Show(this, "Invalid camera id", "Error: Data", MessageBoxButtons.OK);
-                    initial_flag = true;
-                }
-                else if (camera_mode == "IP Camera" && camera_id.Length > 1)
-                {
-                    bool status = PingHost(camera_id);
+                    bool status = opencv.startCamera(int.Parse(camera_id));
                     if (status)
                     {
-                        opencv.startCamera("http://" + camera_id + ":4747/video");
                         threadOpenCV = new Thread(() => Display(opencv));
-
                         CheckCamera_Connection();
                         if (camera_connected)
                         {
@@ -197,6 +234,48 @@ namespace NeedleController.Views
                         }
                         if (!camera_parasetting_flag)
                         {
+                            initial_flag = true;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Start Camera  Failed", "Error: Data", MessageBoxButtons.OK);
+                        initial_flag = true;
+                    }
+                }
+                else if (camera_mode == "Local Camera" && camera_id.Length > 1)
+                {
+                    MessageBox.Show(this, "Invalid camera id", "Error: Data", MessageBoxButtons.OK);
+                    initial_flag = true;
+                }
+                else if (camera_mode == "IP Camera" && camera_id.Length > 1)
+                {
+                    bool status = PingHost(camera_id);
+                    if (status)
+                    {
+                        bool _status = opencv.startCamera("http://" + camera_id + ":4747/video");
+                        if (_status)
+                        {
+                            threadOpenCV = new Thread(() => Display(opencv));
+                            CheckCamera_Connection();
+                            if (camera_connected)
+                            {
+                                threadOpenCV.IsBackground = true;
+                                threadOpenCV.Start();
+                                thread_flag = true;
+                            }
+                            else
+                            {
+                                thread_flag = true;
+                            }
+                            if (!camera_parasetting_flag)
+                            {
+                                initial_flag = true;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(this, "Start Camera  Failed", "Error: Data", MessageBoxButtons.OK);
                             initial_flag = true;
                         }
                     }
@@ -233,7 +312,6 @@ namespace NeedleController.Views
         {
             while (true)
             {
-
                 SetImgPosition();
                 bool status = opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
                     width, height);
@@ -305,9 +383,16 @@ namespace NeedleController.Views
                 {
                     if (reset_camera)
                     {
-                        opencv.stopCamera();
-                        thread_flag = true;
-                        reset_camera = false;
+                        bool status = opencv.stopCamera();
+                        if (!status)
+                        {
+                            thread_flag = true;
+                            reset_camera = false;
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                     timer1.Stop();
                     InitializeCamera();
@@ -319,25 +404,18 @@ namespace NeedleController.Views
             {
                 if (reset_camera)
                 {
-                    
-                    opencv.stopCamera();
-                    threadOpenCV.Abort();
-                    thread_flag = false;
-                    reset_camera = false;
-                }
-                if (change_flag)
-                    SaveParaButton.Enabled = true;
-                else
-                    SaveParaButton.Enabled = false;
-
-                if (default_flag)
-                    DefaultParaButton.Enabled = true;
-                else
-                {
-                    if (default_img || default_opencv)
+                    bool status = opencv.stopCamera();
+                    if (!status)
                     {
-                        DefaultParaButton.Enabled = false;
+                        threadOpenCV.Abort();
+                        thread_flag = false;
+                        reset_camera = false;
                     }
+                    else
+                    {
+                        return;
+                    }
+
                 }
                 if (!camera_connected)
                 {
@@ -355,6 +433,8 @@ namespace NeedleController.Views
                         {
                             case DialogResult.Retry:
                                 camera_connection_failed = true;
+                                paraSetting_flag = false;
+                                imgpParaSetting_flag = false;
                                 break;
                             case DialogResult.Cancel:
                                 this.Close();
@@ -373,12 +453,21 @@ namespace NeedleController.Views
                 }
             }
 
-            /* if (retry_connect_camera)
-             {
-                 InitializeCamera();
-                 retry_connect_camera = false;
-                 timer1.Start();
-             }*/
+            if (change_flag)
+                SaveParaButton.Enabled = true;
+            else
+                SaveParaButton.Enabled = false;
+
+            if(default_flag)
+                DefaultParaButton.Enabled = true;
+            else
+            {
+                if(default_img || default_opencv)
+                {
+                    DefaultParaButton.Enabled = false;
+                }
+            }
+
         }
         private static bool PingHost(string nameOrAddress)
         {
@@ -403,6 +492,22 @@ namespace NeedleController.Views
             }
 
             return pingable;
+        }
+
+        private void Reset_bool ()
+        {
+            reset_camera = false;
+            thread_flag = false;
+            change_flag = false;
+            default_flag = false;
+            camera_connection_failed = false;
+            initial_flag = false;
+            camera_parasetting_flag = false;
+            camera_connected = false;
+            paraSetting_flag = false;
+            imgpParaSetting_flag = false;
+            default_img = false;
+            default_opencv = false;
         }
     }
 }

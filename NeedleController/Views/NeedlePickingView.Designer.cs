@@ -64,13 +64,14 @@ namespace NeedleController.Views
             // 
             this.cameraViewerUC1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.cameraViewerUC1, 2);
-            resources.ApplyResources(this.cameraViewerUC1, "cameraViewerUC1");
             this.cameraViewerUC1.destVideo = null;
-            this.cameraViewerUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraViewerUC1.imgHeight = 196;
-            this.cameraViewerUC1.imgWidth = 295;
-            this.cameraViewerUC1.Location = new System.Drawing.Point(3, 504);
+            resources.ApplyResources(this.cameraViewerUC1, "cameraViewerUC1");
+            this.cameraViewerUC1.imgHeight = 207;
+            this.cameraViewerUC1.imgWidth = 276;
             this.cameraViewerUC1.Name = "cameraViewerUC1";
+            this.cameraViewerUC1.sourceVideo = null;
+            this.cameraViewerUC1.userBrightness = 0;
+            this.cameraViewerUC1.userContrast = 1F;
             // 
             // needleSearchingUC1
             // 

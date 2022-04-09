@@ -431,6 +431,8 @@
   <ItemGroup>
     <Content Include="Logo 3.ico" />
     <Content Include="Logo blue.ico" />
+    <None Include="Resources\Logo 100x100.png" />
+    <None Include="Resources\nEW LOGO.png" />
     <None Include="Resources\S.jpg" />
     <None Include="Resources\RG.jpg" />
     <None Include="Resources\R.jpg" />

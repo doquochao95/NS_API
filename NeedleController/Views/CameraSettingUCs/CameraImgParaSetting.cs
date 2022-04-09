@@ -16,6 +16,7 @@ namespace NeedleController.Views.CameraSettingUCs
     [PresenterBinding(typeof(Presenters.CameraSettingPresenters.CameraImgParaPresenter))]
     public partial class CameraImgParaSetting : MvpUserControl, ICameraImgParaSetting
     {
+        private char display_mode;
         public CameraImgParaSetting()
         {
             InitializeComponent();
@@ -85,7 +86,7 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void Load_CameraImgParaSetting()
         {
-            if (CameraSettingView.camera_connection_failed)
+            if (!CameraSettingView.camera_connection_failed)
             {
                 BrightnessTrackbar.Enabled = false;
                 ContrastTrackBar.Enabled = false;
@@ -135,10 +136,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void GetBrightness()
         {
-            if (!Properties.Settings.Default.Properties["brightness"].DefaultValue.Equals(BrightnessTrackbar.Value.ToString()))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.brightness == BrightnessTrackbar.Value)
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             CameraSettingView.change_flag = true;
             Properties.Settings.Default.brightness = BrightnessTrackbar.Value;
@@ -147,10 +148,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void GetContrast()
         {
-            if (!Properties.Settings.Default.Properties["contrast"].DefaultValue.Equals(((float)(ContrastTrackBar.Value) / 10).ToString()))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.contrast == ((float)(ContrastTrackBar.Value) / 10))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             CameraSettingView.change_flag = true;
             Properties.Settings.Default.contrast = (float)(ContrastTrackBar.Value) / 10;
@@ -159,46 +160,43 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void GetDisplayMode()
         {
-            if (CameraSettingView.load_flag)
+            if (RedRaBtn.Checked)
             {
-                if (RedRaBtn.Checked)
-                {
-                    Properties.Settings.Default.displayImgMode = 'R';
-                    CameraSettingView.default_flag = true;
-                }
-                else if (GreenRaBtn.Checked)
-                {
-                    Properties.Settings.Default.displayImgMode = 'G';
-                    CameraSettingView.default_flag = true;
-                }
-                else if (BlueRaBtn.Checked)
-                {
-                    Properties.Settings.Default.displayImgMode = 'B';
-                    CameraSettingView.default_flag = true;
-                }
-                else if (NormalRaBtn.Checked)
-                {
-                    Properties.Settings.Default.displayImgMode = 'N';
-                    CameraSettingView.default_flag = false;
-                }
-                CameraSettingView.change_flag = true;
+                display_mode = 'R';
             }
+            else if (GreenRaBtn.Checked)
+            {
+                display_mode = 'G';
+            }
+            else if (BlueRaBtn.Checked)
+            {
+                display_mode = 'B';
+            }
+            else if (NormalRaBtn.Checked)
+            {
+                display_mode = 'N';
+            }
+
+            if (CameraSettingView.displayImgMode == display_mode)
+                CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
+
+            Properties.Settings.Default.displayImgMode = display_mode;
+            CameraSettingView.change_flag = true;
         }
 
         public void GetImgPosition()
         {
-            if (CameraSettingView.load_flag)
-            {
-                if (!Properties.Settings.Default.imgPosition.Equals(ImgPositionCmb.SelectedItem.ToString()))
-                    CameraSettingView.change_flag = true;
+            if (!Properties.Settings.Default.imgPosition.Equals(ImgPositionCmb.SelectedItem.ToString()))
+                CameraSettingView.change_flag = true;
 
-                if (!Properties.Settings.Default.Properties["imgPosition"].DefaultValue.Equals(ImgPositionCmb.SelectedItem))
-                    CameraSettingView.default_flag = true;
-                else
-                    CameraSettingView.default_flag = false;
+            if (CameraSettingView.imgPosition == ImgPositionCmb.SelectedItem.ToString())
+                CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
-                Properties.Settings.Default.imgPosition = ImgPositionCmb.SelectedItem.ToString();
-            }
+            Properties.Settings.Default.imgPosition = ImgPositionCmb.SelectedItem.ToString();
         }
 
         private void InitializeTimer()
@@ -210,10 +208,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.Properties["brightness"].DefaultValue.Equals(BrightnessTrackbar.Value.ToString())
-                && Properties.Settings.Default.Properties["contrast"].DefaultValue.Equals(((float)(ContrastTrackBar.Value) / 10).ToString())
-                && Properties.Settings.Default.Properties["imgPosition"].DefaultValue.Equals(ImgPositionCmb.SelectedItem)
-                && Properties.Settings.Default.displayImgMode == 'N')
+            if (Properties.Settings.Default.brightness.Equals(CameraSettingView.brightness)
+                && Properties.Settings.Default.contrast.Equals(CameraSettingView.contrast)
+                && Properties.Settings.Default.imgPosition.Equals(CameraSettingView.imgPosition)
+                && Properties.Settings.Default.displayImgMode.Equals(CameraSettingView.displayImgMode))
             {
                 CameraSettingView.default_img = true;
             }
@@ -221,7 +219,25 @@ namespace NeedleController.Views.CameraSettingUCs
             {
                 CameraSettingView.default_img = false;
             }
-            Load_CameraImgParaSetting();
+
+            if (CameraSettingView.camera_connected)
+            {
+                BrightnessTrackbar.Enabled = true;
+                ContrastTrackBar.Enabled = true;
+                DisplayMode.Enabled = true;
+                ImgPositionCmb.Enabled = true;
+            }
+            else
+            {
+                if (!CameraSettingView.imgpParaSetting_flag)
+                {
+                    BrightnessTrackbar.Enabled = false;
+                    ContrastTrackBar.Enabled = false;
+                    DisplayMode.Enabled = false;
+                    ImgPositionCmb.Enabled = false;
+                    CameraSettingView.imgpParaSetting_flag = true;
+                }
+            }
         }
 
         

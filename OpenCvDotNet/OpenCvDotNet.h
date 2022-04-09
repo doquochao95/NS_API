@@ -15,9 +15,9 @@ namespace OpenCvDotNet {
 	public ref class MyOpenCvWrapper
 	{
 	public:
-		void startCamera(int IDCamera);
-		void startCamera(System::String^ IPCamera);
-		void stopCamera();
+		bool startCamera(int IDCamera);
+		bool startCamera(System::String^ IPCamera);
+		bool stopCamera();
 		bool checkCamera();
 		int countCamera();
 		double needleLength();

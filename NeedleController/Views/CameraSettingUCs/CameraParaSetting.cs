@@ -19,8 +19,6 @@ namespace NeedleController.Views.CameraSettingUCs
     [PresenterBinding(typeof(Presenters.CameraSettingPresenters.CameraParaPresenter))]
     public partial class CameraParaSetting : MvpUserControl, ICameraParaSetting
     {
-        private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
-        private static bool setting_flag = false;
         private static CameraSettingView _cameraSettingView;
         public CameraParaSetting(CameraSettingView cameraSettingView)
         {
@@ -169,7 +167,7 @@ namespace NeedleController.Views.CameraSettingUCs
             HighG.Text = Properties.Settings.Default.colorHighG.ToString();
             HighB.Text = Properties.Settings.Default.colorHighB.ToString();
             ColorNeedle.Invalidate();
-            if (CameraSettingView.camera_connection_failed)
+            if (!CameraSettingView.camera_connection_failed)
             {
                 AddressStringTextBox.Enabled = false;
                 GaussianKSizeCmb.Enabled = false;
@@ -179,9 +177,9 @@ namespace NeedleController.Views.CameraSettingUCs
             }
             IDcameraCmb.Items.Clear();
             IDcameraCmb.Items.AddRange(CameraSettingView.camera_id_list);
-            IDcameraCmb.SelectedText = Properties.Settings.Default.modeCamera;
+            IDcameraCmb.SelectedItem = Properties.Settings.Default.modeCamera;
             AddressStringTextBox.Text = Properties.Settings.Default.IDCamera;
-            setting_flag = true;
+            
             if (IDcameraCmb.SelectedText == "Local Camera")
             {
                 label1.Enabled = false;
@@ -200,38 +198,34 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void GetIDCamera()
         {
-            if (CameraSettingView.load_flag)
-            {
-                if (!Properties.Settings.Default.Properties["modeCamera"].DefaultValue.Equals(IDcameraCmb.SelectedItem))
-                {
-                    CameraSettingView.default_flag = true;
-                }
-                else
-                {
-                    CameraSettingView.default_flag = false;
-                }
-                CameraSettingView.change_flag = true;
-                AddressStringTextBox.Enabled= true;
-                if (IDcameraCmb.Text == "Local Camera")
-                {
-                    label1.Enabled = false;
-                    label2.Enabled = false;
-                }
-                else
-                {
-                    label1.Enabled = true;
-                    label2.Enabled = true;
-                }
-                Properties.Settings.Default.modeCamera = IDcameraCmb.SelectedItem.ToString();
-                //
-                //if (!Properties.Settings.Default.IDCamera.Equals(int.Parse(IDcameraCmb.SelectedItem.ToString())))
-                //{
-                //    CameraSettingView.change_flag = true;
-                //    Properties.Settings.Default.IDCamera = int.Parse(IDcameraCmb.SelectedItem.ToString());
-                //    CameraSettingView.reset_camera = true;
-                //}
+            if (CameraSettingView.modeCamera == IDcameraCmb.SelectedItem.ToString())
+                CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
+            CameraSettingView.change_flag = true;
+            AddressStringTextBox.Enabled = true;
+            if (IDcameraCmb.Text == "Local Camera")
+            {
+                label1.Enabled = false;
+                label2.Enabled = false;
             }
+            else
+            {
+                label1.Enabled = true;
+                label2.Enabled = true;
+            }
+            Properties.Settings.Default.modeCamera = IDcameraCmb.SelectedItem.ToString();
+
+            //if (CameraSettingView.load_flag)
+            //{
+            //    if (!Properties.Settings.Default.IDCamera.Equals(int.Parse(IDcameraCmb.SelectedItem.ToString())))
+            //    {
+            //        CameraSettingView.change_flag = true;
+            //        Properties.Settings.Default.IDCamera = int.Parse(IDcameraCmb.SelectedItem.ToString());
+            //        CameraSettingView.reset_camera = true;
+            //    }
+            //}
         }
 
         public void EnterCameraAddress()
@@ -282,10 +276,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void GetGaussianBlurKsize()
         {
-            if (!Properties.Settings.Default.Properties["gaussianBlurKsize"].DefaultValue.Equals(GaussianKSizeCmb.SelectedItem))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.gaussianBlurKsize == int.Parse(GaussianKSizeCmb.SelectedItem.ToString()))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             if (!Properties.Settings.Default.gaussianBlurKsize.Equals(int.Parse(GaussianKSizeCmb.SelectedItem.ToString())))
                 CameraSettingView.change_flag = true;
@@ -295,10 +289,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void GetCannyThreshold1()
         {
-            if (!Properties.Settings.Default.Properties["cannyThreshold1"].DefaultValue.Equals(CannyThreshold1Trackbar.Value.ToString()))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.cannyThreshold1 == CannyThreshold1Trackbar.Value)
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             CameraSettingView.change_flag = true;
             Properties.Settings.Default.cannyThreshold1 = CannyThreshold1Trackbar.Value;
@@ -307,10 +301,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void GetCannyThreshold2()
         {
-            if (!Properties.Settings.Default.Properties["cannyThreshold2"].DefaultValue.Equals(CannyThreshold2Trackbar.Value.ToString()))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.cannyThreshold2 == CannyThreshold2Trackbar.Value)
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             CameraSettingView.change_flag = true;
             Properties.Settings.Default.cannyThreshold2 = CannyThreshold2Trackbar.Value;
@@ -319,10 +313,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void EnterLowR()
         {
-            if (!Properties.Settings.Default.Properties["colorLowR"].DefaultValue.Equals(LowR.Text))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.colorLowR == int.Parse(LowR.Text))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             if (!Properties.Settings.Default.colorLowR.Equals(int.Parse(LowR.Text)))
                 CameraSettingView.change_flag = true;
@@ -339,10 +333,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void EnterLowG()
         {
-            if (!Properties.Settings.Default.Properties["colorLowG"].DefaultValue.Equals(LowG.Text))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.colorLowG == int.Parse(LowG.Text))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             if (!Properties.Settings.Default.colorLowG.Equals(int.Parse(LowG.Text)))
                 CameraSettingView.change_flag = true;
@@ -359,10 +353,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void EnterLowB()
         {
-            if (!Properties.Settings.Default.Properties["colorLowB"].DefaultValue.Equals(LowB.Text))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.colorLowB == int.Parse(LowB.Text))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             if (!Properties.Settings.Default.colorLowB.Equals(int.Parse(LowB.Text)))
                 CameraSettingView.change_flag = true;
@@ -379,10 +373,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void EnterHighR()
         {
-            if (!Properties.Settings.Default.Properties["colorHighR"].DefaultValue.Equals(HighR.Text))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.colorHighR == int.Parse(HighR.Text))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             if (!Properties.Settings.Default.colorHighR.Equals(int.Parse(HighR.Text)))
                 CameraSettingView.change_flag = true;
@@ -399,10 +393,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void EnterHighG()
         {
-            if (!Properties.Settings.Default.Properties["colorHighG"].DefaultValue.Equals(HighG.Text))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.colorHighG == int.Parse(HighG.Text))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             if (!Properties.Settings.Default.colorHighG.Equals(int.Parse(HighG.Text)))
                 CameraSettingView.change_flag = true;
@@ -419,10 +413,10 @@ namespace NeedleController.Views.CameraSettingUCs
 
         public void EnterHighB()
         {
-            if (!Properties.Settings.Default.Properties["colorHighB"].DefaultValue.Equals(HighB.Text))
-                CameraSettingView.default_flag = true;
-            else
+            if (CameraSettingView.colorHighB == int.Parse(HighB.Text))
                 CameraSettingView.default_flag = false;
+            else
+                CameraSettingView.default_flag = true;
 
             if (!Properties.Settings.Default.colorHighB.Equals(int.Parse(HighB.Text)))
                 CameraSettingView.change_flag = true;
@@ -470,16 +464,17 @@ namespace NeedleController.Views.CameraSettingUCs
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (!Properties.Settings.Default.Properties["IDCamera"].DefaultValue.Equals(IDcameraCmb.SelectedItem)
-                && !Properties.Settings.Default.Properties["gaussianBlurKsize"].DefaultValue.Equals(GaussianKSizeCmb.SelectedItem)
-                && !Properties.Settings.Default.Properties["cannyThreshold1"].DefaultValue.Equals(CannyThreshold1Trackbar.Value.ToString())
-                && !Properties.Settings.Default.Properties["cannyThreshold2"].DefaultValue.Equals(CannyThreshold2Trackbar.Value.ToString())
-                && !Properties.Settings.Default.Properties["colorLowR"].DefaultValue.Equals(LowR.Text)
-                && !Properties.Settings.Default.Properties["colorLowG"].DefaultValue.Equals(LowG.Text)
-                && !Properties.Settings.Default.Properties["colorLowB"].DefaultValue.Equals(LowB.Text)
-                && !Properties.Settings.Default.Properties["colorHighR"].DefaultValue.Equals(HighR.Text)
-                && !Properties.Settings.Default.Properties["colorHighG"].DefaultValue.Equals(HighG.Text)
-                && !Properties.Settings.Default.Properties["colorHighB"].DefaultValue.Equals(HighB.Text))
+            if (!Properties.Settings.Default.modeCamera.Equals(CameraSettingView.modeCamera)
+                && !Properties.Settings.Default.IDCamera.Equals(CameraSettingView.IDCamera)
+                && !Properties.Settings.Default.gaussianBlurKsize.Equals(CameraSettingView.gaussianBlurKsize)
+                && !Properties.Settings.Default.cannyThreshold1.Equals(CameraSettingView.cannyThreshold1)
+                && !Properties.Settings.Default.cannyThreshold2.Equals(CameraSettingView.cannyThreshold2)
+                && !Properties.Settings.Default.colorLowR.Equals(CameraSettingView.colorLowR)
+                && !Properties.Settings.Default.colorLowG.Equals(CameraSettingView.colorLowG)
+                && !Properties.Settings.Default.colorLowB.Equals(CameraSettingView.colorLowB)
+                && !Properties.Settings.Default.colorHighR.Equals(CameraSettingView.colorHighR)
+                && !Properties.Settings.Default.colorHighG.Equals(CameraSettingView.colorHighG)
+                && !Properties.Settings.Default.colorHighB.Equals(CameraSettingView.colorHighB))
             {
                 CameraSettingView.default_opencv = true;
             }
@@ -488,14 +483,26 @@ namespace NeedleController.Views.CameraSettingUCs
                 CameraSettingView.default_opencv = false;
             }
 
-            if (!setting_flag)
+            if (CameraSettingView.camera_connected)
             {
-                timer1.Stop();
-                Load_CameraParaSetting();
-                timer1.Start();
+                AddressStringTextBox.Enabled = true;
+                GaussianKSizeCmb.Enabled = true;
+                CannyThreshold1Trackbar.Enabled = true;
+                CannyThreshold2Trackbar.Enabled = true;
+                Color.Enabled = true;
             }
-
-
+            else
+            {
+                if (!CameraSettingView.paraSetting_flag)
+                {
+                    AddressStringTextBox.Enabled = false;
+                    GaussianKSizeCmb.Enabled = false;
+                    CannyThreshold1Trackbar.Enabled = false;
+                    CannyThreshold2Trackbar.Enabled = false;
+                    Color.Enabled = false;
+                    CameraSettingView.paraSetting_flag = true;
+                }  
+            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -503,6 +510,9 @@ namespace NeedleController.Views.CameraSettingUCs
 
         }
 
+        private void CameraAddress_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

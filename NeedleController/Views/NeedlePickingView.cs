@@ -225,7 +225,6 @@ namespace NeedleController.Views
                 };
                 NeedleQtyList.Add(needlePickingFormModel);
             }
-            /*IEnumerable<NeedlePickingFormModel> NeedleList = NeedleQtyList.OrderBy(i => i.NS_Needles.NeedleName);*/
             IEnumerable<NeedlePickingFormModel> NeedleList = NeedleQtyList.GroupBy(a => new { a.NeedleID })
                 .Select(p => new NeedlePickingFormModel
                 {
@@ -250,33 +249,48 @@ namespace NeedleController.Views
             MainView.last_view = this.Name;
             MainView.check_camera = false;
             MainView.needlepickingviewloaded_status = false;
-            if(camera_connected)
+            if (camera_connected)
             {
                 if (threadOpenCV.IsBackground)
                 {
                     threadOpenCV.Abort();
                 }
-            }  
+            }
             opencv.stopCamera();
         }
 
         private void InitializeCamera()
         {
-            //opencv.startCamera(Properties.Settings.Default.modeCamera,Properties.Settings.Default.IDCamera);
-            string camera_id = "http://" + Properties.Settings.Default.IDCamera + ":4747/video";
-            int str_length = camera_id.Length;
-            if (str_length > 1)
+            try
             {
-                opencv.startCamera(camera_id);
+                string camera_id = Properties.Settings.Default.IDCamera;
+                string camera_mode = Properties.Settings.Default.modeCamera;
+                if (camera_mode == "Local Camera" && camera_id.Length == 1)
+                {
+                    opencv.startCamera(int.Parse(camera_id));
+                    threadOpenCV = new Thread(() => Display(opencv));
+                    CheckCamera_Connection();
+                }
+                else if (camera_mode == "IP Camera" && camera_id.Length > 1)
+                {
+                    bool status = PingHost(camera_id);
+                    if (status)
+                    {
+                        opencv.startCamera("http://" + camera_id + ":4747/video");
+                        threadOpenCV = new Thread(() => Display(opencv));
+                        CheckCamera_Connection();
+                    }
+                    else
+                    {
+                        threadOpenCV = new Thread(() => Display(opencv));
+                        camera_connected = false;
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                opencv.startCamera(int.Parse(camera_id));
+                Console.WriteLine(ex.Message);
             }
-
-            CheckCamera_Connection();
-            threadOpenCV = new Thread(() => Display(opencv));
-
         }
         private void CheckCamera_Connection()
         {
@@ -343,6 +357,29 @@ namespace NeedleController.Views
             }
         }
 
+        private static bool PingHost(string nameOrAddress)
+        {
+            bool pingable = false;
+            Ping pinger = null;
+            try
+            {
+                pinger = new Ping();
+                PingReply reply = pinger.Send(nameOrAddress);
+                pingable = reply.Status == IPStatus.Success;
+            }
+            catch (PingException)
+            {
+                // Discard PingExceptions and return false;
+            }
+            finally
+            {
+                if (pinger != null)
+                {
+                    pinger.Dispose();
+                }
+            }
 
+            return pingable;
+        }
     }
 }

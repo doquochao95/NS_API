@@ -128,6 +128,9 @@
   <data name="SourceVideo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="SourceVideo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="SourceVideo.InitialImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
@@ -139,7 +142,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="SourceVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 198</value>
+    <value>282, 330</value>
   </data>
   <data name="SourceVideo.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>CenterImage</value>
@@ -165,14 +168,17 @@
   <data name="DestVideo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="DestVideo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="DestVideo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>326, 10</value>
+    <value>312, 10</value>
   </data>
   <data name="DestVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
   </data>
   <data name="DestVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 198</value>
+    <value>283, 330</value>
   </data>
   <data name="DestVideo.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>CenterImage</value>
@@ -195,47 +201,20 @@
   <data name="CameraControllergroupBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="UserContrastValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="UserContrastValue.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="UserContrastValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>264, 94</value>
-  </data>
-  <data name="UserContrastValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>14, 15</value>
-  </data>
-  <data name="UserContrastValue.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="UserContrastValue.Text" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;UserContrastValue.Name" xml:space="preserve">
-    <value>UserContrastValue</value>
-  </data>
-  <data name="&gt;&gt;UserContrastValue.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserContrastValue.Parent" xml:space="preserve">
-    <value>CameraControllergroupBox</value>
-  </data>
-  <data name="&gt;&gt;UserContrastValue.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="UserBrightnessValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="UserBrightnessValue.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="UserBrightnessValue.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="UserBrightnessValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>264, 47</value>
+    <value>258, 125</value>
   </data>
   <data name="UserBrightnessValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>14, 15</value>
+    <value>13, 13</value>
   </data>
   <data name="UserBrightnessValue.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -253,73 +232,82 @@
     <value>CameraControllergroupBox</value>
   </data>
   <data name="&gt;&gt;UserBrightnessValue.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="UserContrastValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="UserContrastValue.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="UserContrastValue.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="UserContrastValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>258, 67</value>
+  </data>
+  <data name="UserContrastValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>13, 13</value>
+  </data>
+  <data name="UserContrastValue.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="UserContrastValue.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;UserContrastValue.Name" xml:space="preserve">
+    <value>UserContrastValue</value>
+  </data>
+  <data name="&gt;&gt;UserContrastValue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserContrastValue.Parent" xml:space="preserve">
+    <value>CameraControllergroupBox</value>
+  </data>
+  <data name="&gt;&gt;UserContrastValue.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="UserContrastTrackbar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
   </data>
-  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 20.25pt, style=Italic</value>
+  <data name="UserContrastTrackbar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 129</value>
+  <data name="UserContrastTrackbar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 93</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 35</value>
+  <data name="UserContrastTrackbar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>264, 45</value>
   </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="UserContrastTrackbar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Success</value>
+  <data name="&gt;&gt;UserContrastTrackbar.Name" xml:space="preserve">
+    <value>UserContrastTrackbar</value>
   </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
+  <data name="&gt;&gt;UserContrastTrackbar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;UserContrastTrackbar.Parent" xml:space="preserve">
     <value>CameraControllergroupBox</value>
   </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;UserContrastTrackbar.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 140</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 15</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Status :</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>CameraControllergroupBox</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>3</value>
   </data>
   <data name="User_Contrast.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="User_Contrast.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="User_Contrast.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="User_Contrast.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 94</value>
+    <value>10, 80</value>
   </data>
   <data name="User_Contrast.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 15</value>
+    <value>46, 13</value>
   </data>
   <data name="User_Contrast.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -337,16 +325,118 @@
     <value>CameraControllergroupBox</value>
   </data>
   <data name="&gt;&gt;User_Contrast.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 282</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 13</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Status :</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>CameraControllergroupBox</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="UserBrightnessTrackbar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="UserBrightnessTrackbar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="UserBrightnessTrackbar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 35</value>
+  </data>
+  <data name="UserBrightnessTrackbar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>264, 45</value>
+  </data>
+  <data name="UserBrightnessTrackbar.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;UserBrightnessTrackbar.Name" xml:space="preserve">
+    <value>UserBrightnessTrackbar</value>
+  </data>
+  <data name="&gt;&gt;UserBrightnessTrackbar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserBrightnessTrackbar.Parent" xml:space="preserve">
+    <value>CameraControllergroupBox</value>
+  </data>
+  <data name="&gt;&gt;UserBrightnessTrackbar.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 15.75pt, style=Italic</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 295</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 25</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>CameraControllergroupBox</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="User_Brightness.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="User_Brightness.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="User_Brightness.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="User_Brightness.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 47</value>
+    <value>10, 22</value>
   </data>
   <data name="User_Brightness.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 15</value>
+    <value>56, 13</value>
   </data>
   <data name="User_Brightness.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -364,57 +454,6 @@
     <value>CameraControllergroupBox</value>
   </data>
   <data name="&gt;&gt;User_Brightness.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="UserContrastTrackbar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="UserContrastTrackbar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="UserContrastTrackbar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 92</value>
-  </data>
-  <data name="UserContrastTrackbar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 50</value>
-  </data>
-  <data name="UserContrastTrackbar.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;UserContrastTrackbar.Name" xml:space="preserve">
-    <value>UserContrastTrackbar</value>
-  </data>
-  <data name="&gt;&gt;UserContrastTrackbar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserContrastTrackbar.Parent" xml:space="preserve">
-    <value>CameraControllergroupBox</value>
-  </data>
-  <data name="&gt;&gt;UserContrastTrackbar.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="UserBrightnessTrackbar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="UserBrightnessTrackbar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 45</value>
-  </data>
-  <data name="UserBrightnessTrackbar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 50</value>
-  </data>
-  <data name="UserBrightnessTrackbar.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;UserBrightnessTrackbar.Name" xml:space="preserve">
-    <value>UserBrightnessTrackbar</value>
-  </data>
-  <data name="&gt;&gt;UserBrightnessTrackbar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserBrightnessTrackbar.Parent" xml:space="preserve">
-    <value>CameraControllergroupBox</value>
-  </data>
-  <data name="&gt;&gt;UserBrightnessTrackbar.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
   <data name="CameraControllergroupBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -424,13 +463,16 @@
     <value>Microsoft Sans Serif, 7.85454559pt</value>
   </data>
   <data name="CameraControllergroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>642, 10</value>
+    <value>615, 10</value>
   </data>
   <data name="CameraControllergroupBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
   </data>
+  <data name="CameraControllergroupBox.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
   <data name="CameraControllergroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 198</value>
+    <value>284, 330</value>
   </data>
   <data name="CameraControllergroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -460,7 +502,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>949, 218</value>
+    <value>909, 350</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -471,8 +513,8 @@
   <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>791, 242</value>
+  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -490,7 +532,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>953, 222</value>
+    <value>913, 354</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>CameraViewerUC</value>
