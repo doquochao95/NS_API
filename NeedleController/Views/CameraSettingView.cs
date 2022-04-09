@@ -241,6 +241,8 @@ namespace NeedleController.Views
                     {
                         MessageBox.Show(this, "Start Camera  Failed", "Error: Data", MessageBoxButtons.OK);
                         initial_flag = true;
+                        paraSetting_flag = false;
+                        imgpParaSetting_flag = false;
                     }
                 }
                 else if (camera_mode == "Local Camera" && camera_id.Length > 1)
@@ -277,6 +279,8 @@ namespace NeedleController.Views
                         {
                             MessageBox.Show(this, "Start Camera  Failed", "Error: Data", MessageBoxButtons.OK);
                             initial_flag = true;
+                            paraSetting_flag = false;
+                            imgpParaSetting_flag = false;
                         }
                     }
                     else

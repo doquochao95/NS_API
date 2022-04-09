@@ -489,6 +489,7 @@ namespace NeedleController.Views.CameraSettingUCs
                 GaussianKSizeCmb.Enabled = true;
                 CannyThreshold1Trackbar.Enabled = true;
                 CannyThreshold2Trackbar.Enabled = true;
+                OnOffDetect.Enabled = true;
                 Color.Enabled = true;
             }
             else
@@ -499,6 +500,7 @@ namespace NeedleController.Views.CameraSettingUCs
                     GaussianKSizeCmb.Enabled = false;
                     CannyThreshold1Trackbar.Enabled = false;
                     CannyThreshold2Trackbar.Enabled = false;
+                    OnOffDetect.Enabled = false;
                     Color.Enabled = false;
                     CameraSettingView.paraSetting_flag = true;
                 }  
