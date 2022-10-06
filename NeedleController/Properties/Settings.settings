@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NeedleController.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="local_ip" Type="System.String" Scope="Application">
+    <Setting Name="local_ip" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.0.177</Value>
     </Setting>
-    <Setting Name="port" Type="System.Int32" Scope="Application">
+    <Setting Name="port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8080</Value>
     </Setting>
     <Setting Name="language_set" Type="System.String" Scope="User">
@@ -55,6 +55,18 @@
     </Setting>
     <Setting Name="modeCamera" Type="System.String" Scope="User">
       <Value Profile="(Default)">Local Camera</Value>
+    </Setting>
+    <Setting Name="deviceid" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="devicename" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E1</Value>
+    </Setting>
+    <Setting Name="buildingname" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Building E</Value>
+    </Setting>
+    <Setting Name="buildingid" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

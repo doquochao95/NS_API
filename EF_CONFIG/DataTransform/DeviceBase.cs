@@ -27,6 +27,23 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
+        public static List<NS_Devices> Get_DeviceWithBuildingId(int buildingid)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Devices
+                        .Where(i => i.BuildingID == buildingid && i.OnlineStatus != null)
+                        .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
         public static bool Update_OnlineStatus(int deviceid, string status)
         {
             try
@@ -43,6 +60,24 @@ namespace EF_CONFIG.DataTransform
             {
                 Console.WriteLine(e.ToString());
                 return false;
+            }
+        }
+        public static string Get_OnlineStatus(int deviceid)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Devices
+                        .Where(i => i.DeviceID == deviceid)
+                        .Select(i => i.OnlineStatus)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
             }
         }
     }

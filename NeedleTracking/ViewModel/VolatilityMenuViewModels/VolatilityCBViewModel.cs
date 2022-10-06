@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using EF_CONFIG.DataTransform;
 using EF_CONFIG.Model;
 using NeedleTracking.UserControlUC;
@@ -90,6 +91,27 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
             {
                 _MachineComboBoxEnable = value;
                 OnPropertyChanged("MachineComboBoxEnable");
+            }
+        }
+
+        private System.Windows.Media.Brush _MachineForegroundColor = Brushes.Gray;
+        public System.Windows.Media.Brush MachineForegroundColor
+        {
+            get { return _MachineForegroundColor; }
+            set
+            {
+                _MachineForegroundColor = value;
+                OnPropertyChanged();
+            }
+        }
+        private System.Windows.Media.Brush _BuildingForegroundColor = Brushes.Gray;
+        public System.Windows.Media.Brush BuildingForegroundColor
+        {
+            get { return _BuildingForegroundColor; }
+            set
+            {
+                _BuildingForegroundColor = value;
+                OnPropertyChanged();
             }
         }
 

@@ -5,6 +5,26 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NeedleSupplierModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LogEvents">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="LogType" Type="nvarchar(max)" />
+          <Property Name="TimeStamp" Type="datetime" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+          <Property Name="Properties" Type="nvarchar(max)" />
+          <Property Name="MassageString" Type="nvarchar(max)" />
+          <Property Name="DeviceID" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="NS_BrokenReason">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReasonName" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="NS_Buildings">
           <Key>
             <PropertyRef Name="BuildingID" />
@@ -35,6 +55,7 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
           <Property Name="StockID" Type="int" Nullable="false" />
+          <Property Name="RecycleBoxID" Type="int" />
         </EntityType>
         <EntityType Name="NS_Imports">
           <Key>
@@ -49,6 +70,14 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
           <Property Name="StockID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NS_Lines">
+          <Key>
+            <PropertyRef Name="LineID" />
+          </Key>
+          <Property Name="LineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LineName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BuildingID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NS_NeedlePosition">
           <Key>
@@ -70,6 +99,7 @@
           <Property Name="NeedleLength" Type="decimal" Precision="5" Scale="2" />
           <Property Name="PointTypeImage" Type="varbinary(max)" />
           <Property Name="RealityImage" Type="varbinary(max)" />
+          <Property Name="NeedleWarehouseCode" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NS_PostRecords">
           <Key>
@@ -81,6 +111,64 @@
           <Property Name="DeviceID" Type="int" Nullable="false" />
           <Property Name="BuildingID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="NS_Process">
+          <Key>
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ProcessID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProcessName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="NS_RecycledBox">
+          <Key>
+            <PropertyRef Name="RecycleBoxID" />
+          </Key>
+          <Property Name="RecycleBoxID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="NeedleID" Type="int" Nullable="false" />
+          <Property Name="BrokenTime" Type="datetime" />
+          <Property Name="BrokenTimeStr" Type="nvarchar(max)" />
+          <Property Name="Operator" Type="int" />
+          <Property Name="SewingMachine" Type="nvarchar(max)" />
+          <Property Name="ProcessID" Type="int" />
+          <Property Name="ReasonID" Type="int" />
+          <Property Name="ExportTime" Type="datetime" Nullable="false" />
+          <Property Name="ExportTimeStr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GetByStaffID" Type="int" Nullable="false" />
+          <Property Name="RecycleNeedleImage" Type="varbinary(max)" />
+          <Property Name="NeedlePartsEnough" Type="int" />
+          <Property Name="ConfirmationTime" Type="datetime" />
+          <Property Name="ConfirmationTimeStr" Type="nvarchar(max)" />
+          <Property Name="ConfirmationByStaffID" Type="int" />
+          <Property Name="Handle" Type="nvarchar(max)" />
+          <Property Name="PO" Type="nvarchar(max)" />
+          <Property Name="InBox" Type="int" />
+          <Property Name="CapturedLength" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="DeleteByStaffID" Type="int" />
+          <Property Name="DeleteTime" Type="datetime" />
+          <Property Name="DeleteTimeStr" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="NS_Requests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="NeedleID" Type="int" Nullable="false" />
+          <Property Name="RequestByStaffID" Type="int" Nullable="false" />
+          <Property Name="RequestTime" Type="datetime" Nullable="false" />
+          <Property Name="RequestTimeStr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BrokenTime" Type="datetime" Nullable="false" />
+          <Property Name="BrokenTimeStr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Operator" Type="int" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="SewingMachine" Type="int" Nullable="false" />
+          <Property Name="ReasonID" Type="int" Nullable="false" />
+          <Property Name="NeedlePartsEnough" Type="int" Nullable="false" />
+          <Property Name="Handle" Type="nvarchar(max)" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="AllowByStaffID" Type="int" Nullable="false" />
+          <Property Name="PO" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="NS_Staffs">
           <Key>
             <PropertyRef Name="StaffID" />
@@ -89,7 +177,7 @@
           <Property Name="StaffName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CardNumber" Type="int" Nullable="false" />
           <Property Name="Department" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="BuildingID" Type="int" Nullable="false" />
+          <Property Name="LineID" Type="int" Nullable="false" />
           <Property Name="RFIDCode" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DeviceID" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar(max)" />
@@ -164,6 +252,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NS_Export_NS_RecycledBox">
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="0..1" />
+          <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_RecycledBox">
+              <PropertyRef Name="RecycleBoxID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="RecycleBoxID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NS_Export_NS_Staffs">
           <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
           <End Role="NS_Export" Type="Self.NS_Export" Multiplicity="*" />
@@ -212,6 +312,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NS_Lines_NS_Buildings">
+          <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
+          <End Role="NS_Lines" Type="Self.NS_Lines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Lines">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NS_PostRecord_NS_Buildings">
           <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
           <End Role="NS_PostRecords" Type="Self.NS_PostRecords" Multiplicity="*" />
@@ -236,15 +348,171 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NS_Staffs_NS_Buildings">
-          <End Role="NS_Buildings" Type="Self.NS_Buildings" Multiplicity="1" />
-          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="*" />
+        <Association Name="FK_NS_RecycledBox_NS_BrokenReason">
+          <End Role="NS_BrokenReason" Type="Self.NS_BrokenReason" Multiplicity="0..1" />
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="NS_Buildings">
-              <PropertyRef Name="BuildingID" />
+            <Principal Role="NS_BrokenReason">
+              <PropertyRef Name="ReasonID" />
             </Principal>
-            <Dependent Role="NS_Staffs">
-              <PropertyRef Name="BuildingID" />
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Devices">
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="1" />
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Needles">
+          <End Role="NS_Needles" Type="Self.NS_Needles" Multiplicity="1" />
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Process">
+          <End Role="NS_Process" Type="Self.NS_Process" Multiplicity="0..1" />
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Process">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Staffs">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="GetByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Staffs1">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="0..1" />
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="ConfirmationByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Staffs2">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="0..1" />
+          <End Role="NS_RecycledBox" Type="Self.NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="DeleteByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_BrokenReason">
+          <End Role="NS_BrokenReason" Type="Self.NS_BrokenReason" Multiplicity="1" />
+          <End Role="NS_Requests" Type="Self.NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_BrokenReason">
+              <PropertyRef Name="ReasonID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Devices">
+          <End Role="NS_Devices" Type="Self.NS_Devices" Multiplicity="1" />
+          <End Role="NS_Requests" Type="Self.NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Needles">
+          <End Role="NS_Needles" Type="Self.NS_Needles" Multiplicity="1" />
+          <End Role="NS_Requests" Type="Self.NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Process">
+          <End Role="NS_Process" Type="Self.NS_Process" Multiplicity="1" />
+          <End Role="NS_Requests" Type="Self.NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Process">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Requests">
+          <End Role="NS_Requests" Type="Self.NS_Requests" Multiplicity="1" />
+          <End Role="NS_Requests1" Type="Self.NS_Requests" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Requests">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="NS_Requests1">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Staffs">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
+          <End Role="NS_Requests" Type="Self.NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="AllowByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Staffs1">
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="1" />
+          <End Role="NS_Requests" Type="Self.NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="RequestByStaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -257,6 +525,18 @@
             </Principal>
             <Dependent Role="NS_Staffs">
               <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Staffs_NS_Lines">
+          <End Role="NS_Lines" Type="Self.NS_Lines" Multiplicity="1" />
+          <End Role="NS_Staffs" Type="Self.NS_Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Lines">
+              <PropertyRef Name="LineID" />
+            </Principal>
+            <Dependent Role="NS_Staffs">
+              <PropertyRef Name="LineID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -352,13 +632,19 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="NeedleSupplierModelStoreContainer">
+          <EntitySet Name="LogEvents" EntityType="Self.LogEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_BrokenReason" EntityType="Self.NS_BrokenReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Buildings" EntityType="Self.NS_Buildings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Devices" EntityType="Self.NS_Devices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Export" EntityType="Self.NS_Export" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Imports" EntityType="Self.NS_Imports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Lines" EntityType="Self.NS_Lines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_NeedlePosition" EntityType="Self.NS_NeedlePosition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Needles" EntityType="Self.NS_Needles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_PostRecords" EntityType="Self.NS_PostRecords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Process" EntityType="Self.NS_Process" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_RecycledBox" EntityType="Self.NS_RecycledBox" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NS_Requests" EntityType="Self.NS_Requests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Staffs" EntityType="Self.NS_Staffs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NS_Stocks" EntityType="Self.NS_Stocks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -378,6 +664,10 @@
             <End Role="NS_Needles" EntitySet="NS_Needles" />
             <End Role="NS_Export" EntitySet="NS_Export" />
           </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_RecycledBox" Association="Self.FK_NS_Export_NS_RecycledBox">
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
           <AssociationSet Name="FK_NS_Export_NS_Staffs" Association="Self.FK_NS_Export_NS_Staffs">
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
             <End Role="NS_Export" EntitySet="NS_Export" />
@@ -394,6 +684,10 @@
             <End Role="NS_Stocks" EntitySet="NS_Stocks" />
             <End Role="NS_Imports" EntitySet="NS_Imports" />
           </AssociationSet>
+          <AssociationSet Name="FK_NS_Lines_NS_Buildings" Association="Self.FK_NS_Lines_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Lines" EntitySet="NS_Lines" />
+          </AssociationSet>
           <AssociationSet Name="FK_NS_PostRecord_NS_Buildings" Association="Self.FK_NS_PostRecord_NS_Buildings">
             <End Role="NS_Buildings" EntitySet="NS_Buildings" />
             <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
@@ -402,12 +696,68 @@
             <End Role="NS_Devices" EntitySet="NS_Devices" />
             <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
           </AssociationSet>
-          <AssociationSet Name="FK_NS_Staffs_NS_Buildings" Association="Self.FK_NS_Staffs_NS_Buildings">
-            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+          <AssociationSet Name="FK_NS_RecycledBox_NS_BrokenReason" Association="Self.FK_NS_RecycledBox_NS_BrokenReason">
+            <End Role="NS_BrokenReason" EntitySet="NS_BrokenReason" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Devices" Association="Self.FK_NS_RecycledBox_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Needles" Association="Self.FK_NS_RecycledBox_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Process" Association="Self.FK_NS_RecycledBox_NS_Process">
+            <End Role="NS_Process" EntitySet="NS_Process" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Staffs" Association="Self.FK_NS_RecycledBox_NS_Staffs">
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Staffs1" Association="Self.FK_NS_RecycledBox_NS_Staffs1">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Staffs2" Association="Self.FK_NS_RecycledBox_NS_Staffs2">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_BrokenReason" Association="Self.FK_NS_Requests_NS_BrokenReason">
+            <End Role="NS_BrokenReason" EntitySet="NS_BrokenReason" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Devices" Association="Self.FK_NS_Requests_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Needles" Association="Self.FK_NS_Requests_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Process" Association="Self.FK_NS_Requests_NS_Process">
+            <End Role="NS_Process" EntitySet="NS_Process" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Requests" Association="Self.FK_NS_Requests_NS_Requests">
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+            <End Role="NS_Requests1" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Staffs" Association="Self.FK_NS_Requests_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Staffs1" Association="Self.FK_NS_Requests_NS_Staffs1">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Staffs_NS_Devices" Association="Self.FK_NS_Staffs_NS_Devices">
             <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Staffs_NS_Lines" Association="Self.FK_NS_Staffs_NS_Lines">
+            <End Role="NS_Lines" EntitySet="NS_Lines" />
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Stocks_NS_Devices" Association="Self.FK_NS_Stocks_NS_Devices">
@@ -466,16 +816,30 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="LogEvents" EntityType="NeedleSupplierModel.LogEvent" />
+          <EntitySet Name="NS_BrokenReason" EntityType="NeedleSupplierModel.NS_BrokenReason" />
           <EntitySet Name="NS_Buildings" EntityType="NeedleSupplierModel.NS_Buildings" />
           <EntitySet Name="NS_Devices" EntityType="NeedleSupplierModel.NS_Devices" />
           <EntitySet Name="NS_Export" EntityType="NeedleSupplierModel.NS_Export" />
           <EntitySet Name="NS_Imports" EntityType="NeedleSupplierModel.NS_Imports" />
+          <EntitySet Name="NS_Lines" EntityType="NeedleSupplierModel.NS_Lines" />
           <EntitySet Name="NS_NeedlePosition" EntityType="NeedleSupplierModel.NS_NeedlePosition" />
           <EntitySet Name="NS_Needles" EntityType="NeedleSupplierModel.NS_Needles" />
           <EntitySet Name="NS_PostRecords" EntityType="NeedleSupplierModel.NS_PostRecords" />
+          <EntitySet Name="NS_Process" EntityType="NeedleSupplierModel.NS_Process" />
+          <EntitySet Name="NS_RecycledBox" EntityType="NeedleSupplierModel.NS_RecycledBox" />
+          <EntitySet Name="NS_Requests" EntityType="NeedleSupplierModel.NS_Requests" />
           <EntitySet Name="NS_Staffs" EntityType="NeedleSupplierModel.NS_Staffs" />
           <EntitySet Name="NS_Stocks" EntityType="NeedleSupplierModel.NS_Stocks" />
           <EntitySet Name="sysdiagrams" EntityType="NeedleSupplierModel.sysdiagram" />
+          <AssociationSet Name="FK_NS_RecycledBox_NS_BrokenReason" Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_BrokenReason">
+            <End Role="NS_BrokenReason" EntitySet="NS_BrokenReason" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_BrokenReason" Association="NeedleSupplierModel.FK_NS_Requests_NS_BrokenReason">
+            <End Role="NS_BrokenReason" EntitySet="NS_BrokenReason" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
           <AssociationSet Name="FK_NS_Devices_NS_Buildings" Association="NeedleSupplierModel.FK_NS_Devices_NS_Buildings">
             <End Role="NS_Buildings" EntitySet="NS_Buildings" />
             <End Role="NS_Devices" EntitySet="NS_Devices" />
@@ -488,13 +852,13 @@
             <End Role="NS_Buildings" EntitySet="NS_Buildings" />
             <End Role="NS_Imports" EntitySet="NS_Imports" />
           </AssociationSet>
+          <AssociationSet Name="FK_NS_Lines_NS_Buildings" Association="NeedleSupplierModel.FK_NS_Lines_NS_Buildings">
+            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
+            <End Role="NS_Lines" EntitySet="NS_Lines" />
+          </AssociationSet>
           <AssociationSet Name="FK_NS_PostRecord_NS_Buildings" Association="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings">
             <End Role="NS_Buildings" EntitySet="NS_Buildings" />
             <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NS_Staffs_NS_Buildings" Association="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings">
-            <End Role="NS_Buildings" EntitySet="NS_Buildings" />
-            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Export_NS_Devices" Association="NeedleSupplierModel.FK_NS_Export_NS_Devices">
             <End Role="NS_Devices" EntitySet="NS_Devices" />
@@ -503,6 +867,14 @@
           <AssociationSet Name="FK_NS_PostRecords_NS_Devices" Association="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices">
             <End Role="NS_Devices" EntitySet="NS_Devices" />
             <End Role="NS_PostRecords" EntitySet="NS_PostRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Devices" Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Devices" Association="NeedleSupplierModel.FK_NS_Requests_NS_Devices">
+            <End Role="NS_Devices" EntitySet="NS_Devices" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Staffs_NS_Devices" Association="NeedleSupplierModel.FK_NS_Staffs_NS_Devices">
             <End Role="NS_Devices" EntitySet="NS_Devices" />
@@ -518,6 +890,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_NS_Export_NS_Export" Association="NeedleSupplierModel.FK_NS_Export_NS_Export">
             <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Export" EntitySet="NS_Export" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Export_NS_RecycledBox" Association="NeedleSupplierModel.FK_NS_Export_NS_RecycledBox">
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
             <End Role="NS_Export" EntitySet="NS_Export" />
           </AssociationSet>
           <AssociationSet Name="FK_NS_Export_NS_Staffs" Association="NeedleSupplierModel.FK_NS_Export_NS_Staffs">
@@ -540,9 +916,53 @@
             <End Role="NS_Staffs" EntitySet="NS_Staffs" />
             <End Role="NS_Imports" EntitySet="NS_Imports" />
           </AssociationSet>
+          <AssociationSet Name="FK_NS_Staffs_NS_Lines" Association="NeedleSupplierModel.FK_NS_Staffs_NS_Lines">
+            <End Role="NS_Lines" EntitySet="NS_Lines" />
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Needles" Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Needles" Association="NeedleSupplierModel.FK_NS_Requests_NS_Needles">
+            <End Role="NS_Needles" EntitySet="NS_Needles" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
           <AssociationSet Name="FK_NS_Stocks_NS_Needles" Association="NeedleSupplierModel.FK_NS_Stocks_NS_Needles">
             <End Role="NS_Needles" EntitySet="NS_Needles" />
             <End Role="NS_Stocks" EntitySet="NS_Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Process" Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Process">
+            <End Role="NS_Process" EntitySet="NS_Process" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Process" Association="NeedleSupplierModel.FK_NS_Requests_NS_Process">
+            <End Role="NS_Process" EntitySet="NS_Process" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Staffs" Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Staffs1" Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs1">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_RecycledBox_NS_Staffs2" Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs2">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_RecycledBox" EntitySet="NS_RecycledBox" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Requests" Association="NeedleSupplierModel.FK_NS_Requests_NS_Requests">
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+            <End Role="NS_Requests1" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Staffs" Association="NeedleSupplierModel.FK_NS_Requests_NS_Staffs">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NS_Requests_NS_Staffs1" Association="NeedleSupplierModel.FK_NS_Requests_NS_Staffs1">
+            <End Role="NS_Staffs" EntitySet="NS_Staffs" />
+            <End Role="NS_Requests" EntitySet="NS_Requests" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -556,6 +976,28 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="LogEvent">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LogType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Properties" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MassageString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="NS_BrokenReason">
+          <Key>
+            <PropertyRef Name="ReasonID" />
+          </Key>
+          <Property Name="ReasonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReasonName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NS_RecycledBox" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_BrokenReason" FromRole="NS_BrokenReason" ToRole="NS_RecycledBox" />
+          <NavigationProperty Name="NS_Requests" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_BrokenReason" FromRole="NS_BrokenReason" ToRole="NS_Requests" />
+        </EntityType>
         <EntityType Name="NS_Buildings">
           <Key>
             <PropertyRef Name="BuildingID" />
@@ -565,8 +1007,8 @@
           <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Devices_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Devices" />
           <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Export" />
           <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Imports_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Imports" />
+          <NavigationProperty Name="NS_Lines" Relationship="NeedleSupplierModel.FK_NS_Lines_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Lines" />
           <NavigationProperty Name="NS_PostRecords" Relationship="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_PostRecords" />
-          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings" FromRole="NS_Buildings" ToRole="NS_Staffs" />
         </EntityType>
         <EntityType Name="NS_Devices">
           <Key>
@@ -580,6 +1022,8 @@
           <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Devices_NS_Buildings" FromRole="NS_Devices" ToRole="NS_Buildings" />
           <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Devices" FromRole="NS_Devices" ToRole="NS_Export" />
           <NavigationProperty Name="NS_PostRecords" Relationship="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices" FromRole="NS_Devices" ToRole="NS_PostRecords" />
+          <NavigationProperty Name="NS_RecycledBox" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Devices" FromRole="NS_Devices" ToRole="NS_RecycledBox" />
+          <NavigationProperty Name="NS_Requests" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Devices" FromRole="NS_Devices" ToRole="NS_Requests" />
           <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Devices" FromRole="NS_Devices" ToRole="NS_Staffs" />
           <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Devices" FromRole="NS_Devices" ToRole="NS_Stocks" />
           <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Devices" FromRole="NS_Devices" ToRole="NS_Imports" />
@@ -597,9 +1041,11 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="StaffID" Type="Int32" Nullable="false" />
           <Property Name="StockID" Type="Int32" Nullable="false" />
+          <Property Name="RecycleBoxID" Type="Int32" />
           <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Buildings" FromRole="NS_Export" ToRole="NS_Buildings" />
           <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Devices" FromRole="NS_Export" ToRole="NS_Devices" />
           <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Export" FromRole="NS_Export" ToRole="NS_Needles" />
+          <NavigationProperty Name="NS_RecycledBox" Relationship="NeedleSupplierModel.FK_NS_Export_NS_RecycledBox" FromRole="NS_Export" ToRole="NS_RecycledBox" />
           <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Staffs" FromRole="NS_Export" ToRole="NS_Staffs" />
           <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Stocks" FromRole="NS_Export" ToRole="NS_Stocks" />
         </EntityType>
@@ -622,6 +1068,16 @@
           <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" FromRole="NS_Imports" ToRole="NS_Needles" />
           <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" FromRole="NS_Imports" ToRole="NS_Staffs" />
         </EntityType>
+        <EntityType Name="NS_Lines">
+          <Key>
+            <PropertyRef Name="LineID" />
+          </Key>
+          <Property Name="LineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LineName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Lines_NS_Buildings" FromRole="NS_Lines" ToRole="NS_Buildings" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Lines" FromRole="NS_Lines" ToRole="NS_Staffs" />
+        </EntityType>
         <EntityType Name="NS_NeedlePosition">
           <Key>
             <PropertyRef Name="NeedlePositionID" />
@@ -642,8 +1098,11 @@
           <Property Name="NeedleLength" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="PointTypeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="RealityImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="NeedleWarehouseCode" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Export" FromRole="NS_Needles" ToRole="NS_Export" />
           <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" FromRole="NS_Needles" ToRole="NS_Imports" />
+          <NavigationProperty Name="NS_RecycledBox" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Needles" FromRole="NS_Needles" ToRole="NS_RecycledBox" />
+          <NavigationProperty Name="NS_Requests" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Needles" FromRole="NS_Needles" ToRole="NS_Requests" />
           <NavigationProperty Name="NS_Stocks" Relationship="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" FromRole="NS_Needles" ToRole="NS_Stocks" />
         </EntityType>
         <EntityType Name="NS_PostRecords">
@@ -658,6 +1117,82 @@
           <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings" FromRole="NS_PostRecords" ToRole="NS_Buildings" />
           <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices" FromRole="NS_PostRecords" ToRole="NS_Devices" />
         </EntityType>
+        <EntityType Name="NS_Process">
+          <Key>
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ProcessID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProcessName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NS_RecycledBox" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Process" FromRole="NS_Process" ToRole="NS_RecycledBox" />
+          <NavigationProperty Name="NS_Requests" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Process" FromRole="NS_Process" ToRole="NS_Requests" />
+        </EntityType>
+        <EntityType Name="NS_RecycledBox">
+          <Key>
+            <PropertyRef Name="RecycleBoxID" />
+          </Key>
+          <Property Name="RecycleBoxID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="NeedleID" Type="Int32" Nullable="false" />
+          <Property Name="BrokenTime" Type="DateTime" Precision="3" />
+          <Property Name="BrokenTimeStr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Operator" Type="Int32" />
+          <Property Name="SewingMachine" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProcessID" Type="Int32" />
+          <Property Name="ReasonID" Type="Int32" />
+          <Property Name="ExportTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExportTimeStr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GetByStaffID" Type="Int32" Nullable="false" />
+          <Property Name="RecycleNeedleImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="NeedlePartsEnough" Type="Int32" />
+          <Property Name="ConfirmationTime" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmationTimeStr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ConfirmationByStaffID" Type="Int32" />
+          <Property Name="Handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InBox" Type="Int32" />
+          <Property Name="CapturedLength" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DeleteByStaffID" Type="Int32" />
+          <Property Name="DeleteTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteTimeStr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NS_BrokenReason" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_BrokenReason" FromRole="NS_RecycledBox" ToRole="NS_BrokenReason" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Devices" FromRole="NS_RecycledBox" ToRole="NS_Devices" />
+          <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_RecycledBox" FromRole="NS_RecycledBox" ToRole="NS_Export" />
+          <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Needles" FromRole="NS_RecycledBox" ToRole="NS_Needles" />
+          <NavigationProperty Name="NS_Process" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Process" FromRole="NS_RecycledBox" ToRole="NS_Process" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs" FromRole="NS_RecycledBox" ToRole="NS_Staffs" />
+          <NavigationProperty Name="NS_Staffs1" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs1" FromRole="NS_RecycledBox" ToRole="NS_Staffs" />
+          <NavigationProperty Name="NS_Staffs2" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs2" FromRole="NS_RecycledBox" ToRole="NS_Staffs" />
+        </EntityType>
+        <EntityType Name="NS_Requests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="NeedleID" Type="Int32" Nullable="false" />
+          <Property Name="RequestByStaffID" Type="Int32" Nullable="false" />
+          <Property Name="RequestTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestTimeStr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BrokenTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BrokenTimeStr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Operator" Type="Int32" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="SewingMachine" Type="Int32" Nullable="false" />
+          <Property Name="ReasonID" Type="Int32" Nullable="false" />
+          <Property Name="NeedlePartsEnough" Type="Int32" Nullable="false" />
+          <Property Name="Handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="AllowByStaffID" Type="Int32" Nullable="false" />
+          <Property Name="PO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NS_BrokenReason" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_BrokenReason" FromRole="NS_Requests" ToRole="NS_BrokenReason" />
+          <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Devices" FromRole="NS_Requests" ToRole="NS_Devices" />
+          <NavigationProperty Name="NS_Needles" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Needles" FromRole="NS_Requests" ToRole="NS_Needles" />
+          <NavigationProperty Name="NS_Process" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Process" FromRole="NS_Requests" ToRole="NS_Process" />
+          <NavigationProperty Name="NS_Requests1" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Requests" FromRole="NS_Requests" ToRole="NS_Requests1" />
+          <NavigationProperty Name="NS_Requests2" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Requests" FromRole="NS_Requests1" ToRole="NS_Requests" />
+          <NavigationProperty Name="NS_Staffs" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Staffs" FromRole="NS_Requests" ToRole="NS_Staffs" />
+          <NavigationProperty Name="NS_Staffs1" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Staffs1" FromRole="NS_Requests" ToRole="NS_Staffs" />
+        </EntityType>
         <EntityType Name="NS_Staffs">
           <Key>
             <PropertyRef Name="StaffID" />
@@ -666,16 +1201,21 @@
           <Property Name="StaffName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CardNumber" Type="Int32" Nullable="false" />
           <Property Name="Department" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingID" Type="Int32" Nullable="false" />
+          <Property Name="LineID" Type="Int32" Nullable="false" />
           <Property Name="RFIDCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DeviceID" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserLayer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NS_Buildings" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings" FromRole="NS_Staffs" ToRole="NS_Buildings" />
           <NavigationProperty Name="NS_Devices" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Devices" FromRole="NS_Staffs" ToRole="NS_Devices" />
           <NavigationProperty Name="NS_Export" Relationship="NeedleSupplierModel.FK_NS_Export_NS_Staffs" FromRole="NS_Staffs" ToRole="NS_Export" />
           <NavigationProperty Name="NS_Imports" Relationship="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" FromRole="NS_Staffs" ToRole="NS_Imports" />
+          <NavigationProperty Name="NS_Lines" Relationship="NeedleSupplierModel.FK_NS_Staffs_NS_Lines" FromRole="NS_Staffs" ToRole="NS_Lines" />
+          <NavigationProperty Name="NS_RecycledBox" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs" FromRole="NS_Staffs" ToRole="NS_RecycledBox" />
+          <NavigationProperty Name="NS_RecycledBox1" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs1" FromRole="NS_Staffs" ToRole="NS_RecycledBox" />
+          <NavigationProperty Name="NS_RecycledBox2" Relationship="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs2" FromRole="NS_Staffs" ToRole="NS_RecycledBox" />
+          <NavigationProperty Name="NS_Requests" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Staffs" FromRole="NS_Staffs" ToRole="NS_Requests" />
+          <NavigationProperty Name="NS_Requests1" Relationship="NeedleSupplierModel.FK_NS_Requests_NS_Staffs1" FromRole="NS_Staffs" ToRole="NS_Requests" />
         </EntityType>
         <EntityType Name="NS_Stocks">
           <Key>
@@ -701,6 +1241,30 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <Association Name="FK_NS_RecycledBox_NS_BrokenReason">
+          <End Type="NeedleSupplierModel.NS_BrokenReason" Role="NS_BrokenReason" Multiplicity="0..1" />
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_BrokenReason">
+              <PropertyRef Name="ReasonID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_BrokenReason">
+          <End Type="NeedleSupplierModel.NS_BrokenReason" Role="NS_BrokenReason" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_BrokenReason">
+              <PropertyRef Name="ReasonID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NS_Devices_NS_Buildings">
           <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
           <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="*" />
@@ -737,6 +1301,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NS_Lines_NS_Buildings">
+          <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Lines" Role="NS_Lines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Buildings">
+              <PropertyRef Name="BuildingID" />
+            </Principal>
+            <Dependent Role="NS_Lines">
+              <PropertyRef Name="BuildingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NS_PostRecord_NS_Buildings">
           <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
           <End Type="NeedleSupplierModel.NS_PostRecords" Role="NS_PostRecords" Multiplicity="*" />
@@ -745,18 +1321,6 @@
               <PropertyRef Name="BuildingID" />
             </Principal>
             <Dependent Role="NS_PostRecords">
-              <PropertyRef Name="BuildingID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NS_Staffs_NS_Buildings">
-          <End Type="NeedleSupplierModel.NS_Buildings" Role="NS_Buildings" Multiplicity="1" />
-          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NS_Buildings">
-              <PropertyRef Name="BuildingID" />
-            </Principal>
-            <Dependent Role="NS_Staffs">
               <PropertyRef Name="BuildingID" />
             </Dependent>
           </ReferentialConstraint>
@@ -781,6 +1345,30 @@
               <PropertyRef Name="DeviceID" />
             </Principal>
             <Dependent Role="NS_PostRecords">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Devices">
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Devices">
+          <End Type="NeedleSupplierModel.NS_Devices" Role="NS_Devices" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Devices">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
               <PropertyRef Name="DeviceID" />
             </Dependent>
           </ReferentialConstraint>
@@ -830,6 +1418,18 @@
             </Principal>
             <Dependent Role="NS_Export">
               <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Export_NS_RecycledBox">
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="0..1" />
+          <End Type="NeedleSupplierModel.NS_Export" Role="NS_Export" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_RecycledBox">
+              <PropertyRef Name="RecycleBoxID" />
+            </Principal>
+            <Dependent Role="NS_Export">
+              <PropertyRef Name="RecycleBoxID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -893,6 +1493,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NS_Staffs_NS_Lines">
+          <End Type="NeedleSupplierModel.NS_Lines" Role="NS_Lines" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Lines">
+              <PropertyRef Name="LineID" />
+            </Principal>
+            <Dependent Role="NS_Staffs">
+              <PropertyRef Name="LineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Needles">
+          <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Needles">
+          <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Needles">
+              <PropertyRef Name="NeedleID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NS_Stocks_NS_Needles">
           <End Type="NeedleSupplierModel.NS_Needles" Role="NS_Needles" Multiplicity="1" />
           <End Type="NeedleSupplierModel.NS_Stocks" Role="NS_Stocks" Multiplicity="*" />
@@ -902,6 +1538,102 @@
             </Principal>
             <Dependent Role="NS_Stocks">
               <PropertyRef Name="NeedleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Process">
+          <End Type="NeedleSupplierModel.NS_Process" Role="NS_Process" Multiplicity="0..1" />
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Process">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Process">
+          <End Type="NeedleSupplierModel.NS_Process" Role="NS_Process" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Process">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Staffs">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="GetByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Staffs1">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="0..1" />
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="ConfirmationByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_RecycledBox_NS_Staffs2">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="0..1" />
+          <End Type="NeedleSupplierModel.NS_RecycledBox" Role="NS_RecycledBox" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_RecycledBox">
+              <PropertyRef Name="DeleteByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Requests">
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Requests">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="NS_Requests1">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Staffs">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="AllowByStaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NS_Requests_NS_Staffs1">
+          <End Type="NeedleSupplierModel.NS_Staffs" Role="NS_Staffs" Multiplicity="1" />
+          <End Type="NeedleSupplierModel.NS_Requests" Role="NS_Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NS_Staffs">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="NS_Requests">
+              <PropertyRef Name="RequestByStaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -935,6 +1667,28 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="NeedleSupplierModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="NeedleSupplierModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="LogEvents">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.LogEvent">
+              <MappingFragment StoreEntitySet="LogEvents">
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="MassageString" ColumnName="MassageString" />
+                <ScalarProperty Name="Properties" ColumnName="Properties" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="LogType" ColumnName="LogType" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_BrokenReason">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_BrokenReason">
+              <MappingFragment StoreEntitySet="NS_BrokenReason">
+                <ScalarProperty Name="ReasonName" ColumnName="ReasonName" />
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NS_Buildings">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Buildings">
               <MappingFragment StoreEntitySet="NS_Buildings">
@@ -957,6 +1711,7 @@
           <EntitySetMapping Name="NS_Export">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Export">
               <MappingFragment StoreEntitySet="NS_Export">
+                <ScalarProperty Name="RecycleBoxID" ColumnName="RecycleBoxID" />
                 <ScalarProperty Name="StockID" ColumnName="StockID" />
                 <ScalarProperty Name="StaffID" ColumnName="StaffID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
@@ -984,6 +1739,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NS_Lines">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Lines">
+              <MappingFragment StoreEntitySet="NS_Lines">
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NS_NeedlePosition">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_NeedlePosition">
               <MappingFragment StoreEntitySet="NS_NeedlePosition">
@@ -995,6 +1759,7 @@
           <EntitySetMapping Name="NS_Needles">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Needles">
               <MappingFragment StoreEntitySet="NS_Needles">
+                <ScalarProperty Name="NeedleWarehouseCode" ColumnName="NeedleWarehouseCode" />
                 <ScalarProperty Name="RealityImage" ColumnName="RealityImage" />
                 <ScalarProperty Name="PointTypeImage" ColumnName="PointTypeImage" />
                 <ScalarProperty Name="NeedleLength" ColumnName="NeedleLength" />
@@ -1018,6 +1783,67 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NS_Process">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Process">
+              <MappingFragment StoreEntitySet="NS_Process">
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_RecycledBox">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_RecycledBox">
+              <MappingFragment StoreEntitySet="NS_RecycledBox">
+                <ScalarProperty Name="DeleteTimeStr" ColumnName="DeleteTimeStr" />
+                <ScalarProperty Name="DeleteTime" ColumnName="DeleteTime" />
+                <ScalarProperty Name="DeleteByStaffID" ColumnName="DeleteByStaffID" />
+                <ScalarProperty Name="CapturedLength" ColumnName="CapturedLength" />
+                <ScalarProperty Name="InBox" ColumnName="InBox" />
+                <ScalarProperty Name="PO" ColumnName="PO" />
+                <ScalarProperty Name="Handle" ColumnName="Handle" />
+                <ScalarProperty Name="ConfirmationByStaffID" ColumnName="ConfirmationByStaffID" />
+                <ScalarProperty Name="ConfirmationTimeStr" ColumnName="ConfirmationTimeStr" />
+                <ScalarProperty Name="ConfirmationTime" ColumnName="ConfirmationTime" />
+                <ScalarProperty Name="NeedlePartsEnough" ColumnName="NeedlePartsEnough" />
+                <ScalarProperty Name="RecycleNeedleImage" ColumnName="RecycleNeedleImage" />
+                <ScalarProperty Name="GetByStaffID" ColumnName="GetByStaffID" />
+                <ScalarProperty Name="ExportTimeStr" ColumnName="ExportTimeStr" />
+                <ScalarProperty Name="ExportTime" ColumnName="ExportTime" />
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="SewingMachine" ColumnName="SewingMachine" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
+                <ScalarProperty Name="BrokenTimeStr" ColumnName="BrokenTimeStr" />
+                <ScalarProperty Name="BrokenTime" ColumnName="BrokenTime" />
+                <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="RecycleBoxID" ColumnName="RecycleBoxID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NS_Requests">
+            <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Requests">
+              <MappingFragment StoreEntitySet="NS_Requests">
+                <ScalarProperty Name="PO" ColumnName="PO" />
+                <ScalarProperty Name="AllowByStaffID" ColumnName="AllowByStaffID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Handle" ColumnName="Handle" />
+                <ScalarProperty Name="NeedlePartsEnough" ColumnName="NeedlePartsEnough" />
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+                <ScalarProperty Name="SewingMachine" ColumnName="SewingMachine" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
+                <ScalarProperty Name="BrokenTimeStr" ColumnName="BrokenTimeStr" />
+                <ScalarProperty Name="BrokenTime" ColumnName="BrokenTime" />
+                <ScalarProperty Name="RequestTimeStr" ColumnName="RequestTimeStr" />
+                <ScalarProperty Name="RequestTime" ColumnName="RequestTime" />
+                <ScalarProperty Name="RequestByStaffID" ColumnName="RequestByStaffID" />
+                <ScalarProperty Name="NeedleID" ColumnName="NeedleID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NS_Staffs">
             <EntityTypeMapping TypeName="NeedleSupplierModel.NS_Staffs">
               <MappingFragment StoreEntitySet="NS_Staffs">
@@ -1026,7 +1852,7 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
                 <ScalarProperty Name="RFIDCode" ColumnName="RFIDCode" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
                 <ScalarProperty Name="Department" ColumnName="Department" />
                 <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
                 <ScalarProperty Name="StaffName" ColumnName="StaffName" />

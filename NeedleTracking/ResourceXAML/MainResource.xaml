@@ -1,14 +1,27 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:NeedleTracking.ViewModel"
-                    xmlns:volatilityviewmodel="clr-namespace:NeedleTracking.ViewModel.VolatilityMenuViewModels">
-    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
-    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
-    <viewmodel:SplashViewModel x:Key="SplashVM"></viewmodel:SplashViewModel>
-    <viewmodel:VolatilityMenuViewModel x:Key="volatilitymenuVM"></viewmodel:VolatilityMenuViewModel>
+                    xmlns:historyviewmodel="clr-namespace:NeedleTracking.ViewModel.HistoryMenuViewModels"
+                    xmlns:volatilityviewmodel="clr-namespace:NeedleTracking.ViewModel.VolatilityMenuViewModels"
+                    xmlns:requestviewmodel="clr-namespace:NeedleTracking.ViewModel.RequestMenuViewModels"
+                    xmlns:recentviewmodel="clr-namespace:NeedleTracking.ViewModel.RecentMenuViewModels">
+
     <volatilityviewmodel:VolatilityCBViewModel x:Key="volatilitycomboboxVM"></volatilityviewmodel:VolatilityCBViewModel>
     <volatilityviewmodel:VolatilityDataGridViewModel x:Key="volatilitydatagridVM"></volatilityviewmodel:VolatilityDataGridViewModel>
     <volatilityviewmodel:VolatilityQtyTabViewModel x:Key="volatilityqtytabVM"></volatilityviewmodel:VolatilityQtyTabViewModel>
     <volatilityviewmodel:VolatilityLiveChartViewModel x:Key="voaltilitylivechartVM"></volatilityviewmodel:VolatilityLiveChartViewModel>
+    <requestviewmodel:RequestDataGridViewModel x:Key="requestdatagridVM"></requestviewmodel:RequestDataGridViewModel>
+    <historyviewmodel:HistoryDataViewModel x:Key="historydataVM"></historyviewmodel:HistoryDataViewModel>
+    <historyviewmodel:HistoryActionButtonViewModel x:Key="historyactionbuttonVM"></historyviewmodel:HistoryActionButtonViewModel>
+    <recentviewmodel:DeviceRecentViewModel x:Key="devicerecentVM"></recentviewmodel:DeviceRecentViewModel>
+    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:LoadingViewModel x:Key="LoadingVM"></viewmodel:LoadingViewModel>
+    <viewmodel:SplashViewModel x:Key="SplashVM"></viewmodel:SplashViewModel>
+    <viewmodel:VolatilityMenuViewModel x:Key="VolatilitymenuVM"></viewmodel:VolatilityMenuViewModel>
+    <viewmodel:RequestMenuViewModel x:Key="RequestmenuVM"></viewmodel:RequestMenuViewModel>
+    <viewmodel:HistoryMenuViewModel x:Key="HistorymenuVM"></viewmodel:HistoryMenuViewModel>
+    <viewmodel:ImageViewModel x:Key="ImageVM"></viewmodel:ImageViewModel>
+    <viewmodel:RecentMenuViewModel x:Key="RecentMenuVM"></viewmodel:RecentMenuViewModel>
 
 </ResourceDictionary>

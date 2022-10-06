@@ -30,8 +30,8 @@ namespace NeedleController.Views.NeedlePickingUCs
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.GetButton = new System.Windows.Forms.Button();
             this.QuantityLabel = new System.Windows.Forms.Label();
+            this.GetButton = new System.Windows.Forms.Button();
             this.NeedleNameTilteLabel = new System.Windows.Forms.Label();
             this.QuantityTilteLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
@@ -41,8 +41,8 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.31326F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.68675F));
             this.tableLayoutPanel1.Controls.Add(this.QuantityLabel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.GetButton, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.NeedleNameTilteLabel, 0, 0);
@@ -54,8 +54,23 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(240, 80);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(290, 80);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // QuantityLabel
+            // 
+            this.QuantityLabel.AutoSize = true;
+            this.QuantityLabel.BackColor = System.Drawing.Color.White;
+            this.QuantityLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.QuantityLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.QuantityLabel.Font = new System.Drawing.Font("Century Gothic", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.QuantityLabel.Location = new System.Drawing.Point(226, 25);
+            this.QuantityLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.QuantityLabel.Name = "QuantityLabel";
+            this.QuantityLabel.Size = new System.Drawing.Size(63, 54);
+            this.QuantityLabel.TabIndex = 4;
+            this.QuantityLabel.Text = "0";
+            this.QuantityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // GetButton
             // 
@@ -68,38 +83,23 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.GetButton.Location = new System.Drawing.Point(1, 25);
             this.GetButton.Margin = new System.Windows.Forms.Padding(0);
             this.GetButton.Name = "GetButton";
-            this.GetButton.Size = new System.Drawing.Size(154, 54);
+            this.GetButton.Size = new System.Drawing.Size(224, 54);
             this.GetButton.TabIndex = 3;
-            this.GetButton.Text = "777777";
+            this.GetButton.Text = "777777/777";
             this.GetButton.UseVisualStyleBackColor = false;
             this.GetButton.Click += new System.EventHandler(this.GetButton_Click);
-            // 
-            // QuantityLabel
-            // 
-            this.QuantityLabel.AutoSize = true;
-            this.QuantityLabel.BackColor = System.Drawing.Color.White;
-            this.QuantityLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.QuantityLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.QuantityLabel.Font = new System.Drawing.Font("Century Gothic", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.QuantityLabel.Location = new System.Drawing.Point(156, 25);
-            this.QuantityLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.QuantityLabel.Name = "QuantityLabel";
-            this.QuantityLabel.Size = new System.Drawing.Size(83, 54);
-            this.QuantityLabel.TabIndex = 4;
-            this.QuantityLabel.Text = "0";
-            this.QuantityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // NeedleNameTilteLabel
             // 
             this.NeedleNameTilteLabel.AutoSize = true;
-            this.NeedleNameTilteLabel.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.NeedleNameTilteLabel.BackColor = System.Drawing.Color.LightSkyBlue;
             this.NeedleNameTilteLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NeedleNameTilteLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NeedleNameTilteLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.NeedleNameTilteLabel.Location = new System.Drawing.Point(1, 1);
             this.NeedleNameTilteLabel.Margin = new System.Windows.Forms.Padding(0);
             this.NeedleNameTilteLabel.Name = "NeedleNameTilteLabel";
-            this.NeedleNameTilteLabel.Size = new System.Drawing.Size(154, 23);
+            this.NeedleNameTilteLabel.Size = new System.Drawing.Size(224, 23);
             this.NeedleNameTilteLabel.TabIndex = 5;
             this.NeedleNameTilteLabel.Text = "Needle Code";
             this.NeedleNameTilteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -110,10 +110,10 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.QuantityTilteLabel.BackColor = System.Drawing.Color.BurlyWood;
             this.QuantityTilteLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.QuantityTilteLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.QuantityTilteLabel.Location = new System.Drawing.Point(156, 1);
+            this.QuantityTilteLabel.Location = new System.Drawing.Point(226, 1);
             this.QuantityTilteLabel.Margin = new System.Windows.Forms.Padding(0);
             this.QuantityTilteLabel.Name = "QuantityTilteLabel";
-            this.QuantityTilteLabel.Size = new System.Drawing.Size(83, 23);
+            this.QuantityTilteLabel.Size = new System.Drawing.Size(63, 23);
             this.QuantityTilteLabel.TabIndex = 6;
             this.QuantityTilteLabel.Text = "Quantity";
             this.QuantityTilteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -122,12 +122,14 @@ namespace NeedleController.Views.NeedlePickingUCs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
+            this.MaximumSize = new System.Drawing.Size(300, 90);
+            this.MinimumSize = new System.Drawing.Size(300, 90);
             this.Name = "NeedlePickingForm";
             this.Padding = new System.Windows.Forms.Padding(10, 10, 0, 0);
-            this.Size = new System.Drawing.Size(250, 90);
+            this.Size = new System.Drawing.Size(300, 90);
             this.Load += new System.EventHandler(this.NeedlePickingForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

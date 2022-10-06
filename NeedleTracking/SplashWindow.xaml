@@ -23,7 +23,8 @@
         Height="300"
         Width="600"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        Icon="/Logo 4.ico">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
             <i:InvokeCommandAction Command="{Binding LoadSplashWindowCommand}"

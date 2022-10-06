@@ -15,6 +15,8 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
 {
     public class VolatilityDataGridViewModel : BaseViewModel
     {
+        public List<NS_Needles> needles { get; set; }
+
         private ObservableCollection<VotatilityDatagridModel> _ExtendExportList { get; set; }
         public ObservableCollection<VotatilityDatagridModel> ExtendExportList
         {
@@ -43,7 +45,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                     int i = 1;
                     foreach (var item in ExportList)
                     {
-                        var needle = NeedleBase.Get_NeedleByExportItem(item);
+                        var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                         var building = ImplementBase.Get_BuildingByExportItem(item);
                         var device = ImplementBase.Get_MachineByExportItem(item);
                         var staff = StaffBase.Get_StaffByExportItem(item);
@@ -66,7 +68,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                     int i = 1;
                     foreach (var item in ExportList)
                     {
-                        var needle = NeedleBase.Get_NeedleByExportItem(item);
+                        var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                         var building = ImplementBase.Get_BuildingByExportItem(item);
                         var device = ImplementBase.Get_MachineByExportItem(item);
                         var staff = StaffBase.Get_StaffByExportItem(item);
@@ -89,7 +91,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                     int i = 1;
                     foreach (var item in ExportList)
                     {
-                        var needle = NeedleBase.Get_NeedleByExportItem(item);
+                        var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                         var building = ImplementBase.Get_BuildingByExportItem(item);
                         var device = ImplementBase.Get_MachineByExportItem(item);
                         var staff = StaffBase.Get_StaffByExportItem(item);
@@ -121,7 +123,8 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                         int i = 1;
                         foreach (var item in ExportList)
                         {
-                            var needle = NeedleBase.Get_NeedleByExportItem(item);
+                            var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
+
                             var building = ImplementBase.Get_BuildingByExportItem(item);
                             var device = ImplementBase.Get_MachineByExportItem(item);
                             var staff = StaffBase.Get_StaffByExportItem(item);
@@ -144,7 +147,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                         int i = 1;
                         foreach (var item in ExportList)
                         {
-                            var needle = NeedleBase.Get_NeedleByExportItem(item);
+                            var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                             var building = ImplementBase.Get_BuildingByExportItem(item);
                             var device = ImplementBase.Get_MachineByExportItem(item);
                             var staff = StaffBase.Get_StaffByExportItem(item);
@@ -167,7 +170,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                         int i = 1;
                         foreach (var item in ExportList)
                         {
-                            var needle = NeedleBase.Get_NeedleByExportItem(item);
+                            var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                             var building = ImplementBase.Get_BuildingByExportItem(item);
                             var device = ImplementBase.Get_MachineByExportItem(item);
                             var staff = StaffBase.Get_StaffByExportItem(item);
@@ -199,7 +202,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                             int i = 1;
                             foreach (var item in ExportList)
                             {
-                                var needle = NeedleBase.Get_NeedleByExportItem(item);
+                                var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                                 var building = ImplementBase.Get_BuildingByExportItem(item);
                                 var device = ImplementBase.Get_MachineByExportItem(item);
                                 var staff = StaffBase.Get_StaffByExportItem(item);
@@ -222,7 +225,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                             int i = 1;
                             foreach (var item in ExportList)
                             {
-                                var needle = NeedleBase.Get_NeedleByExportItem(item);
+                                var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                                 var building = ImplementBase.Get_BuildingByExportItem(item);
                                 var device = ImplementBase.Get_MachineByExportItem(item);
                                 var staff = StaffBase.Get_StaffByExportItem(item);
@@ -245,7 +248,7 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
                             int i = 1;
                             foreach (var item in ExportList)
                             {
-                                var needle = NeedleBase.Get_NeedleByExportItem(item);
+                                var needle = needles.Where(i => i.NeedleID == item.NeedleID).FirstOrDefault();
                                 var building = ImplementBase.Get_BuildingByExportItem(item);
                                 var device = ImplementBase.Get_MachineByExportItem(item);
                                 var staff = StaffBase.Get_StaffByExportItem(item);

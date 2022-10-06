@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         xmlns:uc="clr-namespace:NeedleTracking.UserControlUC"
         xmlns:vuc="clr-namespace:NeedleTracking.UserControlUC.VolatilityUC"
+        xmlns:ruc="clr-namespace:NeedleTracking.UserControlUC.RequestUC"
+        xmlns:huc="clr-namespace:NeedleTracking.UserControlUC.HistoryUC"
+        xmlns:reuc="clr-namespace:NeedleTracking.UserControlUC.RecentUC"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -23,8 +26,10 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}"
         Title="Menu"
-        Height="768"
-        Width="1204">
+        Height="730"
+        Width="1366"
+        Effect="{Binding WindowEffect}"
+        Icon="/Logo 4.ico">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedMainWindowCommand}"
@@ -125,6 +130,22 @@
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestMenu"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="requestMenu"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
 
             <DoubleAnimation BeginTime="0:0:0.5"
                              Storyboard.TargetProperty="Opacity"
@@ -176,7 +197,22 @@
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
-
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestMenu"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="requestMenu"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation BeginTime="0:0:0.5"
                              Storyboard.TargetProperty="Opacity"
                              Storyboard.TargetName="volatilityMenu"
@@ -197,13 +233,23 @@
         <Storyboard x:Key="OpenRecent">
             <DoubleAnimation BeginTime="0:0:0"
                              Storyboard.TargetProperty="Opacity"
-                             Storyboard.TargetName="historyMenu"
+                             Storyboard.TargetName="volatilityMenu"
                              From="1.0"
                              To="0.0"
                              Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="volatilityMenu"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation BeginTime="0:0:0"
                              Storyboard.TargetProperty="Opacity"
-                             Storyboard.TargetName="volatilityMenu"
+                             Storyboard.TargetName="historyMenu"
                              From="1.0"
                              To="0.0"
                              Duration="0:0:0.25" />
@@ -217,9 +263,15 @@
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestMenu"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
                                            Storyboard.TargetProperty="Visibility"
-                                           Storyboard.TargetName="volatilityMenu"
+                                           Storyboard.TargetName="requestMenu"
                                            Duration="0:0:0.25">
                 <DiscreteObjectKeyFrame KeyTime="0">
                     <DiscreteObjectKeyFrame.Value>
@@ -237,6 +289,73 @@
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.75"
                                            Storyboard.TargetProperty="Visibility"
                                            Storyboard.TargetName="recentMenu"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenRequest">
+
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="volatilityMenu"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="volatilityMenu"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="historyMenu"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="historyMenu"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="recentMenu"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="recentMenu"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestMenu"
+                             From="0.0"
+                             To="1.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.75"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="requestMenu"
                                            Duration="0:0:0.25">
                 <DiscreteObjectKeyFrame KeyTime="0">
                     <DiscreteObjectKeyFrame.Value>
@@ -272,6 +391,22 @@
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
                                            Storyboard.TargetProperty="Visibility"
                                            Storyboard.TargetName="recentScreen"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestScreen"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="requestScreen"
                                            Duration="0:0:0.25">
                 <DiscreteObjectKeyFrame KeyTime="0">
                     <DiscreteObjectKeyFrame.Value>
@@ -330,6 +465,22 @@
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestScreen"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="requestScreen"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
 
             <DoubleAnimation BeginTime="0:0:0.5"
                              Storyboard.TargetProperty="Opacity"
@@ -351,13 +502,23 @@
         <Storyboard x:Key="OpenRecentScreen">
             <DoubleAnimation BeginTime="0:0:0"
                              Storyboard.TargetProperty="Opacity"
-                             Storyboard.TargetName="historyScreen"
+                             Storyboard.TargetName="volatilityScreen"
                              From="1.0"
                              To="0.0"
                              Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="volatilityScreen"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation BeginTime="0:0:0"
                              Storyboard.TargetProperty="Opacity"
-                             Storyboard.TargetName="volatilityScreen"
+                             Storyboard.TargetName="historyScreen"
                              From="1.0"
                              To="0.0"
                              Duration="0:0:0.25" />
@@ -371,9 +532,15 @@
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestScreen"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
                                            Storyboard.TargetProperty="Visibility"
-                                           Storyboard.TargetName="volatilityScreen"
+                                           Storyboard.TargetName="requestScreen"
                                            Duration="0:0:0.25">
                 <DiscreteObjectKeyFrame KeyTime="0">
                     <DiscreteObjectKeyFrame.Value>
@@ -391,6 +558,75 @@
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.75"
                                            Storyboard.TargetProperty="Visibility"
                                            Storyboard.TargetName="recentScreen"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenRequestScreen">
+
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="volatilityScreen"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="volatilityScreen"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="historyScreen"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="historyScreen"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+
+            <DoubleAnimation BeginTime="0:0:0"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="recentScreen"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.25"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="recentScreen"
+                                           Duration="0:0:0.25">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+
+            <DoubleAnimation BeginTime="0:0:0.5"
+                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetName="requestScreen"
+                             From="0.0"
+                             To="1.0"
+                             Duration="0:0:0.25" />
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.75"
+                                           Storyboard.TargetProperty="Visibility"
+                                           Storyboard.TargetName="requestScreen"
                                            Duration="0:0:0.25">
                 <DiscreteObjectKeyFrame KeyTime="0">
                     <DiscreteObjectKeyFrame.Value>
@@ -425,6 +661,11 @@
             <BeginStoryboard Storyboard="{StaticResource OpenRecent}" />
             <BeginStoryboard Storyboard="{StaticResource OpenRecentScreen}" />
         </EventTrigger>
+        <EventTrigger RoutedEvent="Selector.Selected"
+                      SourceName="RequestOpen">
+            <BeginStoryboard Storyboard="{StaticResource OpenRequest}" />
+            <BeginStoryboard Storyboard="{StaticResource OpenRequestScreen}" />
+        </EventTrigger>
 
     </Window.Triggers>
     <Grid>
@@ -446,6 +687,8 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="90"></ColumnDefinition>
+                        <ColumnDefinition Width="60"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0"
                            Source="D:\NS_API\Logo\Techlogo.png"
@@ -470,7 +713,7 @@
                                                              Height="24"
                                                              HorizontalAlignment="Center"
                                                              Foreground="White" />
-                                    <TextBlock Text="Volatility"
+                                    <TextBlock Text="Biến Động"
                                                HorizontalAlignment="Center"
                                                Foreground="White" />
                                 </StackPanel>
@@ -495,7 +738,7 @@
                                                              Height="24"
                                                              HorizontalAlignment="Center"
                                                              Foreground="White" />
-                                    <TextBlock Text="History"
+                                    <TextBlock Text="Lịch Sử"
                                                HorizontalAlignment="Center"
                                                Foreground="White" />
                                 </StackPanel>
@@ -519,7 +762,31 @@
                                                              Height="24"
                                                              HorizontalAlignment="Center"
                                                              Foreground="White" />
-                                    <TextBlock Text="Recent"
+                                    <TextBlock Text="Hiện Tại"
+                                               HorizontalAlignment="Center"
+                                               Foreground="White" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <TextBlock>
+      <Run Text="tab 3 content. Default look and behaviors." />
+      <LineBreak />
+      <LineBreak />
+      <Run FontStyle="Italic">
+      Praesevzddvvvvvvvvvv
+    </Run>
+                            </TextBlock>
+                        </TabItem>
+                        <TabItem x:Name="RequestOpen"
+                                 Width="90">
+                            <TabItem.Header>
+                                <StackPanel Height="auto"
+                                            Width="auto">
+                                    <materialDesign:PackIcon Kind="AlertCircleOutline"
+                                                             Width="30"
+                                                             Height="24"
+                                                             HorizontalAlignment="Center"
+                                                             Foreground="White" />
+                                    <TextBlock Text="Nhật Ký"
                                                HorizontalAlignment="Center"
                                                Foreground="White" />
                                 </StackPanel>
@@ -555,9 +822,79 @@
                             <TextBlock Foreground="Gray"
                                        FontSize="13"
                                        HorizontalAlignment="Left"
-                                       VerticalAlignment="Center">Please to choose the options.</TextBlock>
+                                       VerticalAlignment="Center">Vui lòng chọn các tùy chọn để xem thông tin</TextBlock>
                         </Grid>
                     </Grid>
+                    <materialDesign:Badged Badge="{Binding CartQuantity}"
+                                           Grid.Column="3"
+                                           HorizontalAlignment="Center"
+                                           BadgePlacementMode="TopRight"
+                                           Width="35"
+                                           Height="35"
+                                           VerticalAlignment="Center">
+                        <Button Style="{StaticResource MaterialDesignFlatLightButton}"
+                                ToolTip="MaterialDesignFlatLightButton"
+                                Width="35"
+                                Height="35"
+                                Padding="0 0 0 0"
+                                IsEnabled="{Binding CartButtonEnable}">
+                            <materialDesign:PackIcon Kind="CartOutline"
+                                                     Height="25"
+                                                     Width="25"
+                                                     Margin="0 0 0 0" />
+                        </Button>
+                    </materialDesign:Badged>
+                    <StackPanel Grid.Column="4"
+                                Orientation="Horizontal">
+                        <materialDesign:PopupBox Foreground="Gray"
+                                                 StaysOpen="True">
+                            <Grid Width="160"
+                                  Height="120"
+                                  Margin="8,8,8,8">
+                                <Grid.Resources>
+                                    <Style TargetType="TextBox"
+                                           BasedOn="{StaticResource MaterialDesignTextBox}">
+                                        <Setter Property="materialDesign:HintAssist.IsFloating"
+                                                Value="True" />
+                                        <Setter Property="Margin"
+                                                Value="5 20 5 20" />
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="0"
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Text="{Binding Selected_NS_Staff.StaffName}"></TextBlock>
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Content="Department" />
+                                <Label Grid.Row="2"
+                                       Grid.Column="0"
+                                       Content="CardID" />
+                                <Label Grid.Row="3"
+                                       Grid.Column="0"
+                                       Content="Layer" />
+                                <Label Grid.Row="1"
+                                       Grid.Column="1"
+                                       Content="{Binding Selected_NS_Staff.Department}" />
+                                <Label Grid.Row="2"
+                                       Grid.Column="1"
+                                       Content="{Binding Selected_NS_Staff.CardNumber}" />
+                                <Label Grid.Row="3"
+                                       Grid.Column="1"
+                                       Content="{Binding Selected_NS_Staff.UserLayer}" />
+                            </Grid>
+                        </materialDesign:PopupBox>
+                    </StackPanel>
                 </Grid>
             </DockPanel>
         </Grid>
@@ -582,7 +919,7 @@
                                     Value="20"></Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <Grid Height="50"
+                    <Grid Height="35"
                           Background="#67569F"
                           RenderTransformOrigin="0.5,0.5">
                         <Grid.RenderTransform>
@@ -610,7 +947,7 @@
                                                      Height="25" />
                         </Button>
                         <Button x:Name="ButtonCloseMenu"
-                                Height="50"
+                                Height="35"
                                 Width="40"
                                 Margin="0"
                                 HorizontalAlignment="Right"
@@ -630,136 +967,81 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <uc:VolatilityMenu Grid.Row="0"
-                                           x:Name="volatilityMenu"
-                                           Margin="25 30 20 20"
+                        <uc:VolatilityMenu x:Name="volatilityMenu"
+                                           Grid.Row="0"
+                                           Margin="25 20 20 20"
                                            Visibility="Visible"
                                            Opacity="1"
                                            HorizontalAlignment="Left"></uc:VolatilityMenu>
-                        <uc:HistoryMenu Grid.Row="0"
-                                        x:Name="historyMenu"
+                        <uc:HistoryMenu x:Name="historyMenu"
+                                        Grid.Row="0"
                                         Margin="25 30 20 20"
                                         Visibility="Hidden"
                                         Opacity="0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"></uc:HistoryMenu>
-                        <uc:RecentMenu Grid.Row="0"
-                                       x:Name="recentMenu"
-                                       Margin="25 30 20 20"
+                        <uc:RecentMenu x:Name="recentMenu"
+                                       Grid.Row="0"
+                                       Margin="25 20 20 20"
                                        Visibility="Hidden"
                                        Opacity="0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"></uc:RecentMenu>
+                        <uc:RequestMenu x:Name="requestMenu"
+                                        Grid.Row="0"
+                                        Margin="25 20 20 20"
+                                        Visibility="Hidden"
+                                        Opacity="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"></uc:RequestMenu>
                     </Grid>
                 </StackPanel>
             </DockPanel>
 
             <Grid x:Name="volatilityScreen"
-                  Grid.Column="1">
+                  Grid.Column="1"
+                  Visibility="Visible">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="180"></RowDefinition>
-                    <RowDefinition Height="260"></RowDefinition>
+                    <RowDefinition Height="220"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <vuc:QuantityTabUC></vuc:QuantityTabUC>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
+                    <Grid>
                         <vuc:LivechartUC></vuc:LivechartUC>
                     </Grid>
-                    <Grid Grid.Column="1">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
                 </Grid>
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="1">
                     <vuc:VolatilityDataGrid></vuc:VolatilityDataGrid>
                 </Grid>
             </Grid>
             <Grid x:Name="recentScreen"
                   Grid.Column="1"
                   Visibility="Hidden">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
+                <Grid>
+                    <Grid>
+                        <reuc:DeviceRecentUC></reuc:DeviceRecentUC>
                     </Grid>
                 </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                </Grid>
-
             </Grid>
             <Grid x:Name="historyScreen"
                   Grid.Column="1"
                   Visibility="Hidden">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <vuc:VolatilityCombobox></vuc:VolatilityCombobox>
+                <Grid>
+                    <Grid>
+                        <huc:HistoryDataUC></huc:HistoryDataUC>
                     </Grid>
                 </Grid>
 
             </Grid>
-
+            <Grid x:Name="requestScreen"
+                  Grid.Column="1"
+                  Visibility="Hidden">
+                <Grid>
+                    <Grid>
+                        <ruc:RequestDataGridUC></ruc:RequestDataGridUC>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

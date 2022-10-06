@@ -25,10 +25,10 @@ namespace OpenCvDotNet {
 		void captureCam();
 		void Display_Mode(char mode, int brightness, float contrast, bool onoffDetect);
 		void User_Display_Mode(char mode, int brightness, float contrast, int user_brightness, float user_contrast);
-		Bitmap^ displaySrc();
-		Bitmap^ displayDst();
-		Bitmap^ displayCanny();
-		Bitmap^ MatToBitmap(cv::UMat image);
+		Bitmap^ displaySrc(double width, double height);
+		Bitmap^ displayDst(double width, double height);
+		Bitmap^ displayCanny(int gaussianBlurKsize, int threshold1, int threshold2, double width, double height);
+		Bitmap^ MatToBitmap(cv::UMat image , double width, double height);
 		void getColor(int LowR, int LowG, int LowB, int HighR, int HighG, int HighB);
 		int Color();
 	private:

@@ -10,6 +10,22 @@ namespace EF_CONFIG.DataTransform
 {
     public static class BuildingBase
     {
-       
+        public static NS_Buildings Get_Building(int buildingid)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Buildings
+                        .Where(i => i.BuildingID == buildingid)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
     }
 }

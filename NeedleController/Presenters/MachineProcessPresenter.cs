@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WinFormsMvp;
 using NeedleController.Views;
+using System.Windows.Forms;
 
 namespace NeedleController.Presenters
 {
@@ -13,14 +14,22 @@ namespace NeedleController.Presenters
         public MachineProcessPresenter(IMachineProcessView view)
             : base(view)
         {
-            View.RetryButtonClicked += View_RetryButtonClicked;
+            View.MachineProcessOpened += View_MachineProgressOpened;
+            View.ContinueButtonClicked += View_ContinueButtonClicked;
             View.CancelButtonClicked += View_CancelButtonClicked;
             View.SuccessButtonClicked += View_SuccessButtonClicked;
             View.FailButtonClicked += View_FailButtonClicked;
+            View.ReasonComboBoxKeyPressed += View_ReasonComboBoxKeyPressed;
+            View.ProcessComboBoxKeyPressed += View_ProcessComboBoxKeyPressed;
+            View.MachineProcessClosed += View_MachineProcessClosed;
         }
-        void View_RetryButtonClicked(object sender, EventArgs e)
+        void View_MachineProgressOpened(object sender, EventArgs e)
         {
-            View.RetryGetNeedle();
+            View.Load_MachineProgress();
+        }
+        void View_ContinueButtonClicked(object sender, EventArgs e)
+        {
+            View.ContinueGetNeedle();
         }
         void View_CancelButtonClicked(object sender, EventArgs e)
         {
@@ -33,6 +42,18 @@ namespace NeedleController.Presenters
         void View_FailButtonClicked(object sender, EventArgs e)
         {
             View.FeedbackFail();
+        }
+        void View_ReasonComboBoxKeyPressed(object sender, KeyPressEventArgs e)
+        {
+            View.PressKey_ReasonComboBox(e);
+        }
+        void View_ProcessComboBoxKeyPressed(object sender, KeyPressEventArgs e)
+        {
+            View.PressKey_ProcessComboBox(e);
+        }
+        void View_MachineProcessClosed(object sender, EventArgs e)
+        {
+            View.MachineProcessClose();
         }
     }
 }

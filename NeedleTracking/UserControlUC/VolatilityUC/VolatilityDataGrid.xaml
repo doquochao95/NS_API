@@ -12,8 +12,13 @@
              DataContext="{StaticResource volatilitydatagridVM}"
              mc:Ignorable="d">
     <Grid Background="#080710">
-        <Grid Margin="20 20 20 20"
-              Background="#111123">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="207*" />
+            <ColumnDefinition Width="82*" />
+        </Grid.ColumnDefinitions>
+        <Grid Margin="20,20,20,20"
+              Background="#111123"
+              Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -112,37 +117,116 @@
                       Margin="20 0 20 10"
                       Grid.Row="2"
                       VerticalAlignment="Top"
-                      Foreground="White"
-                      AlternatingRowBackground="#111123"
                       Background="#19192D"
+                      AlternatingRowBackground="Transparent"
+                      BorderBrush="Transparent"
+                      Foreground="White"
                       AutoGenerateColumns="False"
-                      BorderBrush="#603E20"
                       CanUserAddRows="False"
                       ItemsSource="{Binding ExtendExportList}">
                 <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridRow}}"
+                           TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Background"
+                                Value="Transparent" />
+                        <Setter Property="Foreground"
+                                Value="White" />
+                        <Setter Property="BorderBrush"
+                                Value="Transparent" />
+                        <Setter Property="BorderThickness"
+                                Value="1" />
+                        <Setter Property="Height"
+                                Value="50" />
+                        <Setter Property="Width"
+                                Value="auto" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="HorizontalAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Center" />
+                        <Setter Property="FontSize"
+                                Value="16" />
+                        <Style.Triggers>
+
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{x:Null}" />
+                                <Setter Property="Foreground"
+                                        Value="Wheat" />
+                                <Setter Property="BorderThickness"
+                                        Value="1" />
+                                <Setter Property="BorderBrush"
+                                        Value="WhiteSmoke" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{x:Null}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type DataGridCell}}"
+                           TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{x:Null}" />
+                                <Setter Property="BorderThickness"
+                                        Value="0" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
                     <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}"
                            TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background"
-                                Value="#111123" />
+                                Value="Transparent" />
                         <Setter Property="Foreground"
-                                Value="White" />
+                                Value="WhiteSmoke" />
                         <Setter Property="BorderBrush"
                                 Value="#603E20" />
                         <Setter Property="BorderThickness"
                                 Value="1" />
                         <Setter Property="Height"
-                                Value="40" />
+                                Value="50" />
                         <Setter Property="Width"
                                 Value="auto" />
                         <Setter Property="HorizontalContentAlignment"
                                 Value="Center" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
                         <Setter Property="FontSize"
-                                Value="15" />
+                                Value="18" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Foreground"
+                                        Value="AliceBlue" />
+                            </Trigger>
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter Property="Foreground"
+                                        Value="Yellow" />
+                            </Trigger>
+                            <Trigger Property="SortDirection"
+                                     Value="Ascending">
+                                <Setter Property="Foreground"
+                                        Value="Green" />
+                            </Trigger>
+                            <Trigger Property="SortDirection"
+                                     Value="Descending">
+                                <Setter Property="Foreground"
+                                        Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
-
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Serial Number"
+                    <DataGridTextColumn Header="STT"
                                         IsReadOnly="True"
                                         Binding="{Binding SN }">
                         <DataGridTextColumn.ElementStyle>
@@ -154,7 +238,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Building"
+                    <DataGridTextColumn Header="Tòa Nhà"
                                         IsReadOnly="True"
                                         Binding="{Binding NS_Buildings.BuildingName }">
                         <DataGridTextColumn.ElementStyle>
@@ -166,7 +250,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Device"
+                    <DataGridTextColumn Header="Thiết Bị"
                                         IsReadOnly="True"
                                         Binding="{Binding NS_Devices.DeviceName }">
                         <DataGridTextColumn.ElementStyle>
@@ -178,7 +262,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Needle"
+                    <DataGridTextColumn Header="Têm Kim"
                                         IsReadOnly="True"
                                         Binding="{Binding NS_Needles.NeedleName }">
                         <DataGridTextColumn.ElementStyle>
@@ -190,7 +274,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Date Time"
+                    <DataGridTextColumn Header="Thời Gian Lấy"
                                         IsReadOnly="True"
                                         Width="180"
                                         Binding="{Binding NS_Export.ExprtTimeString }">
@@ -203,7 +287,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Picker"
+                    <DataGridTextColumn Header="Người Lấy"
                                         IsReadOnly="True"
                                         Width="130"
                                         Binding="{Binding NS_Staffs.StaffName }">
@@ -216,7 +300,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Quantity"
+                    <DataGridTextColumn Header="Số Lượng"
                                         IsReadOnly="True"
                                         Binding="{Binding NS_Export.Quantity }">
                         <DataGridTextColumn.ElementStyle>

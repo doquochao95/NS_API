@@ -13,5 +13,6 @@ namespace NeedleTracking
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

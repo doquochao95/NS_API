@@ -12,7 +12,7 @@ typedef unsigned char byte;
 //VideoCapture videoCapture("http://192.168.50.130:4747/video");
 //VideoCapture videoCapture(0);
 VideoCapture videoCapture;
-UMat imgSource, imgGray, imgGaussianBlur, imgCanny, imgDilate, imgErode, imgEqualizeHist, imgOutput, mask;
+UMat imgSource, imgGray, imgGaussianBlur, imgCanny, imgCannyDisplay, imgDilate, imgErode, imgEqualizeHist, imgOutput, mask;
 UMat g, g1, fin_img, imgMode, imgUserMode, imgUserMode_1;
 int color;
 double output;
@@ -29,6 +29,8 @@ bool  MyOpenCvWrapper::startCamera(int IDCamera)
 {
 	bool status;
 	status = videoCapture.open(IDCamera);
+	videoCapture.set(CAP_PROP_FRAME_WIDTH, 1024);
+	videoCapture.set(CAP_PROP_FRAME_HEIGHT, 768);
 	return status;
 	/*videoCapture.open("http://192.168.000.002:4747/video");*/
 }
@@ -117,18 +119,18 @@ void MyOpenCvWrapper::getContours(UMat imgErode, UMat img)
 			//line(img, mid_a, mid_c, Scalar(0, 255, 255), 1);
 			//line(img, mid_b, mid_d, Scalar(0, 255, 255), 1);
 			approxPolyDP(Mat(contours[i]), approx, arcLength(Mat(contours[i]), true) * 0.02, true);
-			if (approx.size() >= 8 && t == 1)
+			if (approx.size() == 4 && t == 1)//(approx.size() >= 8 && t == 1)
 			{
 				//cout << approx.size() << endl;
-				P1 = (double)norm(mid_a - mid_c) / 18.88;
-				P2 = (double)norm(mid_b - mid_d) / 18.88;
+				P1 = (double)norm(mid_a - mid_c) / 9.88;
+				P2 = (double)norm(mid_b - mid_d) / 10;
 			}
 			//cout << approx.size() << endl;
 			//double P1 = (double)254.017 / 18.88;
 			//double P2 = (double)254.912 / 18.88;
 			res = (double)norm(mid_a - mid_c) / P1;
 			res1 = (double)norm(mid_b - mid_d) / P2;
-			if (res != 18.88 || res1 != 18.88)
+			if (res != 9.88 || res1 != 10)
 			{
 				if (res > res1)
 				{
@@ -148,7 +150,7 @@ void MyOpenCvWrapper::getContours(UMat imgErode, UMat img)
 			//cout << res << endl;
 			//cout << res1 << endl;
 			//drawContours(img, contours, i, Scalar(255, 0, 255), 2);
-			cv::Point textOrg(mid_b.x - 10, mid_b.y - 10);
+			cv::Point textOrg(mid_b.x - 10, mid_b.y - 5);
 			string someText = format(" %.2lf mm", res);
 			putText(img, someText, textOrg, FONT_HERSHEY_PLAIN, 1.5, Scalar(0, 0, 255), 2);
 
@@ -171,13 +173,17 @@ bool MyOpenCvWrapper::getNeedleLength(int gaussianBlurKsize, int threshold1, int
 	else
 	{
 		//resize(imgSource, imgSource, cv::Size(imgSource.size().width * width / 100, imgSource.size().height * height / 100), INTER_LINEAR);
-		resize(imgSource, imgSource, cv::Size(), width / 100, height / 100, INTER_LINEAR);
+		//resize(imgSource, imgSource, cv::Size(), width / 100, height / 100, INTER_LINEAR);
+		resize(imgSource, imgSource, cv::Size(imgSource.size().width * 50 / 100, imgSource.size().height * 50 / 100), INTER_LINEAR);
+		
 		//imgOutput = imgSource;
+		imgSource = imgSource(Range(15, imgSource.rows - 100), Range(0, imgSource.cols));
 		imgSource.copyTo(imgOutput);
+		imgSource.copyTo(imgCannyDisplay);
 
 		cvtColor(imgOutput, imgGray, COLOR_RGB2GRAY);
-		equalizeHist(imgGray, imgEqualizeHist);
-		GaussianBlur(imgEqualizeHist, imgGaussianBlur, cv::Size(gaussianBlurKsize, gaussianBlurKsize), 0);
+		//equalizeHist(imgGray, imgEqualizeHist);
+		GaussianBlur(imgGray, imgGaussianBlur, cv::Size(gaussianBlurKsize, gaussianBlurKsize), 0);
 
 		Canny(imgGaussianBlur, imgCanny, threshold1, threshold2);
 		Mat kernel = getStructuringElement(MORPH_RECT, cv::Size(3, 3));
@@ -188,8 +194,9 @@ bool MyOpenCvWrapper::getNeedleLength(int gaussianBlurKsize, int threshold1, int
 	}
 }
 
-Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image)
+Bitmap^ MyOpenCvWrapper::MatToBitmap(UMat image, double width, double height)
 {
+	resize(image, image, cv::Size(), width / 100, height / 100, INTER_LINEAR);
 	Mat img = image.getMat(ACCESS_READ);
 	if (img.data == nullptr)
 		return nullptr;
@@ -355,17 +362,24 @@ void MyOpenCvWrapper::User_Display_Mode(char mode, int brightness, float contras
 	imgSource.convertTo(imgSource, -1, user_contrast, user_brightness);
 }
 
-Bitmap^ MyOpenCvWrapper::displaySrc()
+Bitmap^ MyOpenCvWrapper::displaySrc(double width, double height)
 {
-	return MatToBitmap(imgSource);
+	//resize(imgSource, imgSource, cv::Size(), width / 100, height / 100, INTER_LINEAR);
+	return MatToBitmap(imgSource, width, height);
 }
 
-Bitmap^ MyOpenCvWrapper::displayDst()
+Bitmap^ MyOpenCvWrapper::displayDst(double width, double height)
 {
-	return MatToBitmap(fin_img);
+	//resize(fin_img, fin_img, cv::Size(), width / 100, height / 100, INTER_LINEAR);
+	return MatToBitmap(fin_img, width, height);
 }
 
-Bitmap^ MyOpenCvWrapper::displayCanny()
+Bitmap^ MyOpenCvWrapper::displayCanny(int gaussianBlurKsize, int threshold1, int threshold2, double width, double height)
 {
-	return MatToBitmap(imgCanny);
+	//resize(imgCannyDisplay, imgCannyDisplay, cv::Size(), width / 100, height / 100, INTER_LINEAR);
+	/*cvtColor(imgCannyDisplay, imgCannyDisplay, COLOR_RGB2GRAY);
+	GaussianBlur(imgCannyDisplay, imgCannyDisplay, cv::Size(gaussianBlurKsize, gaussianBlurKsize), 0);
+	Canny(imgCannyDisplay, imgCannyDisplay, threshold1, threshold2);*/
+
+	return MatToBitmap(imgCanny, width, height);
 }

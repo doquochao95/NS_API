@@ -13,12 +13,29 @@ namespace EF_CONFIG.DataTransform
         {
             try
             {
-                using ( NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
                 {
                     return DataContext.NS_Staffs.Find(id);
                 }
             }
             catch { return null; }
+        }
+        public static NS_Staffs Get_Staffs(int? cardnumber)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Staffs
+                        .Where(i => i.CardNumber == cardnumber)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
         }
         public static List<NS_Staffs> Get_StaffName(string Name)
         {
@@ -33,50 +50,38 @@ namespace EF_CONFIG.DataTransform
             }
             catch { return null; }
         }
-        public static bool Check_User(string username, string pass)
-        {
-            try
-            {
-                using(NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
-                {
-                    var accCount = DataContext.NS_Staffs.Where(i => i.UserName==username && i.UserPassword==pass).Count();
-                    if (accCount > 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return false;
-            }
-        }
-        public static bool Check_User(string rfidcode)
+        public static NS_Staffs Check_User(string username, string pass)
         {
             try
             {
                 using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
                 {
-                    var rfaccCount = DataContext.NS_Staffs.Where(i => i.RFIDCode == rfidcode).Count();
-                    if (rfaccCount > 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return DataContext.NS_Staffs
+                        .Where(i => i.UserName == username && i.UserPassword == pass)
+                        .FirstOrDefault();
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return false;
+                return null;
+            }
+        }
+        public static NS_Staffs Check_User(string rfidcode)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Staffs
+                        .Where(i => i.RFIDCode == rfidcode)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
             }
         }
         public static NS_Staffs Get_StaffByExportItem(NS_Export NS_Export)
@@ -111,6 +116,30 @@ namespace EF_CONFIG.DataTransform
             {
                 Console.WriteLine(e.ToString());
                 return null;
+            }
+        }
+        public static bool Check_StaffWithCardNumber(int cardnumber)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    var count = DataContext.NS_Staffs
+                        .Where(i => i.CardNumber == cardnumber).Count();
+                    if (count > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
             }
         }
     }

@@ -23,10 +23,12 @@ namespace EF_CONFIG.Model
         public int Quantity { get; set; }
         public int StaffID { get; set; }
         public int StockID { get; set; }
+        public Nullable<int> RecycleBoxID { get; set; }
     
         public virtual NS_Buildings NS_Buildings { get; set; }
         public virtual NS_Devices NS_Devices { get; set; }
         public virtual NS_Needles NS_Needles { get; set; }
+        public virtual NS_RecycledBox NS_RecycledBox { get; set; }
         public virtual NS_Staffs NS_Staffs { get; set; }
         public virtual NS_Stocks NS_Stocks { get; set; }
     }

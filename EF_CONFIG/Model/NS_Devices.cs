@@ -19,6 +19,8 @@ namespace EF_CONFIG.Model
         {
             this.NS_Export = new HashSet<NS_Export>();
             this.NS_PostRecords = new HashSet<NS_PostRecords>();
+            this.NS_RecycledBox = new HashSet<NS_RecycledBox>();
+            this.NS_Requests = new HashSet<NS_Requests>();
             this.NS_Staffs = new HashSet<NS_Staffs>();
             this.NS_Stocks = new HashSet<NS_Stocks>();
             this.NS_Imports = new HashSet<NS_Imports>();
@@ -35,6 +37,10 @@ namespace EF_CONFIG.Model
         public virtual ICollection<NS_Export> NS_Export { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NS_PostRecords> NS_PostRecords { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_RecycledBox> NS_RecycledBox { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_Requests> NS_Requests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NS_Staffs> NS_Staffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

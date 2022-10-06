@@ -23,7 +23,7 @@ namespace NeedleController.Views
         private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
         private double width;
         private double height;
-
+        private MainView _mainView;
         private CameraSettingUCs.CameraParaSetting cameraParaSetting1;
         private CameraSettingUCs.CameraImgParaSetting cameraImgParaSetting1;
 
@@ -64,10 +64,11 @@ namespace NeedleController.Views
         public static string modeCamera { get; set; }
         //
 
-        public CameraSettingView()
+        public CameraSettingView(MainView mainView)
         {
             InitializeComponent();
             InitializeTimer();
+            _mainView = mainView;
             this.cameraParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraParaSetting(this);
             this.cameraImgParaSetting1 = new NeedleController.Views.CameraSettingUCs.CameraImgParaSetting();
 
@@ -100,6 +101,7 @@ namespace NeedleController.Views
 
         public void CameraSettingViewLoad()
         {
+            _mainView.Reply_Buffer("<led2:1>");
             defaultValue();
             this.panel2.Controls.Add(this.cameraParaSetting1);
             this.cameraParaSetting1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -121,11 +123,12 @@ namespace NeedleController.Views
             on_off_detect = true;
             MainView.last_view = this.Name;
             MainView.camerasettingviewloaded_status = true;
-            
+            MainView.close_waiting = true;
         }
 
         public void CameraSettingViewClose()
         {
+            _mainView.Reply_Buffer("<led2:0>");
             if (camera_connected)
             {
                 if (threadOpenCV.IsBackground)
@@ -319,6 +322,8 @@ namespace NeedleController.Views
                 SetImgPosition();
                 bool status = opencv.getNeedleLength(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
                     width, height);
+                Bitmap canny = opencv.displayCanny(Properties.Settings.Default.gaussianBlurKsize, Properties.Settings.Default.cannyThreshold1, Properties.Settings.Default.cannyThreshold2,
+                    width, height);
                 if (status)
                 {
                     opencv.getColor(Properties.Settings.Default.colorLowR, Properties.Settings.Default.colorLowG, Properties.Settings.Default.colorLowB,
@@ -326,12 +331,13 @@ namespace NeedleController.Views
 
                     opencv.Display_Mode((sbyte)Properties.Settings.Default.displayImgMode, Properties.Settings.Default.brightness, Properties.Settings.Default.contrast, on_off_detect);
 
-                    Bitmap dst = opencv.displayDst();
-                    Bitmap canny = opencv.displayCanny();
+                    Bitmap dst = opencv.displayDst(width, height);
+                    
                     Invoke(new Action(() =>
                     {
                         OutputVideo.Image = dst;
-                        CannyVideo.Image = canny;
+                        
+                        CannyVideo.Image = bitmap2Monochrome(canny, 1);
                     }));
                 }
                 else
@@ -350,18 +356,49 @@ namespace NeedleController.Views
                     height = 100;
                     break;
                 case "Fill":
-                    width = Math.Round((double)(OutputVideo.Width * 100 / 640));
-                    height = Math.Round((double)(OutputVideo.Width * 100 / 640));
+                    width = Math.Round((double)(OutputVideo.Width * 100 / 512));
+                    height = Math.Round((double)(OutputVideo.Width * 100 / 512));
                     break;
                 case "Fit":
-                    width = Math.Round((double)(OutputVideo.Height * 100 / 480));
-                    height = Math.Round((double)(OutputVideo.Height * 100 / 480));
+                    width = Math.Round((double)(OutputVideo.Height * 100 / 384));
+                    height = Math.Round((double)(OutputVideo.Height * 100 / 384));
                     break;
                 case "Stretch":
-                    width = Math.Round((double)(OutputVideo.Width * 100 / 640));
-                    height = Math.Round((double)(OutputVideo.Height * 100 / 480));
+                    width = Math.Round((double)(OutputVideo.Width * 100 / 512));
+                    height = Math.Round((double)(OutputVideo.Height * 100 / 384));
                     break;
             }
+        }
+
+        private Bitmap bitmap2Monochrome(Bitmap srcImg, int brightness)
+        {
+            Bitmap monoImg = new Bitmap(srcImg.Width, srcImg.Height);
+
+            // Loop through all the pixels in the image
+            for (int y = 0; y < srcImg.Height; y++)
+            {
+                for (int x = 0; x < srcImg.Width; x++)
+                {
+                    // Get pixel color
+                    Color existingColor = srcImg.GetPixel(x, y);
+
+                    // Average R, G, and B to determine "brightness" of this pixel
+                    int gray = (int)((existingColor.R + existingColor.G + existingColor.G) / 3);
+
+                    // If the "brightness" is greater than the threshold, this is a white pixel
+                    int color = 0;
+                    if (gray > brightness)
+                    {
+                        color = 255;
+                    }
+
+                    // Update the output image
+                    Color newColor = Color.FromArgb(color, color, color);
+                    monoImg.SetPixel(x, y, newColor);
+                }
+            }
+
+            return monoImg;
         }
 
         private void InitializeTimer()

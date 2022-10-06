@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vuc="clr-namespace:NeedleTracking.UserControlUC.VolatilityUC"
              xmlns:local="clr-namespace:NeedleTracking.UserControlUC"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Name="volatilityMenu"
-             DataContext="{StaticResource volatilitymenuVM}"
+             DataContext="{StaticResource VolatilitymenuVM}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}">
@@ -18,12 +19,11 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <materialDesign:Card Width="190"
-                             Height="560
-                             "
+        <materialDesign:Card Width="210"
                              Background="#19192D">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
@@ -32,14 +32,13 @@
                 <StackPanel Grid.Row="0"
                             Width="160"
                             HorizontalAlignment="Center">
-                    <TextBlock Margin="0 30 12 8"
+                    <TextBlock Margin="0 10 12 0"
                                FontSize="16"
-                               Text="Viewed by :" />
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                               Text="Xem Theo :" />
                     <RadioButton x:Name="AllRadioButton"
                                  Command="{Binding AllRadioButtonChecked}"
                                  CommandParameter="{Binding ElementName=AllRadioButton}"
-                                 Margin="16 4 16 0"
+                                 Margin="16 8 16 0"
                                  Style="{DynamicResource MaterialDesignUserForegroundRadioButton}"
                                  Foreground="White"
                                  IsChecked="{Binding Path=AllRadioButtonIsChecked, Mode=TwoWay}">
@@ -49,7 +48,7 @@
                                                      Kind="CheckAll" />
                             <TextBlock Margin="10 0 0 0"
                                        FontSize="16"
-                                       Text="All"
+                                       Text="Tất Cả"
                                        VerticalAlignment="Center"></TextBlock>
                         </WrapPanel>
                     </RadioButton>
@@ -66,7 +65,7 @@
                                                      Kind="Warehouse" />
                             <TextBlock Margin="10 0 0 0"
                                        FontSize="16"
-                                       Text="Building"
+                                       Text="Tòa Nhà"
                                        VerticalAlignment="Center"></TextBlock>
                         </WrapPanel>
                     </RadioButton>
@@ -83,7 +82,7 @@
                                                      Kind="RobotIndustrial" />
                             <TextBlock Margin="10 0 0 0"
                                        FontSize="16"
-                                       Text="Machine"
+                                       Text="Thiết Bị"
                                        VerticalAlignment="Center"></TextBlock>
                         </WrapPanel>
                     </RadioButton>
@@ -91,14 +90,13 @@
                 <StackPanel Grid.Row="1"
                             Width="160"
                             HorizontalAlignment="Center">
-                    <TextBlock Margin="0 20 12 8"
+                    <TextBlock Margin="0 10 12 0"
                                FontSize="16"
-                               Text="Sorted by :" />
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                               Text="Sắp Xếp Theo :" />
                     <RadioButton x:Name="DayRadioButton"
                                  Command="{Binding DayRadioButtonChecked}"
                                  CommandParameter="{Binding ElementName=DayRadioButton}"
-                                 Margin="16 4 16 0"
+                                 Margin="16 8 16 0"
                                  IsEnabled="{Binding Path=SortedByEnable}"
                                  Style="{DynamicResource MaterialDesignUserForegroundRadioButton}"
                                  Foreground="White"
@@ -109,7 +107,7 @@
                                                      Kind="CalendarDay" />
                             <TextBlock Margin="10 0 0 0"
                                        FontSize="16"
-                                       Text="Day"
+                                       Text="Ngày"
                                        VerticalAlignment="Center"></TextBlock>
                         </WrapPanel>
                     </RadioButton>
@@ -127,7 +125,7 @@
                                                      Kind="CalendarWeek" />
                             <TextBlock Margin="10 0 0 0"
                                        FontSize="16"
-                                       Text="Week"
+                                       Text="Tuần"
                                        VerticalAlignment="Center"></TextBlock>
                         </WrapPanel>
                     </RadioButton>
@@ -145,21 +143,26 @@
                                                      Kind="CalendarMonth" />
                             <TextBlock Margin="10 0 0 0"
                                        FontSize="16"
-                                       Text="Month"
+                                       Text="Tháng"
                                        VerticalAlignment="Center"></TextBlock>
                         </WrapPanel>
                     </RadioButton>
 
                 </StackPanel>
-                <StackPanel Grid.Row="2"
+                <StackPanel Grid.Row="2" Width="160">
+                    <TextBlock Margin="0 5 12 0"
+                               FontSize="16"
+                               Text="Lọc Theo :" />
+                    <vuc:VolatilityCombobox Grid.Row="1" Margin="0 10 0 0"></vuc:VolatilityCombobox>
+                </StackPanel>
+                <StackPanel Grid.Row="3"
                             Orientation="Vertical"
                             HorizontalAlignment="Center"
                             Width="160"
                             Margin="15,0,15,0">
-                    <TextBlock Margin="0 20 12 8"
+                    <TextBlock Margin="0 5 12 8"
                                FontSize="16"
-                               Text="Pick Date :" />
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                               Text="Chọn Ngày :" />
                     <TextBlock Text="{Binding Path=ViewDateString}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
@@ -240,16 +243,16 @@
                     </materialDesign:DialogHost>
                 </StackPanel>
                 <Button x:Name="ApplyButton"
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Height="28"
                         Width="150"
                         IsEnabled="{Binding Path=ApplyButtonEnable}"
-                        Margin="0 15 0 20"
+                        Margin="0 10 0 10"
                         HorizontalAlignment="Center"
                         Background="#A6465C"
                         BorderBrush="#A6465C"
                         Command="{Binding ApplyButtonClick}"
-                        CommandParameter="ApplyButton">Apply</Button>
+                        CommandParameter="ApplyButton">Áp Dụng</Button>
             </Grid>
         </materialDesign:Card>
     </Grid>

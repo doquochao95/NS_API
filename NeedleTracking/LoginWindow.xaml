@@ -6,6 +6,7 @@
         xmlns:uc="clr-namespace:NeedleTracking.UserControlUC"
         xmlns:local="clr-namespace:NeedleTracking"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:properties="clr-namespace:NeedleTracking"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -21,20 +22,23 @@
         Topmost="True"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource LoginVM}"
-        Title="Window1" Height="400" Width="400">
+        Title="Window1" Height="400" Width="400"
+        Icon="/Logo 4.ico">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadLogWindowCommand}"
                                    CommandParameter="{Binding ElementName=loginWindow}"></i:InvokeCommandAction>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Image Source="D:/Tech.jpg" Margin="-189,0,-184,115" Grid.RowSpan="3" />
+        <Image Source="/Tech.jpg"
+               Margin="-189,0,-184,115" Grid.RowSpan="3" />
         <Grid Grid.Row="0">
             <uc:ControlBarUC Tag="{Binding Title, ElementName=loginWindow}"/>
         </Grid>
@@ -53,13 +57,13 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <TextBox x:Name="UsernameBox"
-                        materialDesign:HintAssist.Hint="Username"
+                        materialDesign:HintAssist.Hint="Tên Đăng Nhập"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="20"
                              Text="{Binding UserName}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <PasswordBox x:Name="FloatingPasswordBox"
-                                 materialDesign:HintAssist.Hint="Password"
+                                 materialDesign:HintAssist.Hint="Mật Khẩu"
                                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontSize="20">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PasswordChanged">
@@ -78,18 +82,18 @@
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             Width="150"
                             ToolTip="Resource name: MaterialDesignRaisedButton"
-                            Content="LOGIN"
+                            Content="Đăng Nhập"
                             Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=loginWindow}"
                            />
                     <Button Grid.Column="1"    
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="MaterialDesignOutlinedButton"
-                            Content="EXIT"
+                            Content="Thoát"
                             Width="150"
                             Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=loginWindow}"/>
                 </Grid>
                 <Grid Grid.Row="3">
-                    <TextBlock x:Name="StatusTextblock" Text="Insert your account" Foreground="Red" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="StatusTextblock" Text="{Binding StatusTextBlock}" Foreground="Red" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
                 </Grid>
             </Grid>
         </materialDesign:Card>

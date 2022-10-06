@@ -183,6 +183,16 @@ namespace NeedleController.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap OFFset {
+            get {
+                object obj = ResourceManager.GetObject("OFFset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ParkingIcon {
             get {
                 object obj = ResourceManager.GetObject("ParkingIcon", resourceCulture);
@@ -196,6 +206,16 @@ namespace NeedleController.Properties {
         internal static System.Drawing.Bitmap R {
             get {
                 object obj = ResourceManager.GetObject("R", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Recycle_B_100x100 {
+            get {
+                object obj = ResourceManager.GetObject("Recycle_B_100x100", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -286,6 +306,26 @@ namespace NeedleController.Properties {
         internal static System.Drawing.Bitmap UnParkingIcon {
             get {
                 object obj = ResourceManager.GetObject("UnParkingIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap XY_Plus {
+            get {
+                object obj = ResourceManager.GetObject("XY_Plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Z_Plus {
+            get {
+                object obj = ResourceManager.GetObject("Z_Plus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

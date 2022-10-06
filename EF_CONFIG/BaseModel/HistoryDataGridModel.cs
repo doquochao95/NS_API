@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using EF_CONFIG.Model;
+
+namespace EF_CONFIG.BaseModel
+{
+    public class HistoryDataGridModel
+    {
+        public int SN { get; set; }
+        public NS_RecycledBox NS_RecycledBox { get; set; }
+    }
+}

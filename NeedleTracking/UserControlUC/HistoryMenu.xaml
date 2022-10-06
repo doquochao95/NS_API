@@ -4,10 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:NeedleTracking.UserControlUC"
+             xmlns:vm="clr-namespace:NeedleTracking.ViewModel"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Name="historyMenu"
+             DataContext="{StaticResource HistorymenuVM}"
              mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedHistoryMenuCommand}"
+                                   CommandParameter="{Binding ElementName=historyMenu}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.Resources>
         <SolidColorBrush x:Key="TreeViewItem.TreeArrow.Static.Background"
                          Color="#66569E" />
@@ -272,6 +280,16 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Foreground"
+                    Value="White"></Setter>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground"
+                    Value="White"></Setter>
+            <Setter Property="FontSize"
+                    Value="20"></Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <materialDesign:Card Width="190"
@@ -283,24 +301,40 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+
                 </Grid.RowDefinitions>
                 <!--<TreeView MinWidth="190" ItemContainerStyle="{StaticResource TreeViewItemContainerStyle}">-->
-                <TreeView Grid.Row="0"
-                          Margin="0 5 5 5"
-                          MinWidth="190">
-                    <TreeViewItem Header="Buildings">
-                        <TreeViewItem Header="P Building">
-                            <TreeViewItem Header="P123"></TreeViewItem>
-                            <TreeViewItem Header="P456"></TreeViewItem>
-                        </TreeViewItem>
-                        <TreeViewItem Header="E Building">
-                            <TreeViewItem Header="P123"></TreeViewItem>
-                            <TreeViewItem Header="P456"></TreeViewItem>
-                        </TreeViewItem>
-                    </TreeViewItem>
+                <TreeView x:Name="TreeView"
+                          Grid.Row="0"
+                          HorizontalAlignment="Stretch"
+                          Margin="10"
+                          MinHeight="50"
+                          MinWidth="120"
+                          VerticalAlignment="Stretch"
+                          ItemsSource="{Binding Buildings}">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Devices}"
+                                                  DataType="{x:Type vm:Building}">
+                            <Label Content="{Binding BuildingName}"></Label>
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:Device}">
+                                    <Label Content="{Binding DeviceName}"></Label>
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedItemChanged">
+                            <i:InvokeCommandAction Command="{Binding TreeViewSelectedItemChangedCommand}"
+                                                   CommandParameter="{Binding SelectedItem, ElementName=TreeView}"></i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </TreeView>
                 <StackPanel Grid.Row="1"
-                            Width="120"
+                            Width="160"
                             HorizontalAlignment="Center">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type TextBlock}">
@@ -310,21 +344,179 @@
                     </StackPanel.Resources>
                     <TextBlock Margin="0 15 12 0"
                                FontSize="16"
-                               Text="Sorted by :" />
+                               Text="Sắp Xếp Theo :" />
                     <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <RadioButton Margin="16 0 16 0"
+                    <RadioButton x:Name="DayRadioButton"
+                                 Command="{Binding DayRadioButtonChecked}"
+                                 CommandParameter="{Binding ElementName=DayRadioButton}"
+                                 Margin="16 4 16 0"
+                                 IsEnabled="{Binding Path=SortedByEnable}"
                                  Style="{DynamicResource MaterialDesignUserForegroundRadioButton}"
-                                 Content="Day"
-                                 Foreground="White" />
-                    <RadioButton Margin="16 4 16 0"
+                                 Foreground="White"
+                                 IsChecked="{Binding Path=DayChecked, Mode=TwoWay}">
+                        <WrapPanel>
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     Kind="CalendarDay" />
+                            <TextBlock Margin="10 0 0 0"
+                                       FontSize="16"
+                                       Text="Ngày"
+                                       VerticalAlignment="Center"></TextBlock>
+                        </WrapPanel>
+                    </RadioButton>
+                    <RadioButton x:Name="WeekRadioButton"
+                                 Command="{Binding WeekRadioButtonChecked}"
+                                 CommandParameter="{Binding ElementName=WeekRadioButton}"
+                                 Margin="16 4 16 0"
+                                 IsEnabled="{Binding Path=SortedByEnable}"
                                  Style="{DynamicResource MaterialDesignUserForegroundRadioButton}"
-                                 Content="Week"
-                                 Foreground="White" />
-                    <RadioButton Margin="16 4 16 15"
+                                 Foreground="White"
+                                 IsChecked="{Binding Path=WeekChecked, Mode=TwoWay}">
+                        <WrapPanel>
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     Kind="CalendarWeek" />
+                            <TextBlock Margin="10 0 0 0"
+                                       FontSize="16"
+                                       Text="Tuần"
+                                       VerticalAlignment="Center"></TextBlock>
+                        </WrapPanel>
+                    </RadioButton>
+                    <RadioButton x:Name="MonthRadioButton"
+                                 Command="{Binding MonthRadioButtonChecked}"
+                                 CommandParameter="{Binding ElementName=MonthRadioButton}"
+                                 Margin="16 4 16 0"
+                                 IsEnabled="{Binding Path=SortedByEnable}"
                                  Style="{DynamicResource MaterialDesignUserForegroundRadioButton}"
-                                 Content="Month"
-                                 Foreground="White" />
+                                 Foreground="White"
+                                 IsChecked="{Binding Path=MonthChecked, Mode=TwoWay}">
+                        <WrapPanel>
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     Kind="CalendarMonth" />
+                            <TextBlock Margin="10 0 0 0"
+                                       FontSize="16"
+                                       Text="Tháng"
+                                       VerticalAlignment="Center"></TextBlock>
+                        </WrapPanel>
+                    </RadioButton>
                 </StackPanel>
+                <StackPanel Grid.Row="2"
+                            Orientation="Vertical"
+                            HorizontalAlignment="Center"
+                            Width="160"
+                            Margin="15,5,15,0">
+                    <TextBlock Margin="0 00 12 8"
+                               FontSize="16"
+                               Text="Chọn Ngày :" />
+                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <TextBlock Text="{Binding Path=ViewDateString}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Margin="0 0 0 10"
+                               IsEnabled="{Binding Path=PickDateEnable}"
+                               FontSize="25" />
+
+                    <Button Margin="0 0 0 0"
+                            Height="28"
+                            Width="150"
+                            IsEnabled="{Binding Path=PickDateEnable}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Background="Transparent"
+                            BorderBrush="#564987"
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            CommandTarget="{Binding ElementName=PopupAddCustom1}">
+                        <WrapPanel VerticalAlignment="Center">
+                            <materialDesign:PackIcon Width="20"
+                                                     Height="20"
+                                                     Kind="CalendarSearch"></materialDesign:PackIcon>
+                        </WrapPanel>
+                    </Button>
+                    <materialDesign:DialogHost Name="PopupAddCustom1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               IsOpen="False"
+                                               materialDesign:DialogHost.DialogOpenedCallback="CalendarDialogOpenedEventHandler"
+                                               materialDesign:DialogHost.DialogClosingCallback="CalendarDialogClosingEventHandler">
+                        <materialDesign:DialogHost.DialogContent>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.Resources>
+                                    <Style x:Key="CustomCalendarDayButton1"
+                                           TargetType="CalendarDayButton"
+                                           BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionColor"
+                                                Value="#B2F39B" />
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor"
+                                                Value="Black" />
+                                    </Style>
+                                    <Style x:Key="CustomCalendarButton1"
+                                           TargetType="CalendarButton"
+                                           BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionColor"
+                                                Value="#B2F39B" />
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor"
+                                                Value="Black" />
+                                    </Style>
+                                </Grid.Resources>
+                                <Calendar x:Name="Calendar1"
+                                          Background="#343C3F"
+                                          Foreground="White"
+                                          materialDesign:CalendarAssist.HeaderBackground="#A2E9FF"
+                                          materialDesign:CalendarAssist.HeaderForeground="Black"
+                                          CalendarDayButtonStyle="{StaticResource CustomCalendarDayButton1}"
+                                          CalendarButtonStyle="{StaticResource CustomCalendarButton1}"
+                                          Margin="-1 -4 -1 0">
+                                </Calendar>
+                                <StackPanel Grid.Row="1"
+                                            Margin="8"
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal">
+                                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            IsDefault="True"
+                                            CommandParameter="1"
+                                            Style="{DynamicResource MaterialDesignFlatButton}">OK</Button>
+                                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            IsCancel="True"
+                                            CommandParameter="0"
+                                            Style="{DynamicResource MaterialDesignFlatButton}">CANCEL</Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:DialogHost.DialogContent>
+                    </materialDesign:DialogHost>
+                </StackPanel>
+                <Button x:Name="ApplyButton"
+                        Grid.Row="3"
+                        Height="28"
+                        Width="150"
+                        IsEnabled="{Binding Path=ApplyButtonEnable}"
+                        Margin="0 15 0 20"
+                        HorizontalAlignment="Center"
+                        Background="#A6465C"
+                        BorderBrush="#A6465C"
+                        Command="{Binding ApplyButtonClick}"
+                        CommandParameter="ApplyButton">Áp Dụng</Button>
+                <Button x:Name="ExportExcelButton"
+                        Grid.Row="4"
+                        Height="28"
+                        Width="150"
+                        IsEnabled="{Binding Path=ExportExcelButtonEnable}"
+                        Margin="0 0 0 20"
+                        HorizontalAlignment="Center"
+                        Background="ForestGreen"
+                        BorderBrush="ForestGreen"
+                        Command="{Binding ExportExcelButtonClick}"
+                        CommandParameter="ApplyButton">
+                    <WrapPanel VerticalAlignment="Center">
+                        <materialDesign:PackIcon Width="30"
+                                                 Height="20"
+                                                 Kind="MicrosoftExcel"></materialDesign:PackIcon>
+                    </WrapPanel>
+                </Button>
             </Grid>
         </materialDesign:Card>
     </Grid>

@@ -19,24 +19,39 @@ namespace EF_CONFIG.Model
         {
             this.NS_Export = new HashSet<NS_Export>();
             this.NS_Imports = new HashSet<NS_Imports>();
+            this.NS_RecycledBox = new HashSet<NS_RecycledBox>();
+            this.NS_RecycledBox1 = new HashSet<NS_RecycledBox>();
+            this.NS_RecycledBox2 = new HashSet<NS_RecycledBox>();
+            this.NS_Requests = new HashSet<NS_Requests>();
+            this.NS_Requests1 = new HashSet<NS_Requests>();
         }
     
         public int StaffID { get; set; }
         public string StaffName { get; set; }
         public int CardNumber { get; set; }
         public string Department { get; set; }
-        public int BuildingID { get; set; }
+        public int LineID { get; set; }
         public string RFIDCode { get; set; }
         public int DeviceID { get; set; }
         public string UserName { get; set; }
         public string UserPassword { get; set; }
         public string UserLayer { get; set; }
     
-        public virtual NS_Buildings NS_Buildings { get; set; }
         public virtual NS_Devices NS_Devices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NS_Export> NS_Export { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NS_Imports> NS_Imports { get; set; }
+        public virtual NS_Lines NS_Lines { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_RecycledBox> NS_RecycledBox { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_RecycledBox> NS_RecycledBox1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_RecycledBox> NS_RecycledBox2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_Requests> NS_Requests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NS_Requests> NS_Requests1 { get; set; }
     }
 }

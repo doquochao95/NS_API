@@ -10,7 +10,8 @@ namespace EF_CONFIG.BaseModel
     public class SimpleNeedleModel
     {
         public int NeedleID { get; set; }
-        public int NeedleName { get; set; }
+        public string NeedleName { get; set; }
+        public int WareHouseName { get; set; }
 
     }
 }

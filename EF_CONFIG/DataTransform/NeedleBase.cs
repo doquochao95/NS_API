@@ -16,7 +16,9 @@ namespace EF_CONFIG.DataTransform
             {
                 using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
                 {
-                    return DataContext.NS_Needles.Find(NeedleID);
+                    return DataContext.NS_Needles
+                        .Where(i => i.NeedleID == NeedleID)
+                        .FirstOrDefault();
                 }
             }
             catch (Exception e)
@@ -25,16 +27,22 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
-        public static NS_Needles Get_Needles(string NeedleName) // get needle by name
+        public static NS_Needles Get_NeedleWithNeedleName(int NeedleName) // get needle by name
         {
             try
             {
                 using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
                 {
-                    return DataContext.NS_Needles.Find(NeedleName);
+                    return DataContext.NS_Needles
+                        .Where(i => i.NeedleName == NeedleName)
+                        .FirstOrDefault();
                 }
             }
-            catch { return null; }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
         }
         public static List<NS_Needles> Get_NeedlePoint(string NeedlePoint) //get needles have the same point
         {
@@ -97,11 +105,13 @@ namespace EF_CONFIG.DataTransform
                     SimpleNeedleModel model = new SimpleNeedleModel()
                     {
                         NeedleID = nS_Needle.NeedleID,
-                        NeedleName = nS_Needle.NeedleName
+                        NeedleName = nS_Needle.NeedleWarehouseCode.ToString()+"-"+nS_Needle.NeedleName.ToString(),
+                        WareHouseName = nS_Needle.NeedleWarehouseCode
                     };
                     Models.Add(model);
                 }
-                return Models;
+                var list_model = Models.OrderBy(a=>a.WareHouseName).ToList();
+                return list_model;
             }
             catch (Exception e)
             {
@@ -143,40 +153,6 @@ namespace EF_CONFIG.DataTransform
                 return null;
             }
         }
-        public static NS_Needles Get_NeedleByExportItem(NS_Export NS_Export)
-        {
-            try
-            {
-                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
-                {
-                    return DataContext.NS_Needles
-                        .Where(i => i.NeedleID == NS_Export.NeedleID)
-                        .FirstOrDefault();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return null;
-            }
-        }
-        public static NS_Needles Get_NeedleByVotatilityDatagridModelItem(VotatilityDatagridModel item)
-        {
-            try
-            {
-                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
-                {
-                    return DataContext.NS_Needles
-                        .Where(i => i.NeedleID == item.NS_Export.NeedleID)
-                        .FirstOrDefault();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return null;
-            }
-        }
         public static bool Check_AvailableNeedleName(int needlename)
         {
             try
@@ -200,7 +176,29 @@ namespace EF_CONFIG.DataTransform
                 return false;
             }
         }
-
+        public static bool Check_AvailableNeedleWarehousecode(int needlewarehousecode)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    var rfaccCount = DataContext.NS_Needles.Where(i => i.NeedleWarehouseCode == needlewarehousecode).Count();
+                    if (rfaccCount > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
         public static bool Add_NewNeedle(NS_Needles nS_Needles)
         {
             try

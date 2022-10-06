@@ -29,25 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WaitingProcessView));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.WaitingStatusLabel = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // WaitingStatusLabel
             // 
-            this.WaitingStatusLabel.AutoSize = true;
+            resources.ApplyResources(this.WaitingStatusLabel, "WaitingStatusLabel");
             this.WaitingStatusLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.WaitingStatusLabel.Location = new System.Drawing.Point(82, 16);
             this.WaitingStatusLabel.Name = "WaitingStatusLabel";
-            this.WaitingStatusLabel.Size = new System.Drawing.Size(112, 25);
-            this.WaitingStatusLabel.TabIndex = 0;
-            this.WaitingStatusLabel.Text = "Please wait ...";
             // 
             // WaitingProcessView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 50);
             this.ControlBox = false;
             this.Controls.Add(this.WaitingStatusLabel);
             this.MaximizeBox = false;

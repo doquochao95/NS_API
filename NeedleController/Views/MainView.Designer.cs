@@ -46,8 +46,9 @@ namespace NeedleController.Views
             this.VietnameseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChineseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConnectedStatusLabel = new System.Windows.Forms.Label();
             this.BuildingNameLabel = new System.Windows.Forms.Label();
@@ -59,7 +60,10 @@ namespace NeedleController.Views
             this.CameraSettingButton = new System.Windows.Forms.Button();
             this.NeedleInfoButton = new System.Windows.Forms.Button();
             this.GetNeedleButton = new System.Windows.Forms.Button();
+            this.RecycleBinButton = new System.Windows.Forms.Button();
             this.CultureManagerMainForm = new Infralution.Localization.CultureManager(this.components);
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,21 +161,28 @@ namespace NeedleController.Views
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContactToolStripMenuItem,
+            this.accountToolStripMenuItem,
             this.toolStripSeparator2,
+            this.ContactToolStripMenuItem,
             this.AboutToolStripMenuItem});
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
             resources.ApplyResources(this.HelpToolStripMenuItem, "HelpToolStripMenuItem");
             // 
-            // ContactToolStripMenuItem
+            // accountToolStripMenuItem
             // 
-            this.ContactToolStripMenuItem.Name = "ContactToolStripMenuItem";
-            resources.ApplyResources(this.ContactToolStripMenuItem, "ContactToolStripMenuItem");
+            this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
+            resources.ApplyResources(this.accountToolStripMenuItem, "accountToolStripMenuItem");
+            this.accountToolStripMenuItem.Click += new System.EventHandler(this.accountToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // ContactToolStripMenuItem
+            // 
+            this.ContactToolStripMenuItem.Name = "ContactToolStripMenuItem";
+            resources.ApplyResources(this.ContactToolStripMenuItem, "ContactToolStripMenuItem");
             // 
             // AboutToolStripMenuItem
             // 
@@ -253,10 +264,27 @@ namespace NeedleController.Views
             this.GetNeedleButton.UseVisualStyleBackColor = true;
             this.GetNeedleButton.Click += new System.EventHandler(this.GetNeedleButton_Click);
             // 
+            // RecycleBinButton
+            // 
+            this.RecycleBinButton.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.RecycleBinButton.FlatAppearance.BorderSize = 5;
+            resources.ApplyResources(this.RecycleBinButton, "RecycleBinButton");
+            this.RecycleBinButton.Image = global::NeedleController.Properties.Resources.Recycle_B_100x100;
+            this.RecycleBinButton.Name = "RecycleBinButton";
+            this.RecycleBinButton.UseVisualStyleBackColor = true;
+            this.RecycleBinButton.Click += new System.EventHandler(this.RecycleBinButton_Click);
+            // 
             // CultureManagerMainForm
             // 
             this.CultureManagerMainForm.ManagedControl = this;
             this.CultureManagerMainForm.UICultureChanged += new Infralution.Localization.CultureManager.CultureChangedHandler(this.CultureManagerMainForm_UICultureChanged);
+            // 
+            // progressBar1
+            // 
+            resources.ApplyResources(this.progressBar1, "progressBar1");
+            this.progressBar1.Maximum = 80;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Step = 1;
             // 
             // MainView
             // 
@@ -264,6 +292,8 @@ namespace NeedleController.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ControlBox = false;
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.RecycleBinButton);
             this.Controls.Add(this.AddNeedleButton);
             this.Controls.Add(this.DeviceTilteLabel);
             this.Controls.Add(this.BuldingTilteLabel);
@@ -324,6 +354,10 @@ namespace NeedleController.Views
         private System.Windows.Forms.Label DeviceTilteLabel;
         private System.Windows.Forms.Label BuldingTilteLabel;
         private System.Windows.Forms.Button AddNeedleButton;
+        private System.Windows.Forms.Button RecycleBinButton;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
     }
 }
 

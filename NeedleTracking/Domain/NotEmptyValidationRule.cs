@@ -5,6 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using NeedleTracking.UserControlUC;
+using NeedleTracking.UserControlUC.VolatilityUC;
+using NeedleTracking.UserControlUC.RequestUC;
+using System.Windows.Media;
+using System.Threading;
+using NeedleTracking.ViewModel;
+using NeedleTracking.ViewModel.VolatilityMenuViewModels;
+using NeedleTracking.ViewModel.RequestMenuViewModels;
 
 namespace NeedleTracking.Domain
 {

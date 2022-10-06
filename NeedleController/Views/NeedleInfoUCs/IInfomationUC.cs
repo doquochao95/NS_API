@@ -21,6 +21,7 @@ namespace NeedleController.Views.NeedleInfoUCs
         event MouseEventHandler Panel2MouseUped;
         event MouseEventHandler Panel2MouseMoved;
         event MouseEventHandler NeedleImagePictureBoxMouseWheeled;
+
         event MouseEventHandler PointImagePictureBoxMouseDowned;
         event MouseEventHandler PointImagePictureBoxMouseUped;
         event MouseEventHandler PointImagePictureBoxMouseMoved;

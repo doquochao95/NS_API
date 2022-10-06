@@ -11,6 +11,7 @@ using NeedleTracking.ViewModel.VolatilityMenuViewModels;
 using EF_CONFIG.DataTransform;
 using System.Collections.ObjectModel;
 using EF_CONFIG.Model;
+using System.Windows.Media;
 
 namespace NeedleTracking.ViewModel
 {
@@ -314,8 +315,27 @@ namespace NeedleTracking.ViewModel
         {
             VolatilityCombobox volatilityCombobox = new VolatilityCombobox();
             var volatilityComboBoxVM = volatilityCombobox.DataContext as VolatilityCBViewModel;
-            volatilityComboBoxVM.BuildingComboBoxEnable = Building;
-            volatilityComboBoxVM.MachineComboBoxEnable = Machine;
+            if(Building)
+            {
+                volatilityComboBoxVM.BuildingComboBoxEnable = Building;
+                volatilityComboBoxVM.BuildingForegroundColor = (SolidColorBrush)new BrushConverter().ConvertFromString("#67569F");
+            }
+            else
+            {
+                volatilityComboBoxVM.BuildingComboBoxEnable = Building;
+                volatilityComboBoxVM.BuildingForegroundColor = Brushes.Gray;
+            }
+            if(Machine)
+            {
+                volatilityComboBoxVM.MachineComboBoxEnable = Machine;
+                volatilityComboBoxVM.MachineForegroundColor = (SolidColorBrush)new BrushConverter().ConvertFromString("#67569F");
+            }
+            else
+            {
+                volatilityComboBoxVM.MachineComboBoxEnable = Machine;
+                volatilityComboBoxVM.MachineForegroundColor = Brushes.Gray;
+
+            }
         }
         void SetNullCombobox()
         {

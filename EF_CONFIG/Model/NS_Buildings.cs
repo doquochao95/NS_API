@@ -20,8 +20,8 @@ namespace EF_CONFIG.Model
             this.NS_Devices = new HashSet<NS_Devices>();
             this.NS_Export = new HashSet<NS_Export>();
             this.NS_Imports = new HashSet<NS_Imports>();
+            this.NS_Lines = new HashSet<NS_Lines>();
             this.NS_PostRecords = new HashSet<NS_PostRecords>();
-            this.NS_Staffs = new HashSet<NS_Staffs>();
         }
     
         public int BuildingID { get; set; }
@@ -34,8 +34,8 @@ namespace EF_CONFIG.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NS_Imports> NS_Imports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NS_PostRecords> NS_PostRecords { get; set; }
+        public virtual ICollection<NS_Lines> NS_Lines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NS_Staffs> NS_Staffs { get; set; }
+        public virtual ICollection<NS_PostRecords> NS_PostRecords { get; set; }
     }
 }

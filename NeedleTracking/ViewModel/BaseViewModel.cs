@@ -17,6 +17,7 @@ namespace NeedleTracking.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+#nullable enable
         protected virtual bool SetProperty<T>(ref T member, T value, [CallerMemberName] string? propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(member, value))
@@ -28,6 +29,8 @@ namespace NeedleTracking.ViewModel
             OnPropertyChanged(propertyName);
             return true;
         }
+#nullable disable
+
     }
     class RelayCommand<T> : ICommand
     {

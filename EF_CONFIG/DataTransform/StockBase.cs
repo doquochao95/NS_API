@@ -86,9 +86,7 @@ namespace EF_CONFIG.DataTransform
             {
                 using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
                 {
-                    ObservableCollection<NS_Stocks> stockUpdateModel;
-                    stockUpdateModel = model;
-                    foreach (var item in stockUpdateModel)
+                    foreach (var item in model)
                     {
                         var updateqty = DataContext.NS_Stocks.First(i => i.StockID == item.StockID && i.DeviceID == item.DeviceID);
                         updateqty.NeedleID = item.NeedleID;
@@ -102,6 +100,23 @@ namespace EF_CONFIG.DataTransform
             {
                 Console.WriteLine(e.ToString());
                 return false;
+            }
+        }
+        public static List<NS_Stocks> Get_AllNeedleInStockWithNeedleID(int NeedleID)
+        {
+            try
+            {
+                using (NeedleSupplierDataContext DataContext = new NeedleSupplierDataContext())
+                {
+                    return DataContext.NS_Stocks
+                        .Where(i => i.NeedleID == NeedleID)
+                        .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
             }
         }
     }

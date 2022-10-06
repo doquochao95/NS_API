@@ -1,0 +1,515 @@
+﻿<UserControl x:Class="NeedleTracking.UserControlUC.HistoryUC.HistoryDataUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:NeedleTracking.UserControlUC.HistoryUC"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             mc:Ignorable="d"
+             Name="ucHistoryDataView"
+             DataContext="{StaticResource historydataVM}"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadHistoryDataViewCommand}"
+                                   CommandParameter="{Binding ElementName=ucHistoryDataView}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid Margin="20 20 20 20"
+              Background="#111123"
+              IsEnabled="{Binding InformationEnable}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Margin="20 0 20 0"
+                  Background="#111123"
+                  Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Column="0"
+                             x:Name="NeedleNameTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding NeedleName}"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Tên Kim"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,0,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             VerticalAlignment="Bottom"
+                             IsReadOnly="True"/>
+                    <TextBox Grid.Column="1"
+                             x:Name="POTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding PO}"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="PO"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             VerticalAlignment="Center"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="4"
+                             x:Name="RemovedByTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding RemovedBy}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Loại Bỏ"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             Height="40"
+                             FontSize="14"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="1"
+                             x:Name="BrokenByTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding BrokenBy}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Công Nhân"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="0"
+                             Grid.Row="1"
+                             x:Name="SewingMachineTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding SewingMachine}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Máy May"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="2"
+                             Grid.Row="4"
+                             x:Name="RemoveTimeTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding RemoveTimeString}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Thời Gian Loại"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="3"
+                             x:Name="ConfirmedByTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding ConfirmBy}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Xác Thực"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="2"
+                             Grid.Row="1"
+                             x:Name="BrokenTimetextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding BrokenTimeString}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Thời Gian Gãy"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="2"
+                             Grid.Row="3"
+                             x:Name="ConfirmTimetextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding ConfirmTimeString}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             materialDesign:HintAssist.Hint="Thời Gian Xác Thực"
+                             materialDesign:HintAssist.HelperTextFontSize="16"
+                             materialDesign:HintAssist.Foreground="#603E20"
+                             materialDesign:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox  Grid.Row="2"
+                              Grid.Column="0"
+                              Grid.RowSpan="3"
+                              x:Name="HandleMultiLineTextBox"
+                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                              AcceptsReturn="True"
+                              Foreground="WhiteSmoke"
+                              BorderBrush="#603E20"
+                              materialDesign:HintAssist.Hint="Xử Lý"
+                              materialDesign:HintAssist.HelperTextFontSize="16"
+                              materialDesign:HintAssist.Foreground="#603E20"
+                              materialDesign:HintAssist.Background="#111123"
+                              Margin="5 5 5 5"
+                              FontSize="14"
+                              TextWrapping="Wrap"
+                              VerticalScrollBarVisibility="Visible"
+                              Text="{Binding Handle}"
+                              IsReadOnly="True">
+                    </TextBox>
+                    <TextBox Grid.Column="1"
+                             Grid.Row="2"
+                             x:Name="NeedlePartTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding NeedlePart}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             wpf:HintAssist.Hint="Bộ Phận Kim"
+                             wpf:HintAssist.HelperTextFontSize="16"
+                             wpf:HintAssist.Foreground="#603E20"
+                             wpf:HintAssist.Background="#111123"
+                             Margin="5,5,5,5"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="2"
+                             Grid.Row="2"
+                             x:Name="ReasonTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding Reason}"
+                             VerticalAlignment="Center"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             wpf:HintAssist.Hint="Lí Do"
+                             wpf:HintAssist.HelperTextFontSize="16"
+                             wpf:HintAssist.Foreground="#603E20"
+                             wpf:HintAssist.Background="#111123"
+                             Margin="5,0,5,0"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             IsReadOnly="True" />
+                    <TextBox Grid.Column="2"
+                             x:Name="ProcessTextBox"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding Process}"
+                             AcceptsReturn="True"
+                             Foreground="WhiteSmoke"
+                             BorderBrush="#603E20"
+                             wpf:HintAssist.Hint="Công Đoạn"
+                             wpf:HintAssist.HelperTextFontSize="16"
+                             wpf:HintAssist.Foreground="#603E20"
+                             wpf:HintAssist.Background="#111123"
+                             Margin="5,0,5,0"
+                             Padding="20 10 5 5"
+                             FontSize="14"
+                             Height="40"
+                             VerticalAlignment="Center"
+                             IsReadOnly="True" />
+                </Grid>
+            </Grid>
+
+            <DataGrid x:Name="Datagrid"
+                      Margin="26 10 26 10"
+                      Grid.Row="2"
+                      Background="#19192D"
+                      AlternatingRowBackground="Transparent"
+                      BorderBrush="Transparent"
+                      Foreground="White"
+                      VerticalAlignment="Top"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      ItemsSource="{Binding HistoryDataList}"
+                      ColumnWidth="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      SelectedValue="{Binding SelectedDataGridValue}">
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridRow}}"
+                           TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Background"
+                                Value="Transparent" />
+                        <Setter Property="Foreground"
+                                Value="White" />
+                        <Setter Property="BorderBrush"
+                                Value="Transparent" />
+                        <Setter Property="BorderThickness"
+                                Value="1" />
+                        <Setter Property="Height"
+                                Value="50" />
+                        <Setter Property="Width"
+                                Value="auto" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="HorizontalAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Center" />
+                        <Setter Property="FontSize"
+                                Value="16" />
+                        <Style.Triggers>
+
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{x:Null}" />
+                                <Setter Property="Foreground"
+                                        Value="Wheat" />
+                                <Setter Property="BorderThickness"
+                                        Value="1" />
+                                <Setter Property="BorderBrush"
+                                        Value="WhiteSmoke" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{x:Null}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type DataGridCell}}"
+                           TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{x:Null}" />
+                                <Setter Property="BorderThickness"
+                                        Value="0" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}"
+                           TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background"
+                                Value="Transparent" />
+                        <Setter Property="Foreground"
+                                Value="WhiteSmoke" />
+                        <Setter Property="BorderBrush"
+                                Value="#603E20" />
+                        <Setter Property="BorderThickness"
+                                Value="1" />
+                        <Setter Property="Height"
+                                Value="50" />
+                        <Setter Property="Width"
+                                Value="auto" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="FontSize"
+                                Value="18" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Foreground"
+                                        Value="AliceBlue" />
+                            </Trigger>
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter Property="Foreground"
+                                        Value="Yellow" />
+                            </Trigger>
+                            <Trigger Property="SortDirection"
+                                     Value="Ascending">
+                                <Setter Property="Foreground"
+                                        Value="Green" />
+                            </Trigger>
+                            <Trigger Property="SortDirection"
+                                     Value="Descending">
+                                <Setter Property="Foreground"
+                                        Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="STT"
+                                        IsReadOnly="True"
+                                        Binding="{Binding SN }"
+                                        Width="auto">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                                <Setter Property="FontSize"
+                                        Value="16" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Loại Kim"
+                                        IsReadOnly="True"
+                                        Width="*"
+                                        Binding="{Binding NS_RecycledBox.NS_Needles.NeedleWarehouseCode}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                                <Setter Property="FontSize"
+                                        Value="16" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Tòa Nhà"
+                                        IsReadOnly="True"
+                                        Width="*"
+                                        Binding="{Binding NS_RecycledBox.NS_Devices.NS_Buildings.BuildingName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                                <Setter Property="FontSize"
+                                        Value="16" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Chuyền"
+                                        IsReadOnly="True"
+                                        Width="*"
+                                        Binding="{Binding NS_RecycledBox.NS_Staffs.NS_Lines.LineName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                                <Setter Property="FontSize"
+                                        Value="16" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Thiết Bị"
+                                        IsReadOnly="True"
+                                        Width="*"
+                                        Binding="{Binding NS_RecycledBox.NS_Devices.DeviceCode }">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                                <Setter Property="FontSize"
+                                        Value="16" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Lấy Kim"
+                                        IsReadOnly="True"
+                                        Width="*"
+                                        Binding="{Binding NS_RecycledBox.NS_Staffs.StaffName }">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                                <Setter Property="FontSize"
+                                        Value="16" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Thời Gian Lấy"
+                                        IsReadOnly="True"
+                                        Width="*"
+                                        Binding="{Binding NS_RecycledBox.ExportTimeStr }">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment"
+                                        Value="Center" />
+                                <Setter Property="FontSize"
+                                        Value="16" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Thao Tác"
+                                            Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <local:HistoryActionButtonUC Width="100"></local:HistoryActionButtonUC>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseUp">
+                        <i:InvokeCommandAction Command="{Binding SelectDataGridCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=SelectedItem}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

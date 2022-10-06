@@ -11,113 +11,95 @@
              Name="ucVolatilityCombobox"
              DataContext="{StaticResource volatilitycomboboxVM}"
              mc:Ignorable="d">
-    <Grid Background="#080710">
-        <Grid Background="#111123"
-              Margin="20 20 20 0">
+    <Grid>
+        <Grid Background="#19192D">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="55"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Label Content="Building:"
-                               Foreground="White"
-                               FontSize="18"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Margin="10 0 0 0" />
-                    </Grid>
-                    <Grid Grid.Column="1">
-
-                    </Grid>
-                    <Grid Grid.Column="2">
-                       
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <ComboBox x:Name="BuildingComboBox"
-                              Style="{StaticResource MaterialDesignFilledComboBox}"
-                              IsEnabled="{Binding Path=BuildingComboBoxEnable}"
-                              materialDesign:HintAssist.Hint="Building"
-                              materialDesign:TextFieldAssist.HasClearButton="True"
-                              Background="White"
-                              BorderBrush="#603E20"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              Width="220"
-                              Height="45"
-                              Margin="20 5 20 0"
-                              ItemsSource="{Binding BuildingList}"
-                              DisplayMemberPath="BuildingName">
-                        <ComboBox.SelectedItem>
-                            <Binding Path="BuildingSelected"
-                                     Mode="TwoWay"
-                                     UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <demoAppDomain:NotEmptyValidationRule ValidatesOnTargetUpdated="True"></demoAppDomain:NotEmptyValidationRule>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Label Content="Machine:"
-                                   Foreground="White"
-                                   FontSize="18"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Margin="10 20 0 0" />
-                        </Grid>
-                        <Grid Grid.Column="1">
-
-                        </Grid>
-                        <Grid Grid.Column="2">
-
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="3">
-                    <ComboBox x:Name="MachineComboBox"
-                              Style="{StaticResource MaterialDesignFilledComboBox}"
-                              IsEnabled="{Binding Path=MachineComboBoxEnable}"
-                              materialDesign:HintAssist.Hint="Machine"
-                              materialDesign:TextFieldAssist.HasClearButton="True"
-                              Background="White"
-                              BorderBrush="#603E20"
-                              Padding="10"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              Width="220"
-                              Height="45"
-                              Margin="20 5 20 10"
-                              ItemsSource="{Binding MachineList}"
-                              DisplayMemberPath="DeviceName">
-                        <ComboBox.SelectedItem>
-                            <Binding Path="MachineSelected"
-                                     Mode="TwoWay"
-                                     UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <demoAppDomain:NotEmptyValidationRule ValidatesOnTargetUpdated="True"></demoAppDomain:NotEmptyValidationRule>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
-                </Grid>
+                <ComboBox x:Name="BuildingComboBox"
+                          Grid.Row="1"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          IsEnabled="{Binding Path=BuildingComboBoxEnable}"
+                          materialDesign:HintAssist.Hint="Building"
+                          materialDesign:TextFieldAssist.HasClearButton="True"
+                          Foreground="WhiteSmoke"
+                          BorderBrush="{Binding BuildingForegroundColor}"
+                          materialDesign:HintAssist.HelperTextFontSize="16"
+                          materialDesign:HintAssist.Foreground="#67569F"
+                          materialDesign:HintAssist.Background="#19192D"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Top"
+                          Padding="10 10 5 5"
+                          FontSize="14"
+                          Height="40"
+                          Width="160"
+                          ItemsSource="{Binding BuildingList}"
+                          DisplayMemberPath="BuildingName">
+                    <ComboBox.SelectedItem>
+                        <Binding Path="BuildingSelected"
+                                 Mode="TwoWay"
+                                 UpdateSourceTrigger="PropertyChanged">
+                        </Binding>
+                    </ComboBox.SelectedItem>
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ComboBoxItem}"
+                               x:Name="ContainerStyle">
+                            <Setter Property="Foreground"
+                                    Value="Black"></Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected"
+                                         Value="True">
+                                    <Setter Property="Background"
+                                            Value="Red" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                </ComboBox>
+                <ComboBox x:Name="MachineComboBox"
+                          Grid.Row="3"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          IsEnabled="{Binding Path=MachineComboBoxEnable}"
+                          materialDesign:HintAssist.Hint="Machine"
+                          materialDesign:TextFieldAssist.HasClearButton="True"
+                          Foreground="WhiteSmoke"
+                          BorderBrush="{Binding MachineForegroundColor}"
+                          materialDesign:HintAssist.HelperTextFontSize="16"
+                          materialDesign:HintAssist.Foreground="#67569F"
+                          materialDesign:HintAssist.Background="#19192D"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Top"
+                          Padding="10 10 5 5"
+                          FontSize="14"
+                          Height="40"
+                          Width="160"
+                          ItemsSource="{Binding MachineList}"
+                          DisplayMemberPath="DeviceName">
+                    <ComboBox.SelectedItem>
+                        <Binding Path="MachineSelected"
+                                 Mode="TwoWay"
+                                 UpdateSourceTrigger="PropertyChanged">
+                        </Binding>
+                    </ComboBox.SelectedItem>
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ComboBoxItem}"
+                               x:Name="ContainerStyle1">
+                            <Setter Property="Foreground"
+                                    Value="Black"></Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected"
+                                         Value="True">
+                                    <Setter Property="Background"
+                                            Value="Red" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                </ComboBox>
             </Grid>
         </Grid>
     </Grid>

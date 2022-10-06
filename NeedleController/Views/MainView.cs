@@ -18,36 +18,58 @@ using WinFormsMvp.Forms;
 using System.Net.NetworkInformation;
 using System.Globalization;
 using Infralution.Localization;
+using Microsoft.Office.Interop.Excel;
 
 using OpenCvDotNet;
+using System.IO;
+using System.Text.RegularExpressions;
+using Serilog;
+using Application = System.Windows.Forms.Application;
 
 namespace NeedleController.Views
 {
     public partial class MainView : MvpForm, IMainView
     {
+        public List<ExcelFile> ExcelFiles_list { get; set; }
+        public static List<string> POListString;
+
+        string Filepath = @"\\10.4.0.8\Report\Produce Manage\Production Planning\新資料夾\1.生產進度";
+
         private static string lastlistbox_string;
+
         public static bool _deviceConnection = false;
         public static bool _cableConnection = false;
+        public static bool _connected { get; set; } = false;
+        public static bool _databaseconnected { get; set; } = false;
+
 
         public static bool _confirmRFID { get; set; } = false;
         public static bool needlepickingviewloaded_status { get; set; } = false;
         public static bool addneedleviewloaded_status { get; set; } = false;
         public static bool needleinfoviewloaded_status { get; set; } = false;
+        public static bool recyclebinviewloaded_status { get; set; } = false;
+
         public static bool camerasettingviewloaded_status { get; set; } = false;
         public static bool devicesettingviewloaded_status { get; set; } = false;
+
+        public static bool showaddneedleview_flag { get; set; } = false;
+        public static bool showdevicesettingview_flag { get; set; } = false;
+        public static bool showneedlepickingview_flag { get; set; } = false;
+        public static bool showrecyclebinview_flag { get; set; } = false;
+        public static bool showcamerasettingview_flag { get; set; } = false;
+
+        public static bool CardCheckingDetected { get; set; } = false;
+
+        public static bool loaddevicesetting_withoutconnection { get; set; } = false;
+
 
 
         public static bool check_camera { get; set; } = false;
         public static bool post_onlinestatus { get; set; } = false;
         public static bool get_onlinestatus { get; set; } = false;
         public static bool check_databaseconnection { get; set; } = false;
-        public static bool card_checkingprogress { get; set; } = false;
         public static bool close_waiting { get; set; } = false;
-
         public static bool mainview_close { get; set; } = false;
-
-
-
 
         private readonly MyOpenCvWrapper opencv = new MyOpenCvWrapper();
 
@@ -66,9 +88,7 @@ namespace NeedleController.Views
         public static string building_name { get; set; }
         public static int needlesupplied_status { get; set; } = 2; //0: Failed, 1:Success, 2: Null
 
-        public static int selected_stockid { get; set; }
-        public static int selected_needleid { get; set; }
-        public static int current_qty { get; set; }
+
         public static int countCamera { get; set; }
 
         public static int user_id { get; set; }
@@ -77,16 +97,48 @@ namespace NeedleController.Views
         public static int user_deviceid { get; set; }
         public static string user_layer { get; set; }
 
+        public static string[] limit_error_list { get; set; } = new string[] { "x_at_limit+", "x_at_limit-", "y_at_limit+", "y_at_limit-", "z_at_limit+", "z_at_limit-" };
+        public static int x_position { get; set; }
+        public static int y_position { get; set; }
+        public static int z_position { get; set; }
+        public static bool limit_reached { get; set; } = false;
+        public static bool needle_table_opened { get; set; } = false;
+        public static bool machine_parked { get; set; } = false;
+        public static bool machine_led_on { get; set; } = false;
+        public static bool table_led_on { get; set; } = false;
+
+        public static int x_speed { get; set; }
+        public static int y_speed { get; set; }
+        public static int z_speed { get; set; }
+        public static int w_speed { get; set; }
+
+        public static int x_accel { get; set; }
+        public static int y_accel { get; set; }
+        public static int z_accel { get; set; }
+        public static int w_accel { get; set; }
+
+        public static int x_offset { get; set; }
+        public static int y_offset { get; set; }
+        public static int z_offset { get; set; }
+        public static int w_offset { get; set; }
+
+        public static int x_plus { get; set; }
+        public static int y_plus { get; set; }
+        public static int z_plus { get; set; }
+        public static int w_plus { get; set; }
 
         public MainView()
         {
-            this.Hide();
+            this.Hide();           
             Thread thread = new Thread(new ThreadStart(Loading));
             thread.Start();
             SplashScreenView.loading_status = "InitializeComponent";
             InitializeComponent();
             SetInitalLanguage();
             UpdateLanguageMenus();
+            SplashScreenView.loading_status = "GettingPOCollection";
+            POListString = Get_POlist();
+            SplashScreenView.loading_status = "POGettingSuccess";
             Thread.Sleep(2000);
             SplashScreenView.loading_status = "CheckForDatabaseConnection";
             bool status = CheckForDatabaseConnection();
@@ -94,9 +146,10 @@ namespace NeedleController.Views
             int count = 0;
             while (true)
             {
-                if (count == 2)
+                if (count == 1)
                 {
-                    thread.Abort();
+                    SplashScreenView.closeme = true;
+                    /*   thread.Abort();*/
                     this.TopMost = true;
                     switch (MessageBox.Show(this, "Check your connection to datatabase and try againt later.", "Error: commmunication", MessageBoxButtons.OK))
                     {
@@ -104,12 +157,13 @@ namespace NeedleController.Views
                             break;
                     }
                     this.Close();
-                    Application.Exit();
+                    System.Windows.Forms.Application.Exit();
                     Environment.Exit(0);
                 }
                 if (status)
                 {
-                    thread.Abort();
+                    SplashScreenView.closeme = true;
+                    /*  thread.Abort();*/
                     this.Show();
                     this.TopMost = true;
                     break;
@@ -122,9 +176,11 @@ namespace NeedleController.Views
             }
             InitializeTimer();
         }
+
         public event EventHandler GetNeedleClicked;
         public event EventHandler AddNeedleButtonCLicked;
         public event EventHandler NeedleInfoClicked;
+        public event EventHandler RecycleBinClicked;
         public event EventHandler DeviceSettingClicked;
         public event EventHandler CameraSettingClicked;
         public event EventHandler MainViewLoaded;
@@ -151,6 +207,10 @@ namespace NeedleController.Views
         private void NeedleInfoButton_Click(object sender, EventArgs e)
         {
             NeedleInfoClicked(this, EventArgs.Empty);
+        }
+        private void RecycleBinButton_Click(object sender, EventArgs e)
+        {
+            RecycleBinClicked(this, EventArgs.Empty);
         }
         private void DeviceSettingButton_Click(object sender, EventArgs e)
         {
@@ -197,7 +257,7 @@ namespace NeedleController.Views
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (needlepickingviewloaded_status || addneedleviewloaded_status || needleinfoviewloaded_status || camerasettingviewloaded_status || devicesettingviewloaded_status)
+            if (needlepickingviewloaded_status || addneedleviewloaded_status || needleinfoviewloaded_status || recyclebinviewloaded_status || camerasettingviewloaded_status || devicesettingviewloaded_status)
             {
                 return;
             }
@@ -245,6 +305,11 @@ namespace NeedleController.Views
                         this.Visible = true;
                         last_view = null;
                     }
+                    if (last_view == "RecycleBinView")
+                    {
+                        this.Visible = true;
+                        last_view = null;
+                    }
                     if (last_view == "CameraSettingView")
                     {
                         this.Visible = true;
@@ -257,13 +322,14 @@ namespace NeedleController.Views
                     }
                 }
             }
-
             if (listbox_string == "table_closed")
             {
-                Reply_Buffer("<led2:1><table:1>");          
+                Timer1.Stop();
+                Reply_Buffer("<led2:1><table:1>");
                 this.Visible = false;
                 new WaitingProcessView().Show();
                 listbox_string = null;
+                Timer1.Start();
             }
             if (listbox_string == "table_opened")
             {
@@ -290,9 +356,15 @@ namespace NeedleController.Views
             }
             if (listbox_string == "open_success")
             {
-                close_waiting = true;
-                new AddNeedleView(this).Show();
-                listbox_string = null;
+                Timer1.Stop();
+                if (showaddneedleview_flag)
+                {
+                    close_waiting = true;
+                    new AddNeedleView(this).Show();
+                    showaddneedleview_flag = false;
+                    listbox_string = null;
+                }
+                Timer1.Start();
             }
             if (listbox_string == "open_fail")
             {
@@ -308,71 +380,107 @@ namespace NeedleController.Views
                 this.Visible = true;
                 listbox_string = null;
             }
-
-            bool _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
-            while (true)
+            if (listbox_string == "load_success")
             {
-                if (!_cableConnection)
+                close_waiting = true;
+                new DeviceSettingView(this).Show();
+                listbox_string = null;
+            }
+            if (loaddevicesetting_withoutconnection)
+            {
+                if (showdevicesettingview_flag)
                 {
-                    Timer1.Stop();
-                    ConnectDeviceButton.Enabled = true;
-                    ConnectDeviceToolStripMenuItem.Enabled = true;
-                    ConnectedStatusLabel.Visible = false;
-                    DisconnectedStatusLabel.Visible = true;
-                    switch (MessageBox.Show(this, "Check connection to device again", "Error: Communication", MessageBoxButtons.RetryCancel))
-                    {
-                        case DialogResult.Retry:
-                            _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
-                            break;
-                        case DialogResult.Cancel:
-                            this.Close();
-                            Application.Exit();
-                            Environment.Exit(0);
-                            break;
-                    }
+                    new DeviceSettingView(this).Show();
+                    showdevicesettingview_flag = false;
                 }
-                else
+            }
+            if (showneedlepickingview_flag)
+            {
+                new NeedlePickingView(this).Show();
+                showneedlepickingview_flag = false;
+            }
+            if (showrecyclebinview_flag)
+            {
+                new RecycleBinView(this).Show();
+                showrecyclebinview_flag = false;
+            }
+            if (showcamerasettingview_flag)
+            {
+                new CameraSettingView(this).Show();
+                showcamerasettingview_flag = false;
+            }
+            if (_deviceConnection)
+            {
+                bool _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
+                while (true)
                 {
-                    if (_deviceConnection)
+                    if (!_cableConnection)
                     {
-                        DisconnectedStatusLabel.Visible = false;
-                        ConnectedStatusLabel.Visible = true;
-                        ConnectDeviceButton.Enabled = false;
-                        ConnectDeviceToolStripMenuItem.Enabled = false;
-                        Timer1.Start();
-                        break;
+                        Timer1.Stop();
+                        ConnectDeviceButton.Enabled = true;
+                        ConnectDeviceToolStripMenuItem.Enabled = true;
+                        ConnectedStatusLabel.Visible = false;
+                        DisconnectedStatusLabel.Visible = true;
+                        _connected = false;
+                        Logger.Error("Lost connection from " + device_name, device_id);
+                        switch (MessageBox.Show(this, "Check connection to device again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                        {
+                            case DialogResult.Retry:
+                                _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
+                                break;
+                            case DialogResult.Cancel:
+                                this.Close();
+                                System.Windows.Forms.Application.Exit();
+                                Environment.Exit(0);
+                                break;
+                        }
                     }
                     else
                     {
-                        Timer1.Start();
+                        if (!_connected)
+                        {
+                            Logger.Information("Device " + device_name + " from " + building_name + " is connected", device_id);
+                            DisconnectedStatusLabel.Visible = false;
+                            ConnectedStatusLabel.Visible = true;
+                            ConnectDeviceButton.Enabled = false;
+                            ConnectDeviceToolStripMenuItem.Enabled = false;
+                            Timer1.Start();
+                            _connected = true;
+                        }
                         break;
                     }
                 }
-            }
-
-            bool database_conneciton = CheckForDatabaseConnection();
-            while (true)
-            {
-                if (!database_conneciton)
+                bool database_conneciton = CheckForDatabaseConnection();
+                while (true)
                 {
-                    Timer1.Stop();
-                    switch (MessageBox.Show(this, "Check connection to database again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                    if (!database_conneciton)
                     {
-                        //Stay on this form
-                        case DialogResult.Retry:
-                            database_conneciton = CheckForDatabaseConnection();
-                            break;
-                        case DialogResult.Cancel:
-                            this.Close();
-                            Application.Exit();
-                            Environment.Exit(0);
-                            break;
+                        _databaseconnected = false;
+                        Logger.Error("Lost connection from database", device_id);
+                        Timer1.Stop();
+                        switch (MessageBox.Show(this, "Check connection to database again", "Error: Communication", MessageBoxButtons.RetryCancel))
+                        {
+                            //Stay on this form
+                            case DialogResult.Retry:
+                                database_conneciton = CheckForDatabaseConnection();
+                                break;
+                            case DialogResult.Cancel:
+                                this.Close();
+                                System.Windows.Forms.Application.Exit();
+                                Environment.Exit(0);
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    Timer1.Start();
-                    break;
+                    else
+                    {
+                        if (!_databaseconnected)
+                        {
+                            _databaseconnected = true;
+                            Logger.Information("Device " + device_name + " from " + building_name + " is connected to database", device_id);
+                            Timer1.Start();
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -390,22 +498,33 @@ namespace NeedleController.Views
             para_value_str = Getparametervalue_frombuffer(_message, ":", ">");
             if (para_name == "buildingname")
             {
-                building_name = para_value_str;
+                if (building_name != para_value_str)
+                {
+                    building_name = para_value_str;
+                    Properties.Settings.Default.buildingname = building_name;
+                    Properties.Settings.Default.Save();
+                }
             }
             if (para_name == "deviceid")
             {
-                device_id = int.Parse(para_value_str);
-                var device = EF_CONFIG.DataTransform.DeviceBase.Get_DeviceWithDeviceId(device_id);
-                building_id = device.BuildingID;
-                bool status = EF_CONFIG.DataTransform.DeviceBase.Update_OnlineStatus(device_id, "ONLINE");
-                if (!status)
+                if (device_id != int.Parse(para_value_str))
                 {
-                    return;
+                    device_id = int.Parse(para_value_str);
+                    Properties.Settings.Default.deviceid = device_id;
+                    var device = EF_CONFIG.DataTransform.DeviceBase.Get_DeviceWithDeviceId(device_id);
+                    building_id = device.BuildingID;
+                    Properties.Settings.Default.buildingid = building_id;
+                    Properties.Settings.Default.Save();
                 }
             }
             if (para_name == "devicename")
             {
-                device_name = para_value_str;
+                if (device_name != para_value_str)
+                {
+                    device_name = para_value_str;
+                    Properties.Settings.Default.devicename = device_name;
+                    Properties.Settings.Default.Save();
+                }
             }
             if (para_name == "msg")
             {
@@ -415,6 +534,103 @@ namespace NeedleController.Views
             {
                 needlesupplied_status = int.Parse(para_value_str);
             }
+            if (para_name == "xpos")
+            {
+                x_position = int.Parse(para_value_str);
+            }
+            if (para_name == "ypos")
+            {
+                y_position = int.Parse(para_value_str);
+            }
+            if (para_name == "zpos")
+            {
+                z_position = int.Parse(para_value_str);
+            }
+            if (para_name == "table")
+            {
+                needle_table_opened = Convert.ToBoolean(int.Parse(para_value_str));
+            }
+            if (para_name == "park")
+            {
+                machine_parked = Convert.ToBoolean(int.Parse(para_value_str));
+            }
+            if (para_name == "led1")
+            {
+                machine_led_on = Convert.ToBoolean(int.Parse(para_value_str));
+            }
+            if (para_name == "led2")
+            {
+                table_led_on = Convert.ToBoolean(int.Parse(para_value_str));
+            }
+            ///
+            if (para_name == "speedx")
+            {
+                x_speed = int.Parse(para_value_str);
+            }
+            if (para_name == "speedy")
+            {
+                y_speed = int.Parse(para_value_str);
+            }
+            if (para_name == "speedz")
+            {
+                z_speed = int.Parse(para_value_str);
+            }
+            if (para_name == "speedw")
+            {
+                w_speed = int.Parse(para_value_str);
+            }
+            ///
+            if (para_name == "accelx")
+            {
+                x_accel = int.Parse(para_value_str);
+            }
+            if (para_name == "accely")
+            {
+                y_accel = int.Parse(para_value_str);
+            }
+            if (para_name == "accelz")
+            {
+                z_accel = int.Parse(para_value_str);
+            }
+            if (para_name == "accelw")
+            {
+                w_accel = int.Parse(para_value_str);
+            }
+            ///
+            if (para_name == "offsetx")
+            {
+                x_offset = int.Parse(para_value_str);
+            }
+            if (para_name == "offsety")
+            {
+                y_offset = int.Parse(para_value_str);
+            }
+            if (para_name == "offsetz")
+            {
+                z_offset = int.Parse(para_value_str);
+            }
+            if (para_name == "offsetw")
+            {
+                w_offset = int.Parse(para_value_str);
+            }
+            ///
+            if (para_name == "plusx")
+            {
+                x_plus = int.Parse(para_value_str);
+            }
+            if (para_name == "plusy")
+            {
+                y_plus = int.Parse(para_value_str);
+            }
+            if (para_name == "plusz")
+            {
+                z_plus = int.Parse(para_value_str);
+            }
+            if (para_name == "plusw")
+            {
+                w_plus = int.Parse(para_value_str);
+            }
+
         }
         private string Getparametername_frombuffer(string STR, string FirstString, string LastString)
         {
@@ -432,34 +648,55 @@ namespace NeedleController.Views
             FinalString = STR.Substring(Pos1, Pos2 - Pos1);
             return FinalString;
         }
-
-
         public void ShowNeedlePickingView()
         {
-
             if (_deviceConnection)
             {
-                using (IDCardCheckingView checkingView = new IDCardCheckingView())
+                using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
                 {
                     checkingView.ShowDialog();
                 }
-                if (_confirmRFID)
+                if (CardCheckingDetected)
                 {
-                    if (device_id != user_deviceid)
+                    if (_confirmRFID)
                     {
-                        MessageBox.Show("Your ID card is not acceptable in this device");
+                        if (user_layer == "dev")
+                        {
+                            this.Visible = false;
+                            new WaitingProcessView().Show();
+                            /*new NeedlePickingView(this).Show();*/
+                            showneedlepickingview_flag = true;
+                        }
+                        else
+                        {
+                            if (device_id == user_deviceid)
+                            {
+                                if (user_layer == "admin" || user_layer == "user")
+                                {
+                                    this.Visible = false;
+                                    new WaitingProcessView().Show();
+                                    /*new NeedlePickingView(this).Show();*/
+                                    showneedlepickingview_flag = true;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("You need permission to confirm this");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Your ID card is not acceptable in this device");
+                            }
+                        }
+                        _confirmRFID = false;
+
                     }
                     else
                     {
-                        this.Visible = false;
-                        new NeedlePickingView(this).Show();
+                        MessageBox.Show("Invalid ID Card");
                     }
+                    CardCheckingDetected = false;
                 }
-                else
-                {
-                    MessageBox.Show("Invalid ID Card");
-                }
-                _confirmRFID = false;
             }
             else
             {
@@ -470,46 +707,49 @@ namespace NeedleController.Views
         {
             if (_deviceConnection)
             {
-                using (IDCardCheckingView checkingView = new IDCardCheckingView())
+                if (!showaddneedleview_flag)
                 {
-                    checkingView.ShowDialog();
-                }
-                if (_confirmRFID)
-                {
-                    if (device_id != user_deviceid)
+                    using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
                     {
-                        MessageBox.Show("Your ID card is not acceptable in this device");
+                        checkingView.ShowDialog();
                     }
-                    else
+                    if (CardCheckingDetected)
                     {
-                        if (user_layer == "user")
+                        if (_confirmRFID)
                         {
-                            MessageBox.Show("You need adminstrator permission to access this funtion");
+                            if (user_layer == "dev")
+                            {
+                                Reply_Buffer("<get:wstatus>");
+                                showaddneedleview_flag = true;
+                            }
+                            else
+                            {
+                                if (device_id == user_deviceid)
+                                {
+                                    if (user_layer == "admin")
+                                    {
+                                        Reply_Buffer("<get:wstatus>");
+                                        showaddneedleview_flag = true;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("You need adminstrator permission to access this funtion");
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Your ID card is not acceptable in this device");
+                                }
+                            }
+                            _confirmRFID = false;
                         }
                         else
                         {
-                            using (UdpClient udpClient = new UdpClient())
-                            {
-                                try
-                                {
-                                    replied_buffer = "<checkw:1>";
-                                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
-                                    Byte[] senddata = Encoding.ASCII.GetBytes(replied_buffer);
-                                    udpClient.Send(senddata, senddata.Length);
-                                }
-                                catch (Exception i)
-                                {
-                                    Console.WriteLine(i.ToString());
-                                }
-                            }
+                            MessageBox.Show("Invalid ID Card");
                         }
+                        CardCheckingDetected = false;
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Invalid ID Card");
-                }
-                _confirmRFID = false;
             }
             else
             {
@@ -521,70 +761,181 @@ namespace NeedleController.Views
             this.Visible = false;
             new NeedleInfoView(this).Show();
         }
-        public void ShowDeviceSettingView()
+        public void ShowRecycleBinView()
         {
             if (_deviceConnection)
             {
-                using (IDCardCheckingView checkingView = new IDCardCheckingView())
+                using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
                 {
                     checkingView.ShowDialog();
                 }
-                if (_confirmRFID)
+                if (CardCheckingDetected)
                 {
-                    if (device_id != user_deviceid)
+                    if (_confirmRFID)
                     {
-                        MessageBox.Show("Your ID card is not acceptable in this device");
+                        if (user_layer == "dev")
+                        {
+                            this.Visible = false;
+                            new WaitingProcessView().Show();
+                            showrecyclebinview_flag = true;
+                            /*new RecycleBinView(this).Show();*/
+                        }
+                        else
+                        {
+                            if (device_id == user_deviceid)
+                            {
+                                if (user_layer == "admin")
+                                {
+                                    this.Visible = false;
+                                    new WaitingProcessView().Show();
+                                    showrecyclebinview_flag = true;
+                                    /*new RecycleBinView(this).Show();*/
+                                }
+                                else
+                                {
+                                    MessageBox.Show("You need adminstrator permission to access this funtion");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Your ID card is not acceptable in this device");
+                            }
+                        }
+                        _confirmRFID = false;
                     }
                     else
                     {
-                        if (user_layer == "user")
+                        MessageBox.Show("Invalid ID Card");
+                    }
+                    CardCheckingDetected = false;
+                }
+        }
+            else
+            {
+                MessageBox.Show("Connect to device first");
+            }
+}
+        public void ShowDeviceSettingView()
+        {
+            using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
+            {
+                checkingView.ShowDialog();
+            }
+            if (CardCheckingDetected)
+            {
+                if (_confirmRFID)
+                {
+                    if (user_layer == "dev")
+                    {
+                        if (_deviceConnection)
                         {
-                            MessageBox.Show("You need adminstrator permission to access this funtion");
+                            using (UdpClient udpClient = new UdpClient())
+                            {
+                                try
+                                {
+                                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                                    Byte[] senddata = Encoding.ASCII.GetBytes("<get:xpos><get:ypos><get:zpos><get:table><get:parking><get:led1><get:led2>");
+                                    Byte[] senddata1 = Encoding.ASCII.GetBytes("<speed:x><speed:y><speed:z><speed:w>");
+                                    Byte[] senddata2 = Encoding.ASCII.GetBytes("<accel:x><accel:y><accel:z><accel:w>");
+                                    Byte[] senddata3 = Encoding.ASCII.GetBytes("<offset:x><offset:y><offset:z><offset:w>");
+                                    Byte[] senddata4 = Encoding.ASCII.GetBytes("<plus:x><plus:y><plus:z><plus:w>");
+                                    Byte[] senddata5 = Encoding.ASCII.GetBytes("<get:load>");
+                                    udpClient.Send(senddata, senddata.Length);
+                                    udpClient.Send(senddata1, senddata1.Length);
+                                    udpClient.Send(senddata2, senddata2.Length);
+                                    udpClient.Send(senddata3, senddata3.Length);
+                                    udpClient.Send(senddata4, senddata4.Length);
+                                    udpClient.Send(senddata5, senddata5.Length);
+                                }
+                                catch (Exception i)
+                                {
+                                    Console.WriteLine(i.ToString());
+                                }
+                            }
+                            this.Visible = false;
+                            new WaitingProcessView().Show();
                         }
                         else
                         {
                             this.Visible = false;
-                            new DeviceSettingView(this).Show();
+                            showdevicesettingview_flag = true;
+                            loaddevicesetting_withoutconnection = true;
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("You need adminstrator permission to access this funtion");
+                    }
+                    _confirmRFID = false;
                 }
                 else
                 {
                     MessageBox.Show("Invalid ID Card");
                 }
-                _confirmRFID = false;
-            }
-            else
-            {
-                MessageBox.Show("Connect to device first");
+                CardCheckingDetected = false;
             }
         }
         public void ShowCameraSettingView()
         {
-            this.Visible = false;
-            new CameraSettingView().Show();
+            using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
+            {
+                checkingView.ShowDialog();
+            }
+            if (CardCheckingDetected)
+            {
+                if (_confirmRFID)
+                {
+                    if (user_layer == "dev")
+                    {
+                        this.Visible = false;
+                        new WaitingProcessView().Show();
+                        showcamerasettingview_flag = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You need adminstrator permission to access this funtion");
+                    }
+                    _confirmRFID = false;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid ID Card");
+                }
+                CardCheckingDetected = false;
+            }
         }
         public void MainViewLoad()
         {
             this.TopMost = false;
             countCamera = opencv.countCamera();
+            device_id = Properties.Settings.Default.deviceid;
+            device_name = Properties.Settings.Default.devicename;
+            building_id = Properties.Settings.Default.buildingid;
+            building_name = Properties.Settings.Default.buildingname;
+
         }
         public void ConnectDevice()
         {
-            Thread thdUDPServer = new Thread(new ThreadStart(ServerThread));
-            thdUDPServer.Start();
-            using (UdpClient udpClient = new UdpClient())
+            start_progressbar(progressBar1);
+            bool _cableConnection = PingHost(NeedleController.Properties.Settings.Default.local_ip);
+            if (_cableConnection)
             {
-                try
+                while (true)
                 {
-                    udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
-                    Byte[] senddata = Encoding.ASCII.GetBytes("<reset:1>");
-                    udpClient.Send(senddata, senddata.Length);
+                    bool status = EF_CONFIG.DataTransform.DeviceBase.Update_OnlineStatus(device_id, "ONLINE");
+                    if (status)
+                    {
+                        break;
+                    }
                 }
-                catch (Exception i)
-                {
-                    Console.WriteLine(i.ToString());
-                }
+                Thread thdUDPServer = new Thread(new ThreadStart(ServerThread));
+                thdUDPServer.IsBackground = true;
+                thdUDPServer.Start();
+                Reply_Buffer("<reset:1>");
+            }
+            else
+            {
+                MessageBox.Show("Recheck device ip or cable connection");
             }
         }
         public void CloseForm()
@@ -592,7 +943,7 @@ namespace NeedleController.Views
             if (device_id == 0)
             {
                 this.Close();
-                Application.Exit();
+                System.Windows.Forms.Application.Exit();
                 Environment.Exit(0);
             }
             else
@@ -608,7 +959,7 @@ namespace NeedleController.Views
                     return;
                 }
                 this.Close();
-                Application.Exit();
+                System.Windows.Forms.Application.Exit();
                 Environment.Exit(0);
             }
 
@@ -639,37 +990,75 @@ namespace NeedleController.Views
             ChineseToolStripMenuItem.Checked = (culture.TwoLetterISOLanguageName == "zh");
 
         }
-
+        private bool CheckFor_Form(string FormName)
+        {
+            try
+            {
+                FormCollection fc = System.Windows.Forms.Application.OpenForms;
+                foreach (Form frm in fc)
+                {
+                    if (frm.Name == FormName)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
         public void ServerThread()
         {
-            using (UdpClient udpClient = new UdpClient(NeedleController.Properties.Settings.Default.port))
+            try
             {
-                while (true)
+                using (UdpClient udpClient = new UdpClient(NeedleController.Properties.Settings.Default.port))
                 {
-                    IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, NeedleController.Properties.Settings.Default.port);
-                    Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
-                    string returnData = Encoding.ASCII.GetString(receiveBytes);
-                    this.Invoke(new MethodInvoker(delegate ()
+                    while (true)
                     {
-                        string msg = returnData;
-                        _message = msg;
-                        CheckParameterThread();
-                        SetString_message();
-                        if (returnData == "<msg:setting_success>")
+                        IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Parse(NeedleController.Properties.Settings.Default.local_ip), NeedleController.Properties.Settings.Default.port);
+                        Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
+                        string returnData = Encoding.ASCII.GetString(receiveBytes);
+                        this.Invoke(new MethodInvoker(delegate ()
                         {
-                            _deviceConnection = true;
-                            BuildingNameLabel.Text = building_name;
-                            DeviceNameLabel.Text = device_name;
-                        }
-                    }));
+                            string msg = returnData;
+                            if (!_connected)
+                            {
+                                Logger.Debug("Get buffer " + msg + " from ip " + NeedleController.Properties.Settings.Default.local_ip + " .Port " + NeedleController.Properties.Settings.Default.port);
+                            }
+                            else
+                            {
+                                Logger.Debug("Get buffer " + msg + " from device " + device_name, device_id);
+                            }
+                            _message = msg;
+                            CheckParameterThread();
+                            SetString_message();
+                            if (returnData == "<msg:setting_success>")
+                            {
+                                _deviceConnection = true;
+                                BuildingNameLabel.Text = building_name;
+                                DeviceNameLabel.Text = device_name;
+                                stop_progressbar(progressBar1);
+                            }
+                        }));
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
             }
         }
         public bool PingHost(string nameOrAddress)
         {
             bool pingable = false;
             Ping pinger = null;
-
             try
             {
                 pinger = new Ping();
@@ -687,11 +1076,19 @@ namespace NeedleController.Views
                     pinger.Dispose();
                 }
             }
-
             return pingable;
         }
-        private void Reply_Buffer(string buffer)
+        public void Reply_Buffer(string buffer)
         {
+            if (!_connected)
+            {
+                Logger.Debug("Put buffer " + buffer + " to ip " + NeedleController.Properties.Settings.Default.local_ip + " .Port " + NeedleController.Properties.Settings.Default.port);
+
+            }
+            else
+            {
+                Logger.Debug("Put buffer " + buffer + " to device " + device_name, device_id);
+            }
             using (UdpClient udpClient = new UdpClient())
             {
                 try
@@ -702,11 +1099,25 @@ namespace NeedleController.Views
                     udpClient.Send(senddata, senddata.Length);
 
                 }
-                catch (Exception i)
+                catch (Exception e)
                 {
-                    Console.WriteLine(i.ToString());
+                    Logger.Error(e.Message, device_id);
+                    MessageBox.Show(e.ToString());
+                    Console.WriteLine(e.ToString());
                 }
             }
+        }
+        public bool CheckOpenedForm(string name)
+        {
+            FormCollection form = System.Windows.Forms.Application.OpenForms;
+            foreach (Form form1 in form)
+            {
+                if (form1.Text == name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         public void SetString_message()
         {
@@ -721,20 +1132,195 @@ namespace NeedleController.Views
         }
         public void Loading()
         {
-            SplashScreenView splashScreen = new SplashScreenView();
-            splashScreen.ShowDialog();
-            Application.Exit();
-            Environment.Exit(0);
+            try
+            {
+                using (SplashScreenView splashScreen = new SplashScreenView())
+                {
+                    splashScreen.ShowDialog();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
+            }
+            /*try
+            {
+                System.Windows.Forms.Application.Run(new SplashScreenView());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }*/
         }
+        List<string> Get_POlist()
+        {
+            try
+            {
+                DirectoryInfo d = new DirectoryInfo(Filepath);
+                List<ExcelFile> excelFiles = new List<ExcelFile>();
+                FileInfo[] Files = d.GetFiles("A06-Schedule_Report *.xlsx");
+                System.Data.DataTable ExcelPOList = new System.Data.DataTable();
+                foreach (FileInfo file in Files)
+                {
+                    string _name = file.Name;
+                    string[] date = _name.Split(new string[] { "A06-Schedule_Report " }, StringSplitOptions.None);
+                    string datestring = string.Concat(date);
+                    string[] datetime = datestring.Split(new string[] { ".xlsx" }, StringSplitOptions.None);
+                    string datetimestring = string.Concat(datetime);
+                    string resultString = null;
+                    Regex regexObj = new Regex(@"[^\d]");
+                    resultString = regexObj.Replace(datetimestring, "");
+                    DateTime _date = DateTime.ParseExact(resultString, "MMddyyyy",
+                                           System.Globalization.CultureInfo.InvariantCulture);
+                    ExcelFile excelfile = new ExcelFile()
+                    {
+                        FileName = _name,
+                        Date = _date
+                    };
+                    excelFiles.Add(excelfile);
+                }
+                ExcelFiles_list = excelFiles;
+                ExcelFile ex = ExcelFiles_list.OrderByDescending(i => i.Date).First();
+                ExcelPOList = Import(Filepath + "\\" + ex.FileName);
+                string[] POListString_array = ExcelPOList.AsEnumerable().Select<DataRow, string>(x => x.Field<string>("COLUMN1")).ToArray();
+                var item = new List<string>();
+                for (int i = 0; i < POListString_array.Length; i++)
+                {
+                    item.Add(POListString_array[i]);
+                }
+                return item.Distinct().ToList();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+        public System.Data.DataTable Import(string filename, bool headers = false)
+        {
+            try
+            {
+                var _xl = new Microsoft.Office.Interop.Excel.Application();
+                var wb = _xl.Workbooks.Open(filename);
+                var sheets = wb.Sheets;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                if (sheets != null && sheets.Count != 0)
+                {
+                    foreach (var item in sheets)
+                    {
+                        var sheet = (Microsoft.Office.Interop.Excel.Worksheet)item;
+                        if (sheet.Name == "ASL")
+                        {
+                            dt = new System.Data.DataTable();
+                            if (sheet != null)
+                            {
+                                var ColumnCount = ((Microsoft.Office.Interop.Excel.Range)sheet.UsedRange.Rows[1, Type.Missing]).Columns.Count;
+                                var rowCount = ((Microsoft.Office.Interop.Excel.Range)sheet.UsedRange.Columns[1, Type.Missing]).Rows.Count;
+
+                                var cell = (Microsoft.Office.Interop.Excel.Range)sheet.Cells[4, 9];
+                                var column = new DataColumn(headers ? cell.Value : string.Empty);
+                                dt.Columns.Add(column);
+
+                                for (int i = 4; i < rowCount; i++)
+                                {
+                                    var r = dt.NewRow();
+                                    var cell1 = (Microsoft.Office.Interop.Excel.Range)sheet.Cells[i + 1 + (headers ? 1 : 0), 9];
+                                    r[0] = cell1.Value;
+                                    dt.Rows.Add(r);
+                                }
+
+                            }
+                        }
+                    }
+                }
+                _xl.Quit();
+                return dt;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
         public bool CheckForDatabaseConnection()
         {
-            return EF_CONFIG.Extends.SysExtendBase.IsAvailable();
+            try
+            {
+                return EF_CONFIG.Extends.SysExtendBase.IsAvailable();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
+                return false;
+            }
         }
         private void BuildingNameLabel_Click(object sender, EventArgs e)
         {
 
         }
+        public void start_progressbar(ProgressBar progressBar)
+        {
+            progressBar.Style = ProgressBarStyle.Marquee;
+            progressBar.MarqueeAnimationSpeed = 20;
+        }
+        public void stop_progressbar(ProgressBar progressBar)
+        {
+            progressBar.MarqueeAnimationSpeed = 0;
+            progressBar.Style = ProgressBarStyle.Blocks;
+            progressBar.Value = progressBar1.Minimum;
+        }
 
-
+        private void accountToolStripMenuItem_Click(object sender, EventArgs ev)
+        {
+            try
+            {
+                using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
+                {
+                    checkingView.ShowDialog();
+                }
+                if (CardCheckingDetected)
+                {
+                    if (_confirmRFID)
+                    {
+                        if (user_layer == "dev")
+                        {
+                            this.Visible = false;
+                            MessageBox.Show("Funtion is being under development");
+                        }
+                        else
+                        {
+                            MessageBox.Show("You need developer permission to access this funtion");
+                        }
+                        _confirmRFID = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid ID Card");
+                    }
+                    CardCheckingDetected = false;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
+            }
+        }
     }
+    public class ExcelFile
+    {
+        public string FileName { get; set; }
+        public DateTime Date { get; set; }
+    }
+
 }

@@ -7,11 +7,15 @@ using NeedleTracking.UserControlUC;
 using NeedleTracking.UserControlUC.VolatilityUC;
 using NeedleTracking.ViewModel;
 using EF_CONFIG.DataTransform;
+using EF_CONFIG.Model;
+
 
 namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
 {
     public class VolatilityQtyTabViewModel : BaseViewModel
     {
+        public List<NS_Needles> needle { get; set; }
+
         private int _TotalUsage { get; set; }
         public int TotalUsage
         {
@@ -55,11 +59,9 @@ namespace NeedleTracking.ViewModel.VolatilityMenuViewModels
             var ExportList = voladatagridVM.ExtendExportList;
             foreach (var item in ExportList)
             {
-                var Needle = NeedleBase.Get_NeedleByVotatilityDatagridModelItem(item);
-                TotalPrice = _TotalPrice + Needle.NeedlePrice;
+                var needleprice = needle.Where(i => i.NeedleID == item.NS_Export.NeedleID).Select(e => e.NeedlePrice).FirstOrDefault();
+                TotalPrice = _TotalPrice + needleprice;
             }
-
-
         }
 
 

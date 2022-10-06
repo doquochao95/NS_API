@@ -223,4 +223,16 @@
   <data name="DeviceNameLabel.Text" xml:space="preserve">
     <value>Tên thiết bị</value>
   </data>
+  <data name="RecycleBinButton.Text" xml:space="preserve">
+    <value>Thùng Rác</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Màn Hình Chính</value>
+  </data>
+  <data name="accountToolStripMenuItem.Text" xml:space="preserve">
+    <value>Tài Khoản</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
 </root>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WinFormsMvp;
 
 namespace NeedleController.Views
@@ -12,6 +13,7 @@ namespace NeedleController.Views
         event EventHandler GetNeedleClicked;
         event EventHandler AddNeedleButtonCLicked;
         event EventHandler NeedleInfoClicked;
+        event EventHandler RecycleBinClicked;
         event EventHandler DeviceSettingClicked;
         event EventHandler CameraSettingClicked;
         event EventHandler MainViewLoaded;
@@ -27,6 +29,8 @@ namespace NeedleController.Views
         void ShowNeedlePickingView();
         void ShowAddNeedleView();
         void ShowNeedleInfoView();
+        void ShowRecycleBinView();
+
         void ShowDeviceSettingView();
         void ShowCameraSettingView();
         void MainViewLoad();
@@ -38,10 +42,14 @@ namespace NeedleController.Views
 
         void UpdateLanguageMenus();
 
+        bool CheckOpenedForm(string name);
+        void Reply_Buffer(string buffer);
 
         void ServerThread();
         bool PingHost(string nameOrAddress);
         void SetString_message();
+        void start_progressbar(ProgressBar progressBar);
+        void stop_progressbar(ProgressBar progressBar);
 
     }
 }

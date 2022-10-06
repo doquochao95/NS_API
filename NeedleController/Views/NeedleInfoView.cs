@@ -50,6 +50,7 @@ namespace NeedleController.Views
         public static string selected_needlesize { get; set; }
         public static string selected_needleprice { get; set; }
         public static string selected_needlelength { get; set; }
+        public static string selected_warehousecode { get; set; }
 
         public static List<NS_Needles> needle_list { get; set; }
 
@@ -86,11 +87,13 @@ namespace NeedleController.Views
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            bool _cableConnection = _MainView.PingHost(NeedleController.Properties.Settings.Default.local_ip);
+            /*bool _cableConnection = _MainView.PingHost(NeedleController.Properties.Settings.Default.local_ip);
             while (true)
             {
                 if (!_cableConnection)
                 {
+                    MainView._connected = false;
+                    Logger.Error("Lost connection from " + MainView.device_name, MainView.device_id);
                     Timer1.Stop();
                     switch (MessageBox.Show(this, "Check connection to device again", "Error: Communication", MessageBoxButtons.RetryCancel))
                     {
@@ -106,16 +109,22 @@ namespace NeedleController.Views
                 }
                 else
                 {
-                    Timer1.Start();
+                    if (!MainView._connected)
+                    {
+                        MainView._connected = true;
+                        Logger.Information("Device " + MainView.device_name + " from " + MainView.building_name + " is connected", MainView.device_id);
+                        Timer1.Start();
+                    }
                     break;
                 }
-            }
-
+            }*/
             bool database_conneciton = _MainView.CheckForDatabaseConnection();
             while (true)
             {
                 if (!database_conneciton)
                 {
+                    MainView._databaseconnected = false;
+                    Logger.Error("Lost connection from database", MainView.device_id);
                     Timer1.Stop();
                     switch (MessageBox.Show(this, "Check connection to database again", "Error: Communication", MessageBoxButtons.RetryCancel))
                     {
@@ -132,7 +141,12 @@ namespace NeedleController.Views
                 }
                 else
                 {
-                    Timer1.Start();
+                    if (!MainView._databaseconnected)
+                    {
+                        MainView._databaseconnected = true;
+                        Logger.Information("Device " + MainView.device_name + " from " + MainView.building_name + " is connected to database", MainView.device_id);
+                        Timer1.Start();
+                    }
                     break;
                 }
             }
@@ -184,11 +198,11 @@ namespace NeedleController.Views
                 case 1:
                     {
                         Reset_Parameters();
-                        using (IDCardCheckingView checkingView = new IDCardCheckingView())
+                        using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
                         {
                             checkingView.ShowDialog();
                         }
-                        if (MainView.card_checkingprogress)
+                        if (MainView.CardCheckingDetected)
                         {
                             if (MainView._confirmRFID)
                             {
@@ -213,7 +227,6 @@ namespace NeedleController.Views
                                     }
                                     Reset_Parameters();
                                     last_selectedTabindex = 1;
-
                                 }
                             }
                             else
@@ -224,21 +237,20 @@ namespace NeedleController.Views
                         }
                         else
                         {
-
                             NeedleInformationTabControl.SelectTab(0);
                         }
-                        MainView.card_checkingprogress = false;
+                        MainView.CardCheckingDetected = false;
                         MainView._confirmRFID = false;
                         break;
                     }
                 case 2:
                     {
                         Reset_Parameters();
-                        using (IDCardCheckingView checkingView = new IDCardCheckingView())
+                        using (IDCardCheckingView checkingView = new IDCardCheckingView(this.Name))
                         {
                             checkingView.ShowDialog();
                         }
-                        if (MainView.card_checkingprogress)
+                        if (MainView.CardCheckingDetected)
                         {
                             if (MainView._confirmRFID)
                             {
@@ -274,10 +286,9 @@ namespace NeedleController.Views
                         }
                         else
                         {
-
                             NeedleInformationTabControl.SelectTab(0);
                         }
-                        MainView.card_checkingprogress = false;
+                        MainView.CardCheckingDetected = false;
                         MainView._confirmRFID = false;
                         break;
                     }

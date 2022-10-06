@@ -13,10 +13,10 @@ namespace NeedleController.Presenters
         public MainPresenter(IMainView view)
             : base(view)
         {
-            View.GetNeedleClicked += View_GetNeedleClicked;
-            
+            View.GetNeedleClicked += View_GetNeedleClicked;    
             View.NeedleInfoClicked += View_NeedleInfoClicked;
             View.AddNeedleButtonCLicked += View_AddNeedleButtonClicked;
+            View.RecycleBinClicked += View_RecycleBinClicked;
             View.DeviceSettingClicked += View_DeviceSettingClicked;
             View.CameraSettingClicked += View_CameraSettingClicked;
             View.MainViewLoaded += View_MainViewLoaded;
@@ -39,6 +39,10 @@ namespace NeedleController.Presenters
         void View_NeedleInfoClicked(object sender, EventArgs e)
         {
             View.ShowNeedleInfoView();
+        }
+        void View_RecycleBinClicked(object sender, EventArgs e)
+        {
+            View.ShowRecycleBinView();
         }
         void View_DeviceSettingClicked(object sender, EventArgs e)
         {

@@ -82,11 +82,15 @@
             this.Controls.Add(this.LoadingStatusMetroLabel);
             this.Controls.Add(this.metroProgressBar1);
             this.Controls.Add(this.metroPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Movable = false;
             this.Name = "SplashScreenView";
             this.Resizable = false;
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
+            this.ShowInTaskbar = false;
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

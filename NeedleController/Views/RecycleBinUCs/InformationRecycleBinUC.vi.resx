@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Hướng Xử Lý</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ConfirmTimeLabel_value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>172, 31</value>
+  </data>
+  <data name="ConfirmTimeLabel_value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 32</value>
+  </data>
+  <data name="ConfirmTimeLabel_value.Text" xml:space="preserve">
+    <value>*lúc</value>
+  </data>
+  <data name="ConfirmByLabel_value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>172, 0</value>
+  </data>
+  <data name="ConfirmByLabel_value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 31</value>
+  </data>
+  <data name="ConfirmByLabel_value.Text" xml:space="preserve">
+    <value>*xácthực</value>
+  </data>
+  <data name="ConfirmTimeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 32</value>
+  </data>
+  <data name="ConfirmTimeLabel.Text" xml:space="preserve">
+    <value>Thời Gian :</value>
+  </data>
+  <data name="ConfirmedByLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 31</value>
+  </data>
+  <data name="ConfirmedByLabel.Text" xml:space="preserve">
+    <value>Xác Nhận Bởi QC :</value>
+  </data>
+  <data name="ConfirmationGroupBox.Text" xml:space="preserve">
+    <value>Xác Thực</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="LineLabel_Value.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="LineLabel_Value.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="LineLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 145</value>
+  </data>
+  <data name="LineLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 34</value>
+  </data>
+  <data name="LineLabel_Value.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="LineLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LineLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="LineLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 34</value>
+  </data>
+  <data name="LineLabel.Text" xml:space="preserve">
+    <value>Chuyền :</value>
+  </data>
+  <data name="LineLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="OperatorLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>537, 0</value>
+  </data>
+  <data name="OperatorLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="OperatorLabel_Value.Text" xml:space="preserve">
+    <value>*côngnhân</value>
+  </data>
+  <data name="metroLabel6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 0</value>
+  </data>
+  <data name="metroLabel6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="metroLabel6.Text" xml:space="preserve">
+    <value>Công Nhân :</value>
+  </data>
+  <data name="POLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>537, 145</value>
+  </data>
+  <data name="POLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 34</value>
+  </data>
+  <data name="PartEnoughLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>537, 116</value>
+  </data>
+  <data name="PartEnoughLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="PartEnoughLabel_Value.Text" xml:space="preserve">
+    <value>*đủ/không</value>
+  </data>
+  <data name="ProcessLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>537, 58</value>
+  </data>
+  <data name="ProcessLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="ProcessLabel_Value.Text" xml:space="preserve">
+    <value>*côngđoạn</value>
+  </data>
+  <data name="ReasonLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>537, 87</value>
+  </data>
+  <data name="ReasonLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="ReasonLabel_Value.Text" xml:space="preserve">
+    <value>*lído</value>
+  </data>
+  <data name="SewingMachineLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>537, 29</value>
+  </data>
+  <data name="SewingMachineLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="SewingMachineLabel_Value.Text" xml:space="preserve">
+    <value>*máy</value>
+  </data>
+  <data name="metroLabel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 145</value>
+  </data>
+  <data name="metroLabel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 34</value>
+  </data>
+  <data name="BrokenTimeLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 58</value>
+  </data>
+  <data name="BrokenTimeLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="BrokenTimeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="BrokenTimeLabel.Text" xml:space="preserve">
+    <value>Thời Gian Kim Hỏng:</value>
+  </data>
+  <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 116</value>
+  </data>
+  <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="metroLabel1.Text" xml:space="preserve">
+    <value>Tình Trạng Kim :</value>
+  </data>
+  <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 58</value>
+  </data>
+  <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="metroLabel2.Text" xml:space="preserve">
+    <value>Công Đoạn :</value>
+  </data>
+  <data name="metroLabel4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 87</value>
+  </data>
+  <data name="metroLabel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="metroLabel4.Text" xml:space="preserve">
+    <value>Lí Do :</value>
+  </data>
+  <data name="metroLabel5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 29</value>
+  </data>
+  <data name="metroLabel5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="metroLabel5.Text" xml:space="preserve">
+    <value>Máy May :</value>
+  </data>
+  <data name="StaffNameLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 116</value>
+  </data>
+  <data name="StaffNameLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="StaffNameLabel_Value.Text" xml:space="preserve">
+    <value>*bởi</value>
+  </data>
+  <data name="ExportTimeStrLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 87</value>
+  </data>
+  <data name="ExportTimeStrLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="ExportTimeStrLabel_Value.Text" xml:space="preserve">
+    <value>*lúc</value>
+  </data>
+  <data name="DeviceNameLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 29</value>
+  </data>
+  <data name="DeviceNameLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="DeviceNameLabel_Value.Text" xml:space="preserve">
+    <value>*thiếtbị</value>
+  </data>
+  <data name="StaffNameLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="StaffNameLabel.Text" xml:space="preserve">
+    <value>Lấy Bởi :</value>
+  </data>
+  <data name="ExportTimeStrLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="ExportTimeStrLabel.Text" xml:space="preserve">
+    <value>Thời Gian Lấy :</value>
+  </data>
+  <data name="DeviceNameLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="DeviceNameLabel.Text" xml:space="preserve">
+    <value>Máy Phát Kim :</value>
+  </data>
+  <data name="NeedleNameLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 29</value>
+  </data>
+  <data name="NeedleNameLabel.Text" xml:space="preserve">
+    <value>Tên Kim :</value>
+  </data>
+  <data name="NeedleNameLabel_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 0</value>
+  </data>
+  <data name="NeedleNameLabel_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 29</value>
+  </data>
+  <data name="NeedleNameLabel_Value.Text" xml:space="preserve">
+    <value>*tên</value>
+  </data>
+  <data name="DetailInformationGroupBox.Text" xml:space="preserve">
+    <value>Thông Tin Chi Tiết</value>
+  </data>
+  <data name="ResetButton.Text" xml:space="preserve">
+    <value>Đặt Lại Kích Thước</value>
+  </data>
+  <data name="metroLabel3.Text" xml:space="preserve">
+    <value>PO :</value>
+  </data>
+</root>

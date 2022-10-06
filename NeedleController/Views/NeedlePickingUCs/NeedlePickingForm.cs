@@ -56,27 +56,69 @@ namespace NeedleController.Views.NeedlePickingUCs
                     Byte[] senddata = Encoding.ASCII.GetBytes("<" + _NeedleQtyStock.StockName.ToLower() + ":" + _NeedleQtyStock.CurrentQuantity + ">");
                     udpClient.Send(senddata, senddata.Length);
                     NeedlePickingView.getneedle_flag = true;
+                    NeedlePickingView.selected_needle_length = decimal.ToDouble((decimal)EF_CONFIG.DataTransform.NeedleBase.Get_Needles(_NeedleQtyStock.NeedleID).NeedleLength);
                     foreach(var item in NeedlePickingView.NeedleQtyList)
                     {
                         if (item.StockId == _NeedleQtyStock.StockId)
                         {
-                            MainView.selected_stockid = item.StockId;
-                            MainView.selected_needleid = item.NeedleID;
-                            MainView.current_qty = item.CurrentQuantity;
+                            NeedlePickingView.selected_stockid = item.StockId;
+                            NeedlePickingView.selected_needleid = item.NeedleID;
+                            NeedlePickingView.current_qty = item.CurrentQuantity;
                         }
                     }
                 }
-                catch (Exception i)
+                catch (Exception e)
                 {
-                    Console.WriteLine(i.ToString());
+                    Logger.Error(e.Message, MainView.device_id);
+                    MessageBox.Show(e.ToString());
+                    Console.WriteLine(e.ToString());
                 }
             }
 
         }
         public void LoadNeedlePickingForm()
         {
-            GetButton.Text = _NeedleQtyStock.NeedleName.ToString();
+            GetButton.Text = _NeedleQtyStock.WareHouseCode.ToString()+"-"+_NeedleQtyStock.NeedleName.ToString();
             QuantityLabel.Text = _NeedleQtyStock.TotalQuantity.ToString();
         }
+        /*public void GetNeedle()
+        {
+            int count = 0;
+            foreach (var item in _Stocks)
+            {
+                if (count == WishQuantityNumericUpDown.Value)
+                {
+                    break;
+                }
+                else
+                {
+                    using (UdpClient udpClient = new UdpClient())
+                    {
+                        udpClient.Connect(NeedleController.Properties.Settings.Default.local_ip, NeedleController.Properties.Settings.Default.port);
+                        Byte[] senddata = Encoding.ASCII.GetBytes("<" + item.StockName.ToLower() + ":" + item.CurrentQuantity + ">");
+                        udpClient.Send(senddata, senddata.Length);
+                        foreach (var _item in NeedlePickingView.NeedleQtyList_StockList)
+                        {
+                            if (_item.StockId == item.StockID)
+                            {
+                                MainView.selected_stockid = item.StockID;
+                                MainView.selected_needleid = item.NeedleID;
+                                MainView.current_qty = item.CurrentQuantity;
+                            }
+                        }
+                        NeedlePickingView.getneedle_flag = true;
+                        count++;
+                    }
+                }
+            }
+
+        }
+        public void LoadNeedlePickingForm()
+        {
+            WishQuantityNumericUpDown.Maximum = _NeedleQtyStock.TotalQuantity;
+            GetButton.Text = _NeedleQtyStock.NeedleName.ToString();
+            QuantityLabel.Text = _NeedleQtyStock.TotalQuantity.ToString();
+        }*/
     }
+
 }

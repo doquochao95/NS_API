@@ -27,13 +27,19 @@ namespace EF_CONFIG.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<LogEvent> LogEvents { get; set; }
+        public virtual DbSet<NS_BrokenReason> NS_BrokenReason { get; set; }
         public virtual DbSet<NS_Buildings> NS_Buildings { get; set; }
         public virtual DbSet<NS_Devices> NS_Devices { get; set; }
         public virtual DbSet<NS_Export> NS_Export { get; set; }
         public virtual DbSet<NS_Imports> NS_Imports { get; set; }
+        public virtual DbSet<NS_Lines> NS_Lines { get; set; }
         public virtual DbSet<NS_NeedlePosition> NS_NeedlePosition { get; set; }
         public virtual DbSet<NS_Needles> NS_Needles { get; set; }
         public virtual DbSet<NS_PostRecords> NS_PostRecords { get; set; }
+        public virtual DbSet<NS_Process> NS_Process { get; set; }
+        public virtual DbSet<NS_RecycledBox> NS_RecycledBox { get; set; }
+        public virtual DbSet<NS_Requests> NS_Requests { get; set; }
         public virtual DbSet<NS_Staffs> NS_Staffs { get; set; }
         public virtual DbSet<NS_Stocks> NS_Stocks { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

@@ -31,96 +31,31 @@ namespace NeedleController.Views.NeedlePickingUCs
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CameraViewerUC));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.CameraControllergroupBox = new System.Windows.Forms.GroupBox();
-            this.UserContrastTrackbar = new System.Windows.Forms.TrackBar();
-            this.User_Contrast = new System.Windows.Forms.Label();
-            this.UserContrastValue = new System.Windows.Forms.Label();
-            this.UserBrightnessValue = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.UserBrightnessTrackbar = new System.Windows.Forms.TrackBar();
-            this.label4 = new System.Windows.Forms.Label();
-            this.User_Brightness = new System.Windows.Forms.Label();
             this.SourceVideo = new System.Windows.Forms.PictureBox();
-            this.DestVideo = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.CameraControllergroupBox = new System.Windows.Forms.GroupBox();
+            this.User_Brightness = new System.Windows.Forms.Label();
+            this.User_Contrast = new System.Windows.Forms.Label();
+            this.UserBrightnessTrackbar = new System.Windows.Forms.TrackBar();
+            this.UserContrastTrackbar = new System.Windows.Forms.TrackBar();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.UserBrightnessValue = new System.Windows.Forms.Label();
+            this.UserContrastValue = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
-            this.CameraControllergroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UserContrastTrackbar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UserBrightnessTrackbar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceVideo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DestVideo)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.CameraControllergroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UserBrightnessTrackbar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UserContrastTrackbar)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.SourceVideo, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.DestVideo, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.CameraControllergroupBox, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.SourceVideo, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            // 
-            // CameraControllergroupBox
-            // 
-            resources.ApplyResources(this.CameraControllergroupBox, "CameraControllergroupBox");
-            this.CameraControllergroupBox.Controls.Add(this.UserBrightnessValue);
-            this.CameraControllergroupBox.Controls.Add(this.UserContrastValue);
-            this.CameraControllergroupBox.Controls.Add(this.UserContrastTrackbar);
-            this.CameraControllergroupBox.Controls.Add(this.User_Contrast);
-            this.CameraControllergroupBox.Controls.Add(this.label3);
-            this.CameraControllergroupBox.Controls.Add(this.UserBrightnessTrackbar);
-            this.CameraControllergroupBox.Controls.Add(this.label4);
-            this.CameraControllergroupBox.Controls.Add(this.User_Brightness);
-            this.CameraControllergroupBox.Name = "CameraControllergroupBox";
-            this.CameraControllergroupBox.TabStop = false;
-            // 
-            // UserContrastTrackbar
-            // 
-            resources.ApplyResources(this.UserContrastTrackbar, "UserContrastTrackbar");
-            this.UserContrastTrackbar.Maximum = 100;
-            this.UserContrastTrackbar.Name = "UserContrastTrackbar";
-            this.UserContrastTrackbar.TickFrequency = 10;
-            this.UserContrastTrackbar.Scroll += new System.EventHandler(this.UserContrastTrackbar_Scroll);
-            // 
-            // User_Contrast
-            // 
-            resources.ApplyResources(this.User_Contrast, "User_Contrast");
-            this.User_Contrast.Name = "User_Contrast";
-            this.User_Contrast.Click += new System.EventHandler(this.User_Contrast_Click);
-            // 
-            // UserContrastValue
-            // 
-            resources.ApplyResources(this.UserContrastValue, "UserContrastValue");
-            this.UserContrastValue.Name = "UserContrastValue";
-            // 
-            // UserBrightnessValue
-            // 
-            resources.ApplyResources(this.UserBrightnessValue, "UserBrightnessValue");
-            this.UserBrightnessValue.Name = "UserBrightnessValue";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            // 
-            // UserBrightnessTrackbar
-            // 
-            resources.ApplyResources(this.UserBrightnessTrackbar, "UserBrightnessTrackbar");
-            this.UserBrightnessTrackbar.Maximum = 100;
-            this.UserBrightnessTrackbar.Minimum = -100;
-            this.UserBrightnessTrackbar.Name = "UserBrightnessTrackbar";
-            this.UserBrightnessTrackbar.TickFrequency = 10;
-            this.UserBrightnessTrackbar.Scroll += new System.EventHandler(this.UserBrightnessTrackbar_Scroll);
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.ForeColor = System.Drawing.Color.SpringGreen;
-            this.label4.Name = "label4";
-            // 
-            // User_Brightness
-            // 
-            resources.ApplyResources(this.User_Brightness, "User_Brightness");
-            this.User_Brightness.Name = "User_Brightness";
-            this.User_Brightness.Click += new System.EventHandler(this.User_Brightness_Click);
             // 
             // SourceVideo
             // 
@@ -131,14 +66,66 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.SourceVideo.Name = "SourceVideo";
             this.SourceVideo.TabStop = false;
             // 
-            // DestVideo
+            // panel1
             // 
-            this.DestVideo.BackColor = System.Drawing.Color.DarkGray;
-            this.DestVideo.BackgroundImage = global::NeedleController.Properties.Resources.Logo_100x100;
-            resources.ApplyResources(this.DestVideo, "DestVideo");
-            this.DestVideo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.DestVideo.Name = "DestVideo";
-            this.DestVideo.TabStop = false;
+            this.panel1.Controls.Add(this.CameraControllergroupBox);
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Name = "panel1";
+            // 
+            // CameraControllergroupBox
+            // 
+            resources.ApplyResources(this.CameraControllergroupBox, "CameraControllergroupBox");
+            this.CameraControllergroupBox.Controls.Add(this.tableLayoutPanel2);
+            this.CameraControllergroupBox.Name = "CameraControllergroupBox";
+            this.CameraControllergroupBox.TabStop = false;
+            // 
+            // User_Brightness
+            // 
+            resources.ApplyResources(this.User_Brightness, "User_Brightness");
+            this.User_Brightness.Name = "User_Brightness";
+            // 
+            // User_Contrast
+            // 
+            resources.ApplyResources(this.User_Contrast, "User_Contrast");
+            this.User_Contrast.Name = "User_Contrast";
+            // 
+            // UserBrightnessTrackbar
+            // 
+            resources.ApplyResources(this.UserBrightnessTrackbar, "UserBrightnessTrackbar");
+            this.UserBrightnessTrackbar.Maximum = 100;
+            this.UserBrightnessTrackbar.Minimum = -100;
+            this.UserBrightnessTrackbar.Name = "UserBrightnessTrackbar";
+            this.UserBrightnessTrackbar.TickFrequency = 10;
+            this.UserBrightnessTrackbar.Scroll += new System.EventHandler(this.UserBrightnessTrackbar_Scroll);
+            // 
+            // UserContrastTrackbar
+            // 
+            resources.ApplyResources(this.UserContrastTrackbar, "UserContrastTrackbar");
+            this.UserContrastTrackbar.Maximum = 100;
+            this.UserContrastTrackbar.Name = "UserContrastTrackbar";
+            this.UserContrastTrackbar.TickFrequency = 10;
+            this.UserContrastTrackbar.Scroll += new System.EventHandler(this.UserContrastTrackbar_Scroll);
+            // 
+            // tableLayoutPanel2
+            // 
+            resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
+            this.tableLayoutPanel2.Controls.Add(this.UserContrastValue, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.UserBrightnessValue, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.UserContrastTrackbar, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.UserBrightnessTrackbar, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.User_Contrast, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.User_Brightness, 0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            // 
+            // UserBrightnessValue
+            // 
+            resources.ApplyResources(this.UserBrightnessValue, "UserBrightnessValue");
+            this.UserBrightnessValue.Name = "UserBrightnessValue";
+            // 
+            // UserContrastValue
+            // 
+            resources.ApplyResources(this.UserContrastValue, "UserContrastValue");
+            this.UserContrastValue.Name = "UserContrastValue";
             // 
             // CameraViewerUC
             // 
@@ -147,13 +134,14 @@ namespace NeedleController.Views.NeedlePickingUCs
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "CameraViewerUC";
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.CameraControllergroupBox.ResumeLayout(false);
-            this.CameraControllergroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UserContrastTrackbar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UserBrightnessTrackbar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceVideo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DestVideo)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.CameraControllergroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.UserBrightnessTrackbar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UserContrastTrackbar)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -162,15 +150,14 @@ namespace NeedleController.Views.NeedlePickingUCs
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox SourceVideo;
-        private System.Windows.Forms.PictureBox DestVideo;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox CameraControllergroupBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label User_Contrast;
-        private System.Windows.Forms.Label User_Brightness;
-        private System.Windows.Forms.TrackBar UserContrastTrackbar;
-        private System.Windows.Forms.TrackBar UserBrightnessTrackbar;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label UserContrastValue;
         private System.Windows.Forms.Label UserBrightnessValue;
+        private System.Windows.Forms.TrackBar UserContrastTrackbar;
+        private System.Windows.Forms.TrackBar UserBrightnessTrackbar;
+        private System.Windows.Forms.Label User_Contrast;
+        private System.Windows.Forms.Label User_Brightness;
     }
 }

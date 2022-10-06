@@ -38,13 +38,13 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0"
-                                           Margin="5 5 5 0"
+                                           Margin="3 3 3 0"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            TextWrapping="WrapWithOverflow"
                                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                            Text="Total Usage"
-                                           Foreground="White">
+                                           Foreground="White" FontSize="22">
                                 </TextBlock>
                                 <Grid Grid.Row="1">
                                     <TextBlock Margin="5 5 5 5"
@@ -104,13 +104,13 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0"
-                                           Margin="5 5 5 0"
+                                           Margin="3 3 3 0"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            TextWrapping="WrapWithOverflow"
                                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                            Text="Total Type"
-                                           Foreground="White">
+                                           Foreground="White" FontSize="22">
                                 </TextBlock>
                                 <Grid Grid.Row="1">
                                     <TextBlock Margin="5 5 5 5"
@@ -170,13 +170,13 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0"
-                                           Margin="5 5 5 0"
+                                           Margin="3 3 3 0"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            TextWrapping="WrapWithOverflow"
                                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                            Text="Total Price"
-                                           Foreground="White">
+                                           Foreground="White" FontSize="22">
                                 </TextBlock>
                                 <Grid Grid.Row="1">
                                     <TextBlock Margin="5 5 5 5"

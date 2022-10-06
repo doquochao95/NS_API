@@ -36,12 +36,14 @@ namespace NeedleController.Views.NeedleInfoUCs
         private static bool isMove;
         private static Size original_size;
         private static Point original_point;
+        private static bool brand_open = false;
         public InfomationUC()
         {
             InitializeComponent();
             InitializeTimer();
             this.NeedleImagePictureBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.NeedleImagePictureBox_MouseWheel);
             this.PointImagePictureBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PointImagePictureBox_MouseWheel);
+            brand_open = true;
         }
         public event EventHandler InfomationUCLoaded;
         public event EventHandler NeedleComboBoxSelectedIndexChanged;
@@ -50,17 +52,19 @@ namespace NeedleController.Views.NeedleInfoUCs
         public event MouseEventHandler NeedleImagePictureBoxMouseDowned;
         public event MouseEventHandler NeedleImagePictureBoxMouseUped;
         public event MouseEventHandler NeedleImagePictureBoxMouseMoved;
+        public event MouseEventHandler NeedleImagePictureBoxMouseWheeled;
         public event MouseEventHandler Panel2MouseDowned;
         public event MouseEventHandler Panel2MouseUped;
         public event MouseEventHandler Panel2MouseMoved;
-        public event MouseEventHandler NeedleImagePictureBoxMouseWheeled;
+
         public event MouseEventHandler PointImagePictureBoxMouseDowned;
         public event MouseEventHandler PointImagePictureBoxMouseUped;
         public event MouseEventHandler PointImagePictureBoxMouseMoved;
+        public event MouseEventHandler PointImagePictureBoxMouseWheeled;
         public event MouseEventHandler Panel1MouseDowned;
         public event MouseEventHandler Panel1MouseUped;
         public event MouseEventHandler Panel1MouseMoved;
-        public event MouseEventHandler PointImagePictureBoxMouseWheeled;
+
         public event EventHandler ResetPointImageButtonClicked;
         public event EventHandler ResetNeedleImageButtonClicked;
 
@@ -114,6 +118,7 @@ namespace NeedleController.Views.NeedleInfoUCs
         {
             NeedleImagePictureBoxMouseWheeled(this, e);
         }
+
         private void PointImagePictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             PointImagePictureBoxMouseDowned(this, e);
@@ -147,6 +152,7 @@ namespace NeedleController.Views.NeedleInfoUCs
         {
             ResetPointImageButtonClicked(this, EventArgs.Empty);
         }
+
         private void ResetNeedleImageButton_Click(object sender, EventArgs e)
         {
             ResetNeedleImageButtonClicked(this, EventArgs.Empty);
@@ -168,83 +174,115 @@ namespace NeedleController.Views.NeedleInfoUCs
         }
         public void Load_InformationUC()
         {
-            original_point = PointImagePictureBox.Location;
-            original_size = PointImagePictureBox.Size;
-            NeedleComboBox.Items.Clear();
-            if (NeedleInfoView.needle_list == null)
+            try
             {
-                return;
+                original_point = PointImagePictureBox.Location;
+                original_size = PointImagePictureBox.Size;
+                if (NeedleInfoView.needle_list == null)
+                {
+                    return;
+                }
+                var NS_Listneedle = NeedleInfoView.needle_list.OrderBy(i => i.NeedleWarehouseCode).ToList();
+                NeedleComboBox.DataSource = NS_Listneedle;
+                NeedleComboBox.DisplayMember = "NeedleWarehouseCode";
+                NeedleComboBox.ValueMember = "NeedleID";
+                NeedleComboBox.SelectedItem = null;
+                Reset_Parameters();
             }
-            foreach (var needle in NeedleInfoView.needle_list)
+            catch (Exception e)
             {
-                NeedleComboBox.Items.Add(needle);
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
             }
-            NeedleComboBox.DisplayMember = "NeedleName";
-            NeedleComboBox.ValueMember = "NeedleID";
-            Reset_Parameters();
         }
         public void Change_NeedleComboBoxSelectedIndex()
         {
-            if (NeedleComboBox.SelectedItem != null)
+            if (brand_open)
             {
-                int needlename = int.Parse(NeedleComboBox.Text);
-                var item = NeedleInfoView.needle_list.Where(i => i.NeedleName == needlename).FirstOrDefault();
-                NeedleNameTextBox.Text = item.NeedleName.ToString();
-                NeedleCodeTextBox.Text = item.NeedleCode;
-                NeedleSizeTextBox.Text = item.NeedleSize;
-                NeedlePointTextBox.Text = item.NeedlePoint;
-                NeedlePriceTextBox.Text = item.NeedlePrice.ToString();
-                NeedleLengthTextBox.Text = item.NeedleLength.ToString();
-                PointImagePictureBox.Image = byteArrayToImage(item.PointTypeImage);
-                NeedleImagePictureBox.Image = byteArrayToImage(item.RealityImage);
-                NeedleInfoView.selected_needlepointbitmap = byteArrayToImage(item.PointTypeImage);
-                NeedleInfoView.selected_needleimagebitmap = byteArrayToImage(item.RealityImage);
-                SearchTextBox.Text = item.NeedleName.ToString();
+                brand_open = false;
+            }
+            else
+            {
+                if (NeedleComboBox.SelectedIndex >= 0)
+                {
+                    try
+                    {
+                        int needlename = int.Parse(NeedleComboBox.Text);
+                        var item = NeedleInfoView.needle_list.Where(i => i.NeedleWarehouseCode == needlename).FirstOrDefault();
+                        NeedleNameTextBox.Text = item.NeedleName.ToString();
+                        NeedleCodeTextBox.Text = item.NeedleCode;
+                        NeedleSizeTextBox.Text = item.NeedleSize;
+                        NeedlePointTextBox.Text = item.NeedlePoint;
+                        NeedlePriceTextBox.Text = item.NeedlePrice.ToString();
+                        NeedleLengthTextBox.Text = item.NeedleLength.ToString();
+                        PointImagePictureBox.Image = byteArrayToImage(item.PointTypeImage);
+                        NeedleImagePictureBox.Image = byteArrayToImage(item.RealityImage);
+                        NeedleInfoView.selected_needlepointbitmap = byteArrayToImage(item.PointTypeImage);
+                        NeedleInfoView.selected_needleimagebitmap = byteArrayToImage(item.RealityImage);
+                        SearchTextBox.Text = item.NeedleWarehouseCode.ToString();
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e.Message, MainView.device_id);
+                        MessageBox.Show(e.ToString());
+                        Console.WriteLine(e.ToString());
+                    }
+                }
             }
         }
         public void SearchNeedle()
         {
-            string search_name = SearchTextBox.Text;
-            if (search_name == null || search_name == "")
+            try
             {
-                MessageBox.Show(this, "Please type needle name", "Attention :", MessageBoxButtons.OK);
-            }
-            else
-            {
-                if (search_name.Length > 6)
+                string search_name = SearchTextBox.Text;
+                if (search_name == null || search_name == "")
                 {
-                    MessageBox.Show(this, "More than 6 characters", "Attention :", MessageBoxButtons.OK);
+                    MessageBox.Show(this, "Please type needle name", "Attention :", MessageBoxButtons.OK);
                 }
                 else
                 {
-                    if (IsDigitsOnly(search_name))
+                    if (search_name.Length > 6)
                     {
-                        bool status = EF_CONFIG.DataTransform.NeedleBase.Check_AvailableNeedleName(int.Parse(search_name));
-                        if (!status)
-                        {
-                            MessageBox.Show(this, "Needle is not available. Please try another name", "Attention :", MessageBoxButtons.OK);
-                        }
-                        else
-                        {
-                            var item = NeedleInfoView.needle_list.Where(i => i.NeedleName == int.Parse(search_name)).FirstOrDefault();
-                            NeedleNameTextBox.Text = item.NeedleName.ToString();
-                            NeedleCodeTextBox.Text = item.NeedleCode;
-                            NeedleSizeTextBox.Text = item.NeedleSize;
-                            NeedlePointTextBox.Text = item.NeedlePoint;
-                            NeedlePriceTextBox.Text = item.NeedlePrice.ToString();
-                            NeedleLengthTextBox.Text = item.NeedleLength.ToString();
-                            PointImagePictureBox.Image = byteArrayToImage(item.PointTypeImage);
-                            NeedleImagePictureBox.Image = byteArrayToImage(item.RealityImage);
-                            NeedleInfoView.selected_needlepointbitmap = byteArrayToImage(item.PointTypeImage);
-                            NeedleInfoView.selected_needleimagebitmap = byteArrayToImage(item.RealityImage);
-                            NeedleComboBox.Text = item.NeedleName.ToString();
-                        }
+                        MessageBox.Show(this, "More than 6 characters", "Attention :", MessageBoxButtons.OK);
                     }
                     else
                     {
-                        MessageBox.Show(this, "Contains not allowance character", "Attention :", MessageBoxButtons.OK);
+                        if (IsDigitsOnly(search_name))
+                        {
+                            bool status = EF_CONFIG.DataTransform.NeedleBase.Check_AvailableNeedleWarehousecode(int.Parse(search_name));
+                            if (!status)
+                            {
+                                MessageBox.Show(this, "Needle is not available. Please try another name", "Attention :", MessageBoxButtons.OK);
+                            }
+                            else
+                            {
+                                var item = NeedleInfoView.needle_list.Where(i => i.NeedleWarehouseCode == int.Parse(search_name)).FirstOrDefault();
+                                NeedleNameTextBox.Text = item.NeedleName.ToString();
+                                NeedleCodeTextBox.Text = item.NeedleCode;
+                                NeedleSizeTextBox.Text = item.NeedleSize;
+                                NeedlePointTextBox.Text = item.NeedlePoint;
+                                NeedlePriceTextBox.Text = item.NeedlePrice.ToString();
+                                NeedleLengthTextBox.Text = item.NeedleLength.ToString();
+                                PointImagePictureBox.Image = byteArrayToImage(item.PointTypeImage);
+                                NeedleImagePictureBox.Image = byteArrayToImage(item.RealityImage);
+                                NeedleInfoView.selected_needlepointbitmap = byteArrayToImage(item.PointTypeImage);
+                                NeedleInfoView.selected_needleimagebitmap = byteArrayToImage(item.RealityImage);
+                                NeedleComboBox.Text = item.NeedleName.ToString();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(this, "Contains not allowance character", "Attention :", MessageBoxButtons.OK);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
             }
         }
 
@@ -269,37 +307,6 @@ namespace NeedleController.Views.NeedleInfoUCs
         {
             NeedleImagePictureBox.Focus();
             if (isMove)
-            {
-                int x, y;
-                int moveX, moveY;
-                moveX = Cursor.Position.X - mouseDownPoint.X;
-                moveY = Cursor.Position.Y - mouseDownPoint.Y;
-                x = NeedleImagePictureBox.Location.X + moveX;
-                y = NeedleImagePictureBox.Location.Y + moveY;
-                NeedleImagePictureBox.Location = new Point(x, y);
-                mouseDownPoint.X = Cursor.Position.X;
-                mouseDownPoint.Y = Cursor.Position.Y;
-            }
-        }
-        public void MouseDown_panel2(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                mouseDownPoint.X = Cursor.Position.X;
-                mouseDownPoint.Y = Cursor.Position.Y;
-                isMove = true;
-            }
-        }
-        public void MouseUp_panel2(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isMove = false;
-            }
-        }
-        public void MouseMove_panel2(MouseEventArgs e)
-        {
-            panel2.Focus(); if (isMove)
             {
                 int x, y;
                 int moveX, moveY;
@@ -346,6 +353,39 @@ namespace NeedleController.Views.NeedleInfoUCs
             VY = (int)((double)y * (oh - NeedleImagePictureBox.Height) / oh);
             NeedleImagePictureBox.Location = new Point(NeedleImagePictureBox.Location.X + VX, NeedleImagePictureBox.Location.Y + VY);
         }
+
+        public void MouseDown_panel2(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDownPoint.X = Cursor.Position.X;
+                mouseDownPoint.Y = Cursor.Position.Y;
+                isMove = true;
+            }
+        }
+        public void MouseUp_panel2(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isMove = false;
+            }
+        }
+        public void MouseMove_panel2(MouseEventArgs e)
+        {
+            panel2.Focus(); if (isMove)
+            {
+                int x, y;
+                int moveX, moveY;
+                moveX = Cursor.Position.X - mouseDownPoint.X;
+                moveY = Cursor.Position.Y - mouseDownPoint.Y;
+                x = NeedleImagePictureBox.Location.X + moveX;
+                y = NeedleImagePictureBox.Location.Y + moveY;
+                NeedleImagePictureBox.Location = new Point(x, y);
+                mouseDownPoint.X = Cursor.Position.X;
+                mouseDownPoint.Y = Cursor.Position.Y;
+            }
+        }
+
         public void MouseDown_PointImagePictureBox(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -445,6 +485,7 @@ namespace NeedleController.Views.NeedleInfoUCs
             VY = (int)((double)y * (oh - PointImagePictureBox.Height) / oh);
             PointImagePictureBox.Location = new Point(PointImagePictureBox.Location.X + VX, PointImagePictureBox.Location.Y + VY);
         }
+
         public void Click_ResetPointImageButton()
         {
             PointImagePictureBox.Location = original_point;

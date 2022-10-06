@@ -154,11 +154,17 @@
   <data name="nEW_LOGO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nEW LOGO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="OFFset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OFFset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ParkingIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ParkingIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="R" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\R.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Recycle_B_100x100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Recycle B 100x100 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ResetIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ResetIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -186,5 +192,11 @@
   </data>
   <data name="UnParkingIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UnParkingIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XY_Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XY Plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Z_Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Z Plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

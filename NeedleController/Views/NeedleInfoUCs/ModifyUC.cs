@@ -54,15 +54,15 @@ namespace NeedleController.Views.NeedleInfoUCs
         public event EventHandler LengthTextBoxFocusLeaved;
         public event KeyEventHandler EnterKeyPressed;
 
-        private void ModifyUC_Load(object sender, EventArgs e)
+        private void ModifyUC_Load(object sender, EventArgs ev)
         {
             try
             {
                 ModifyUCLoaded(this, EventArgs.Empty);
             }
-            catch (NullReferenceException n)
+            catch (NullReferenceException e)
             {
-                Console.WriteLine(n.ToString());
+                Console.WriteLine(e.ToString());
             }
         }
         private void SearchButton_Click(object sender, EventArgs e)
@@ -148,160 +148,185 @@ namespace NeedleController.Views.NeedleInfoUCs
 
         public void LoadModifyUC()
         {
-            NeedleComboBox.Items.Clear();
-            if (NeedleInfoView.needle_list == null)
+            try
             {
-                return;
+                if (NeedleInfoView.needle_list == null)
+                {
+                    return;
+                }
+                var NS_Listneedle = NeedleInfoView.needle_list.OrderBy(i => i.NeedleWarehouseCode).ToList();
+                NeedleComboBox.DataSource = NS_Listneedle;
+                NeedleComboBox.DisplayMember = "NeedleWarehouseCode";
+                NeedleComboBox.ValueMember = "NeedleID";
+                NeedleComboBox.SelectedItem = null;
+                NeedlePointListComboBox.Items.Clear();
+                NeedlePointListComboBox.Items.AddRange(NeedleInfoView.PointList);
+                Reset_Parameters();
             }
-            foreach (var needle in NeedleInfoView.needle_list)
+            catch (Exception e)
             {
-                NeedleComboBox.Items.Add(needle);
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
             }
-            NeedleComboBox.DisplayMember = "NeedleName";
-            NeedleComboBox.ValueMember = "NeedleID";
-            NeedlePointListComboBox.Items.Clear();
-            NeedlePointListComboBox.Items.AddRange(NeedleInfoView.PointList);
-            Reset_Parameters();
         }
         public void SearchForNeedle()
         {
-            string search_name = SearchTextBox.Text;
-            if (search_name == null || search_name == "")
+            try
             {
-                MessageBox.Show(this, "Please type needle name", "Attention :", MessageBoxButtons.OK);
-            }
-            else
-            {
-                if (search_name.Length > 6)
+                string search_name = SearchTextBox.Text;
+                if (search_name == null || search_name == "")
                 {
-                    MessageBox.Show(this, "More than 6 characters", "Attention :", MessageBoxButtons.OK);
+                    MessageBox.Show(this, "Please type needle name", "Attention :", MessageBoxButtons.OK);
                 }
                 else
                 {
-                    if (IsDigitsOnly(search_name))
+                    if (search_name.Length > 6)
                     {
-                        bool status = EF_CONFIG.DataTransform.NeedleBase.Check_AvailableNeedleName(int.Parse(search_name));
-                        if (!status)
-                        {
-                            MessageBox.Show(this, "Needle is not available. Please try another name", "Attention :", MessageBoxButtons.OK);
-                        }
-                        else
-                        {
-                            select_flag = true;
-                            int needlename = int.Parse(NeedleComboBox.Text);
-                            var item = NeedleInfoView.needle_list.Where(i => i.NeedleName == needlename).FirstOrDefault();
-                            NameTextBox.Text = item.NeedleName.ToString();
-                            CodeTextBox.Text = item.NeedleCode;
-                            SizeTextBox.Text = item.NeedleSize;
-                            PointTextBox.Text = item.NeedlePoint;
-                            PriceTextBox.Text = item.NeedlePrice.ToString();
-                            LengthTextBox.Text = item.NeedleLength.ToString();
-
-                            NeedleInfoView.selected_needleid = item.NeedleID.ToString();
-                            NeedleInfoView.selected_needlename = item.NeedleName.ToString();
-                            NeedleInfoView.selected_needlecode = item.NeedleCode;
-                            NeedleInfoView.selected_needlesize = item.NeedleSize;
-                            NeedleInfoView.selected_needlepoint = item.NeedlePoint;
-                            NeedleInfoView.selected_needleprice = item.NeedlePrice.ToString();
-                            NeedleInfoView.selected_needlelength = item.NeedleLength.ToString();
-                            NeedleInfoView.selected_needleimagebitmap_byte = item.RealityImage;
-                            NeedlePointPictureBox.Image = byteArrayToImage(item.PointTypeImage);
-                            NeedleRealityPictureBox.Image = byteArrayToImage(item.RealityImage);
-                            NeedleComboBox.Text = item.NeedleName.ToString();
-                            NeedlePointWarningLabel.Text = null;
-
-                            if (item.PointTypeImage != null)
-                            {
-                                NeedleInfoView.selected_needlepointbitmap_byte = item.PointTypeImage;
-                                NeedlePointListComboBox.Text = item.NeedlePoint.ToString();
-                            }
-                            else
-                            {
-                                NeedleInfoView.selected_needlepointbitmap_byte = null;
-                                NeedlePointListComboBox.Text = null;
-                            }
-                        }
+                        MessageBox.Show(this, "More than 6 characters", "Attention :", MessageBoxButtons.OK);
                     }
                     else
                     {
-                        MessageBox.Show(this, "Contains not allowance character", "Attention :", MessageBoxButtons.OK);
+                        if (IsDigitsOnly(search_name))
+                        {
+                            bool status = EF_CONFIG.DataTransform.NeedleBase.Check_AvailableNeedleWarehousecode(int.Parse(search_name));
+                            if (!status)
+                            {
+                                MessageBox.Show(this, "Needle is not available. Please try another name", "Attention :", MessageBoxButtons.OK);
+                            }
+                            else
+                            {
+                                select_flag = true;
+                                int needlename = int.Parse(search_name);
+                                var item = NeedleInfoView.needle_list.Where(i => i.NeedleWarehouseCode == needlename).FirstOrDefault();
+                                NameTextBox.Text = item.NeedleName.ToString();
+                                CodeTextBox.Text = item.NeedleCode;
+                                SizeTextBox.Text = item.NeedleSize;
+                                PointTextBox.Text = item.NeedlePoint;
+                                PriceTextBox.Text = item.NeedlePrice.ToString();
+                                LengthTextBox.Text = item.NeedleLength.ToString();
+
+                                NeedleInfoView.selected_needleid = item.NeedleID.ToString();
+                                NeedleInfoView.selected_needlename = item.NeedleName.ToString();
+                                NeedleInfoView.selected_needlecode = item.NeedleCode;
+                                NeedleInfoView.selected_needlesize = item.NeedleSize;
+                                NeedleInfoView.selected_needlepoint = item.NeedlePoint;
+                                NeedleInfoView.selected_needleprice = item.NeedlePrice.ToString();
+                                NeedleInfoView.selected_needlelength = item.NeedleLength.ToString();
+                                NeedleInfoView.selected_needleimagebitmap_byte = item.RealityImage;
+                                NeedlePointPictureBox.Image = byteArrayToImage(item.PointTypeImage);
+                                NeedleRealityPictureBox.Image = byteArrayToImage(item.RealityImage);
+                                NeedleComboBox.Text = item.NeedleName.ToString();
+                                NeedlePointWarningLabel.Text = null;
+
+                                if (item.PointTypeImage != null)
+                                {
+                                    NeedleInfoView.selected_needlepointbitmap_byte = item.PointTypeImage;
+                                    NeedlePointListComboBox.Text = item.NeedlePoint.ToString();
+                                }
+                                else
+                                {
+                                    NeedleInfoView.selected_needlepointbitmap_byte = null;
+                                    NeedlePointListComboBox.Text = null;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(this, "Contains not allowance character", "Attention :", MessageBoxButtons.OK);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
             }
         }
         public void SaveCurrentNeedleInformations()
         {
-            int count = 0;
-            CheckNameTextBoxData();
-            CheckCodeTextBoxData();
-            CheckSizeTextBoxData();
-            CheckPriceTextBoxData();
-            CheckLengthTextBoxData();
-            Check_NeedlePointListComboBoxIndexChanged();
+            try
+            {
+                int count = 0;
+                CheckNameTextBoxData();
+                CheckCodeTextBoxData();
+                CheckSizeTextBoxData();
+                CheckPriceTextBoxData();
+                CheckLengthTextBoxData();
+                Check_NeedlePointListComboBoxIndexChanged();
 
-            TextBox[] textBoxes = new TextBox[] {NameTextBox,
+                TextBox[] textBoxes = new TextBox[] {NameTextBox,
                                                 CodeTextBox,
                                                 SizeTextBox,
                                                 PriceTextBox,
                                                 LengthTextBox};
-            Label[] label = new Label[] {NameWarningLabel,
+                Label[] label = new Label[] {NameWarningLabel,
                                         CodeWarningLabel,
                                         SizeWarningLabel,
                                         PriceWarningLabel,
                                         LengthWarningLabel,
                                         NeedlePointWarningLabel};
-            for (int i = 0; i < label.Length; i++)
-            {
-                if (label[i].ForeColor == Color.Red)
+                for (int i = 0; i < label.Length; i++)
                 {
-                    if (i == 5)
+                    if (label[i].ForeColor == Color.Red)
                     {
-                        MessageBox.Show(this, "Invalid data at " + NeedlePointListComboBox.Name + ": value NULL ", "Error: " + label[i].Text, MessageBoxButtons.OK);
-                    }
-                    else
-                    {
-                        MessageBox.Show(this, "Invalid data at " + textBoxes[i].Name + ": value " + textBoxes[i].Text, "Error: " + label[i].Text, MessageBoxButtons.OK);
-
-                    }
-                }
-                else
-                {
-                    count++;
-                    continue;
-                }
-            }
-            if (count == 6)
-            {
-                NS_Needles nS_Needles = new NS_Needles()
-                {
-                    NeedleID = int.Parse(NeedleInfoView.selected_needleid),
-                    NeedleName = int.Parse(NeedleInfoView.selected_needlename),
-                    NeedleCode = NeedleInfoView.selected_needlecode,
-                    NeedleSize = NeedleInfoView.selected_needlesize,
-                    NeedlePoint = NeedleInfoView.selected_needlepoint,
-                    NeedlePrice = decimal.Parse(NeedleInfoView.selected_needleprice),
-                    NeedleLength = decimal.Parse(NeedleInfoView.selected_needlelength),
-                    PointTypeImage = NeedleInfoView.selected_needlepointbitmap_byte,
-                    RealityImage = NeedleInfoView.selected_needleimagebitmap_byte
-                };
-                switch (MessageBox.Show(this, "Do you want to save ?", "Attention :", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                {
-                    case DialogResult.Yes:
-                        bool status = EF_CONFIG.DataTransform.NeedleBase.Update_NeedleInformatio(nS_Needles);
-                        if (!status)
+                        if (i == 5)
                         {
-                            return;
+                            MessageBox.Show(this, "Invalid data at " + NeedlePointListComboBox.Name + ": value NULL ", "Error: " + label[i].Text, MessageBoxButtons.OK);
                         }
                         else
                         {
-                            NeedleInfoView.needle_list = EF_CONFIG.DataTransform.NeedleBase.Get_AllNeedle();
-                            LoadModifyUC();
-                            MessageBox.Show(this, "Saved successfuly", "Attention", MessageBoxButtons.OK);
+                            MessageBox.Show(this, "Invalid data at " + textBoxes[i].Name + ": value " + textBoxes[i].Text, "Error: " + label[i].Text, MessageBoxButtons.OK);
+
                         }
-                        break;
-                    case DialogResult.No:
-                        break;
+                    }
+                    else
+                    {
+                        count++;
+                        continue;
+                    }
                 }
+                if (count == 6)
+                {
+                    NS_Needles nS_Needles = new NS_Needles()
+                    {
+                        NeedleID = int.Parse(NeedleInfoView.selected_needleid),
+                        NeedleName = int.Parse(NeedleInfoView.selected_needlename),
+                        NeedleCode = NeedleInfoView.selected_needlecode,
+                        NeedleSize = NeedleInfoView.selected_needlesize,
+                        NeedlePoint = NeedleInfoView.selected_needlepoint,
+                        NeedlePrice = decimal.Parse(NeedleInfoView.selected_needleprice),
+                        NeedleLength = decimal.Parse(NeedleInfoView.selected_needlelength),
+                        PointTypeImage = NeedleInfoView.selected_needlepointbitmap_byte,
+                        RealityImage = NeedleInfoView.selected_needleimagebitmap_byte
+                    };
+                    switch (MessageBox.Show(this, "Do you want to save ?", "Attention :", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        case DialogResult.Yes:
+                            bool status = EF_CONFIG.DataTransform.NeedleBase.Update_NeedleInformatio(nS_Needles);
+                            if (!status)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                NeedleInfoView.needle_list = EF_CONFIG.DataTransform.NeedleBase.Get_AllNeedle();
+                                LoadModifyUC();
+                                MessageBox.Show(this, "Saved successfuly", "Attention", MessageBoxButtons.OK);
+                            }
+                            break;
+                        case DialogResult.No:
+                            break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
             }
         }
         public void CancelSettedNeedleInformation()
@@ -310,36 +335,45 @@ namespace NeedleController.Views.NeedleInfoUCs
         }
         public void Open_OpenFileDialog()
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            try
             {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "png files (*.png)|*.png|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    NeedleInfoView.selected_needleimagebitmap = new Bitmap(openFileDialog.FileName);
-                    NeedleInfoView.selected_needleimagebitmap_byte = imageToByteArray(NeedleInfoView.selected_needleimagebitmap);
-                    NeedleRealityPictureBox.Image = NeedleInfoView.selected_needleimagebitmap;
-                    FileDirectionTextBox.Text = openFileDialog.FileName;
+                    openFileDialog.InitialDirectory = "c:\\";
+                    openFileDialog.Filter = "png files (*.png)|*.png|All files (*.*)|*.*";
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        NeedleInfoView.selected_needleimagebitmap = new Bitmap(openFileDialog.FileName);
+                        NeedleInfoView.selected_needleimagebitmap_byte = imageToByteArray(NeedleInfoView.selected_needleimagebitmap);
+                        NeedleRealityPictureBox.Image = NeedleInfoView.selected_needleimagebitmap;
+                        FileDirectionTextBox.Text = openFileDialog.FileName;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
             }
         }
         public void Check_NeedleComboboxIndexChanged()
         {
-            if (NeedleComboBox.SelectedItem != null)
+            if (NeedleComboBox.SelectedIndex > 0)
             {
                 select_flag = true;
                 int needlename = int.Parse(NeedleComboBox.Text);
-                var item = NeedleInfoView.needle_list.Where(i => i.NeedleName == needlename).FirstOrDefault();
+                var item = NeedleInfoView.needle_list.Where(i => i.NeedleWarehouseCode == needlename).FirstOrDefault();
                 NameTextBox.Text = item.NeedleName.ToString();
                 CodeTextBox.Text = item.NeedleCode;
                 SizeTextBox.Text = item.NeedleSize;
                 PointTextBox.Text = item.NeedlePoint;
                 PriceTextBox.Text = item.NeedlePrice.ToString();
                 LengthTextBox.Text = item.NeedleLength.ToString();
-                SearchTextBox.Text = item.NeedleName.ToString();
+                SearchTextBox.Text = item.NeedleWarehouseCode.ToString();
 
                 NeedleInfoView.selected_needleid = item.NeedleID.ToString();
                 NeedleInfoView.selected_needlename = item.NeedleName.ToString();
@@ -517,40 +551,49 @@ namespace NeedleController.Views.NeedleInfoUCs
         }
         private void Reset_Parameters()
         {
-            NeedlePointListComboBox.Text = null;
-            NeedlePointListComboBox.SelectedItem = null;
+            try
+            {
+                NeedlePointListComboBox.Text = null;
+                NeedlePointListComboBox.SelectedItem = null;
 
-            NeedleComboBox.SelectedItem = null;
-            NeedleComboBox.Text = null;
+                NeedleComboBox.SelectedItem = null;
+                NeedleComboBox.Text = null;
 
-            SearchTextBox.Text = null;
-            NameTextBox.Text = null;
-            CodeTextBox.Text = null;
-            PointTextBox.Text = null;
-            PriceTextBox.Text = null;
-            SizeTextBox.Text = null;
-            LengthTextBox.Text = null;
-            FileDirectionTextBox.Text = null;
-            NeedlePointPictureBox.Image = null;
-            NeedleRealityPictureBox.Image = null;
+                SearchTextBox.Text = null;
+                NameTextBox.Text = null;
+                CodeTextBox.Text = null;
+                PointTextBox.Text = null;
+                PriceTextBox.Text = null;
+                SizeTextBox.Text = null;
+                LengthTextBox.Text = null;
+                FileDirectionTextBox.Text = null;
+                NeedlePointPictureBox.Image = null;
+                NeedleRealityPictureBox.Image = null;
 
-            CheckNameTextBoxData();
-            CheckCodeTextBoxData();
-            CheckSizeTextBoxData();
-            CheckPriceTextBoxData();
-            CheckLengthTextBoxData();
-            Check_NeedlePointListComboBoxIndexChanged();
-            NeedleInfoView.selected_needleimagebitmap = null;
-            NeedleInfoView.selected_needleimagebitmap_byte = imageToByteArray(NeedleInfoView.selected_needleimagebitmap);
-            NeedleRealityPictureBox.Image = NeedleInfoView.selected_needleimagebitmap;
+                CheckNameTextBoxData();
+                CheckCodeTextBoxData();
+                CheckSizeTextBoxData();
+                CheckPriceTextBoxData();
+                CheckLengthTextBoxData();
+                Check_NeedlePointListComboBoxIndexChanged();
+                NeedleInfoView.selected_needleimagebitmap = null;
+                NeedleInfoView.selected_needleimagebitmap_byte = imageToByteArray(NeedleInfoView.selected_needleimagebitmap);
+                NeedleRealityPictureBox.Image = NeedleInfoView.selected_needleimagebitmap;
 
-            NameWarningLabel.Text = null;
-            CodeWarningLabel.Text = null;
-            SizeWarningLabel.Text = null;
-            PointWarningLabel.Text = null;
-            PriceWarningLabel.Text = null;
-            LengthWarningLabel.Text = null;
-            NeedlePointWarningLabel.Text = null;
+                NameWarningLabel.Text = null;
+                CodeWarningLabel.Text = null;
+                SizeWarningLabel.Text = null;
+                PointWarningLabel.Text = null;
+                PriceWarningLabel.Text = null;
+                LengthWarningLabel.Text = null;
+                NeedlePointWarningLabel.Text = null;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, MainView.device_id);
+                MessageBox.Show(e.ToString());
+                Console.WriteLine(e.ToString());
+            }
 
         }
 
@@ -588,6 +631,6 @@ namespace NeedleController.Views.NeedleInfoUCs
             return null;
         }
 
-        
+
     }
 }

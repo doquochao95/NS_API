@@ -1,0 +1,44 @@
+﻿<Window  x:Class="NeedleTracking.LoadingWindow"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:uc="clr-namespace:NeedleTracking.UserControlUC"
+         xmlns:local="clr-namespace:NeedleTracking"
+         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+         mc:Ignorable="d"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         FontFamily="{DynamicResource MaterialDesignFont}"
+         WindowStyle="None"
+         ResizeMode="NoResize"
+         Name="loadingWindow"
+         Topmost="True"
+         WindowStartupLocation="CenterScreen"
+         DataContext="{StaticResource LoadingVM}"
+         Height="50"
+         Width="50"
+         AllowsTransparency="True"
+         Background="Transparent">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadLoadingWindowCommand}"
+                                   CommandParameter="{Binding ElementName=loadingWindow}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <materialDesign:Card UniformCornerRadius="30"
+                             Padding="5">
+            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                         Value="50"
+                         Height="30"
+                         Width="30"
+                         IsIndeterminate="True"
+                         />
+        </materialDesign:Card>
+    </Grid>
+</Window>

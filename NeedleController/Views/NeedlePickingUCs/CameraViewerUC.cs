@@ -20,6 +20,7 @@ using WinFormsMvp.Forms;
 using NeedleController.Presenters;
 using NeedleController.Presenters.NeedlePickingPresenters;
 
+
 namespace NeedleController.Views.NeedlePickingUCs
 {
     [PresenterBinding(typeof(CameraViewerPresenter))]
@@ -30,12 +31,11 @@ namespace NeedleController.Views.NeedlePickingUCs
             get { return this.SourceVideo.Image; }
             set { this.SourceVideo.Image = value; }
         }
-
-        public Image destVideo
-        {
-            get { return this.DestVideo.Image; }
-            set { this.DestVideo.Image = value; }
-        }
+        /* public Image destVideo
+         {
+             get { return this.DestVideo.Image; }
+             set { this.DestVideo.Image = value; }
+         }*/
 
         public int imgWidth
         {
@@ -97,6 +97,11 @@ namespace NeedleController.Views.NeedlePickingUCs
         }
 
         private void User_Contrast_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }

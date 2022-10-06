@@ -157,4 +157,10 @@
   <data name="UserNameLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>526, 0</value>
   </data>
+  <data name="IdLabel.Text" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="UserNameLabel.Text" xml:space="preserve">
+    <value>User Name</value>
+  </data>
 </root>

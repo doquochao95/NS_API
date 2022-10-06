@@ -4,34 +4,56 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e5f008b7738c4d72a210656c33f027fe" Name="Diagram1" ZoomLevel="85">
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Buildings" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Devices" Width="1.5" PointX="3" PointY="7.375" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Export" Width="1.5" PointX="10.5" PointY="7.125" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Imports" Width="1.5" PointX="13.5" PointY="7.125" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_NeedlePosition" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Needles" Width="1.5" PointX="8.25" PointY="3.25" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_PostRecords" Width="1.5" PointX="5.25" PointY="3.75" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Staffs" Width="1.5" PointX="5.25" PointY="7.125" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Stocks" Width="1.5" PointX="8.25" PointY="7.625" />
-        <EntityTypeShape EntityType="NeedleSupplierModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
+      <Diagram DiagramId="e5f008b7738c4d72a210656c33f027fe" Name="Diagram1" ZoomLevel="90">
+        <EntityTypeShape EntityType="NeedleSupplierModel.LogEvent" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_BrokenReason" Width="1.5" PointX="3" PointY="23.5" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Buildings" Width="1.5" PointX="0.75" PointY="18" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Devices" Width="1.5" PointX="3" PointY="16" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Export" Width="1.5" PointX="10.5" PointY="16.125" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Imports" Width="1.5" PointX="10.5" PointY="21.875" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Lines" Width="1.5" PointX="3" PointY="20.375" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_NeedlePosition" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Needles" Width="1.5" PointX="3" PointY="7.375" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_PostRecords" Width="1.5" PointX="8.25" PointY="22" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Process" Width="1.5" PointX="3" PointY="12" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_RecycledBox" Width="1.5" PointX="5.25" PointY="8.25" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Requests" Width="1.5" PointX="8.25" PointY="14.875" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Staffs" Width="1.5" PointX="5.25" PointY="20.875" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.NS_Stocks" Width="1.5" PointX="5.25" PointY="16.375" />
+        <EntityTypeShape EntityType="NeedleSupplierModel.sysdiagram" Width="1.5" PointX="2.75" PointY="3.75" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_BrokenReason" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Requests_NS_BrokenReason" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Devices_NS_Buildings" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Buildings" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Imports_NS_Buildings" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Lines_NS_Buildings" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_PostRecord_NS_Buildings" />
-        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Staffs_NS_Buildings" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Devices" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_PostRecords_NS_Devices" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Devices" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Requests_NS_Devices" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Staffs_NS_Devices" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Devices" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Devices" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Export" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_RecycledBox" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Staffs" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Export_NS_Stocks" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Imports_NS_Stocks" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Needles" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Tracking_NS_Staffs" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Staffs_NS_Lines" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Needles" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Requests_NS_Needles" />
         <AssociationConnector Association="NeedleSupplierModel.FK_NS_Stocks_NS_Needles" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Process" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Requests_NS_Process" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs1" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_RecycledBox_NS_Staffs2" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Requests_NS_Requests" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Requests_NS_Staffs" />
+        <AssociationConnector Association="NeedleSupplierModel.FK_NS_Requests_NS_Staffs1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

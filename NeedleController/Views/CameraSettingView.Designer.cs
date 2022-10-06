@@ -30,18 +30,19 @@ namespace NeedleController.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CameraSettingView));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DefaultParaButton = new System.Windows.Forms.Button();
             this.Preview_grBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.OutputVideo = new System.Windows.Forms.PictureBox();
             this.CannyVideo = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.SaveParaButton = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.Preview_grBox.SuspendLayout();
@@ -127,26 +128,6 @@ namespace NeedleController.Views
             this.tableLayoutPanel2.Size = new System.Drawing.Size(972, 225);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // panel2
-            // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 255);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(486, 372);
-            this.panel2.TabIndex = 10;
-            // 
-            // panel3
-            // 
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(495, 255);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(486, 372);
-            this.panel3.TabIndex = 11;
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // OutputVideo
             // 
             this.OutputVideo.BackColor = System.Drawing.Color.DarkGray;
@@ -172,6 +153,22 @@ namespace NeedleController.Views
             this.CannyVideo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.CannyVideo.TabIndex = 7;
             this.CannyVideo.TabStop = false;
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 255);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(486, 372);
+            this.panel2.TabIndex = 10;
+            // 
+            // panel3
+            // 
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(495, 255);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(486, 372);
+            this.panel3.TabIndex = 11;
             // 
             // panel4
             // 
@@ -199,12 +196,17 @@ namespace NeedleController.Views
             this.SaveParaButton.UseVisualStyleBackColor = false;
             this.SaveParaButton.Click += new System.EventHandler(this.SaveParaButton_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // CameraSettingView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 661);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1000, 700);
             this.Name = "CameraSettingView";

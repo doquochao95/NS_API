@@ -23,21 +23,27 @@ namespace NeedleController.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.177")]
         public string local_ip {
             get {
                 return ((string)(this["local_ip"]));
             }
+            set {
+                this["local_ip"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8080")]
         public int port {
             get {
                 return ((int)(this["port"]));
+            }
+            set {
+                this["port"] = value;
             }
         }
         
@@ -230,6 +236,54 @@ namespace NeedleController.Properties {
             }
             set {
                 this["modeCamera"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int deviceid {
+            get {
+                return ((int)(this["deviceid"]));
+            }
+            set {
+                this["deviceid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("E1")]
+        public string devicename {
+            get {
+                return ((string)(this["devicename"]));
+            }
+            set {
+                this["devicename"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Building E")]
+        public string buildingname {
+            get {
+                return ((string)(this["buildingname"]));
+            }
+            set {
+                this["buildingname"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int buildingid {
+            get {
+                return ((int)(this["buildingid"]));
+            }
+            set {
+                this["buildingid"] = value;
             }
         }
     }

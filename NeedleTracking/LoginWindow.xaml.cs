@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using NeedleTracking.ViewModel;
 using EF_CONFIG.DataTransform;
+using EF_CONFIG.Model;
+using NeedleTracking.UserControlUC.RequestUC;
+using NeedleTracking.ViewModel.RequestMenuViewModels;
 
 namespace NeedleTracking
 {
@@ -28,7 +31,7 @@ namespace NeedleTracking
         public LoginWindow()
         {
             InitializeComponent();
-            this.KeyDown += new KeyEventHandler(this.RFID_KeyPress);
+           /* this.KeyDown += new KeyEventHandler(this.RFID_KeyPress);*/
         }
         private void RFID_KeyPress(object sender, KeyEventArgs e)
         {
@@ -41,10 +44,12 @@ namespace NeedleTracking
             if (_barcode.Count == 10)
             {
                 MainWindow mainWindow = new MainWindow();
+                var mainWindowVM = mainWindow.DataContext as MainViewModel;
                 string msg = new String(_barcode.ToArray());
-                bool flag = StaffBase.Check_User(msg);
-                if (flag)
+                 NS_Staffs staff = StaffBase.Check_User(msg);
+                if (staff!=null)
                 {
+                    mainWindowVM.Selected_NS_Staff = staff;
                     loginWindow.Close();
                     mainWindow.Show();
                 }
@@ -54,7 +59,7 @@ namespace NeedleTracking
                     StatusTextblock.Foreground=Brushes.Red;
                 }
                 _barcode.Clear();
-                
+               
             }
         }
 
